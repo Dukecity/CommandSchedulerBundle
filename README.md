@@ -67,6 +67,7 @@ Version 3:
 
 ## Screenshots
 ![list](Resources/doc/images/scheduled-list.png)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FChris53897%2FCommandSchedulerBundle.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FChris53897%2FCommandSchedulerBundle?ref=badge_shield)
 
 ![new](Resources/doc/images/new-schedule.png)
 
@@ -79,3 +80,6 @@ See the [documentation here](https://github.com/Chris53897/CommandSchedulerBundl
 ## License
 
 This bundle is under the MIT license. See the [complete license](Resources/meta/LICENCE) for info.
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FChris53897%2FCommandSchedulerBundle.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FChris53897%2FCommandSchedulerBundle?ref=badge_large)
