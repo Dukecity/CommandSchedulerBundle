@@ -5,6 +5,7 @@ namespace Dukecity\CommandSchedulerBundle\Service;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\StreamOutput;
+use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -64,6 +65,7 @@ class CommandParser
             ]
         );
 
+        Debug::enable(E_RECOVERABLE_ERROR & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED, false);
         $output = new StreamOutput(fopen('php://memory', 'w+'));
         $application->run($input, $output);
         rewind($output->getStream());
