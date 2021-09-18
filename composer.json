@@ -68,5 +68,7 @@
         "psr-4": {
             "App\\Tests\\": "Tests/"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
