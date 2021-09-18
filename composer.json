@@ -21,6 +21,7 @@
         "doctrine/orm": "^2.9",
         "doctrine/doctrine-bundle": "^2.4",
         "doctrine/doctrine-migrations-bundle": "^3.1",
+        "laminas/laminas-code": "4.5.x-dev",
         "dragonmantank/cron-expression": "^3.1",
         "symfony/framework-bundle": "^4.4.20|^5.3|^6.0",
         "symfony/twig-bundle": "^4.4.20|^5.3|^6.0",
