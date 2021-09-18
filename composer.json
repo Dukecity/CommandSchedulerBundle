@@ -42,7 +42,7 @@
     },
     "require-dev": {
         "ext-pcntl": "*",
-        "phpunit/phpunit": "^8.0|^9.5",
+        "phpunit/phpunit": "^8.5.20|^9.5",
         "doctrine/doctrine-fixtures-bundle": "^3.4.0",
         "symfony/debug-bundle": "^4.4.20|^5.3|^6.0",
         "symfony/dom-crawler": "^4.4.20|^5.3|^6.0",
