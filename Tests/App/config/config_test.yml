@@ -1,21 +1,25 @@
 parameters:
     database_path: "%kernel.project_dir%/build/test.db"
 
+sensio_framework_extra:
+    router:
+        annotations: false
+
 framework:
     translator:      ~
     assets:
     secret:          secret
-    test:            ~
+    test:            true
     router:          { resource: "%kernel.project_dir%/Tests/App/config/routing.yml" }
     form:            true
     csrf_protection: false
     validation:      { enable_annotations: true }
     session:
-        #storage_factory_id: session.storage.factory.native
-        #storage_id: session.storage.factory.mock_file
-        storage_id: session.storage.filesystem
-        #storage_id: session.storage.mock_file
-        #name: MOCKSESSION
+        handler_id: null
+        cookie_secure: auto
+        cookie_samesite: lax
+        storage_factory_id: session.storage.factory.mock_file
+
     profiler:
         enabled: false
         collect: false
@@ -56,17 +60,11 @@ liip_test_fixtures:
         sqlite: liip_test_fixtures.services_database_backup.sqlite
 
 services:
-    # default configuration for services in *this* file
     _defaults:
-        # automatically injects dependencies in your services
         autowire: true
-        # automatically registers your services as commands, event subscribers, etc.
         autoconfigure: true
-        # this means you cannot fetch services directly from the container via $container->get()
-        # if you need to do this, you can override this setting on individual services
         public: true
 
     Dukecity\CommandSchedulerBundle\Fixtures\ORM\:
         resource: '../../../Fixtures/ORM/*'
         tags: ['doctrine.fixture.orm']
-
