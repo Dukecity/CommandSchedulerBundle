@@ -20,6 +20,7 @@
         "symfony/console": "^5.4|^6.0",
         "doctrine/orm": "^2.9",
         "doctrine/doctrine-bundle": "^2.4.2",
+        "doctrine/collections": "^1.6.8",
         "doctrine/dbal": "^2.13.3",
         "doctrine/doctrine-migrations-bundle": "^3.1.0",
         "doctrine/persistence": "^2.2.2",
