@@ -39,6 +39,7 @@
         "symfony/property-access": "^5.4|^6.0",
         "symfony/http-kernel": "^5.4|^6.0",
         "symfony/yaml": "^5.4|^6.0",
+        "twig/twig": "^3.3",
         "lorisleiva/cron-translator": "^0.2"
     },
     "require-dev": {
