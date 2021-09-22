@@ -22,6 +22,7 @@
         "doctrine/doctrine-bundle": "^2.4.2",
         "doctrine/dbal": "^2.13.3",
         "doctrine/doctrine-migrations-bundle": "^3.1.0",
+        "doctrine/persistence": "^2.2.2",
         "laminas/laminas-code": "4.5.x-dev",
         "dragonmantank/cron-expression": "^3.1",
         "symfony/framework-bundle": "^5.4|^6.0",
