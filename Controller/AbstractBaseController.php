@@ -3,6 +3,7 @@
 namespace Dukecity\CommandSchedulerBundle\Controller;
 
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\Translation\TranslatorInterface as ContractsTranslatorInterface;
 
@@ -14,6 +15,13 @@ use Symfony\Contracts\Translation\TranslatorInterface as ContractsTranslatorInte
 abstract class AbstractBaseController extends AbstractController
 {
     private string $managerName;
+    private ManagerRegistry $managerRegistry;
+
+
+    public function setManagerRegistry(ManagerRegistry $managerRegistry)
+    {
+        $this->managerRegistry = $managerRegistry;
+    }
 
     /**
      * @var ContractsTranslatorInterface
@@ -46,6 +54,6 @@ abstract class AbstractBaseController extends AbstractController
      */
     protected function getDoctrineManager(): ObjectManager
     {
-        return $this->getDoctrine()->getManager($this->managerName);
+        return $this->managerRegistry->getManager($this->managerName);
     }
 }

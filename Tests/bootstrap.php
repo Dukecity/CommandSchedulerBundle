@@ -10,7 +10,7 @@ if (!file_exists($file)) {
 $autoload = require $file;
 
 if (is_dir(__DIR__.'/../build')) {
-    echo "Removing files in the build directory.\n".__DIR__."\n";
+    #echo "Removing files in the build directory.\n".__DIR__."\n";
     $files = new RecursiveIteratorIterator(
         new RecursiveDirectoryIterator(__DIR__.'/../build/', RecursiveDirectoryIterator::SKIP_DOTS),
         RecursiveIteratorIterator::CHILD_FIRST

@@ -39,7 +39,7 @@ class DetailController extends AbstractBaseController
                 return $this->redirectToRoute('dukecity_command_scheduler_list');
             }
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrineManager();
             $em->persist($scheduledCommand);
             $em->flush();
 

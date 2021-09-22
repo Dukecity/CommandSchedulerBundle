@@ -11,12 +11,14 @@ framework:
     csrf_protection: false
     validation:      { enable_annotations: true }
     session:
+        #storage_factory_id: session.storage.factory.native
+        #storage_id: session.storage.factory.mock_file
         storage_id: session.storage.filesystem
         #storage_id: session.storage.mock_file
         #name: MOCKSESSION
     profiler:
-        enabled: true
-        collect: true
+        enabled: false
+        collect: false
 
 #liip_functional_test: ~
 
