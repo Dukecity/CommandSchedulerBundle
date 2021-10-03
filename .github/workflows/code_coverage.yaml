@@ -15,7 +15,10 @@ jobs:
 
       - run: composer install --no-progress
 
-      - run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+      - name: Get Code-Coverage
+        env:
+          SYMFONY_DEPRECATIONS_HELPER: 'weak'
+        run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
       - uses: codecov/codecov-action@v1.3.1
         with:
