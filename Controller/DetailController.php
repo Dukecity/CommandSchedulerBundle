@@ -16,11 +16,6 @@ class DetailController extends AbstractBaseController
 {
     /**
      * Handle display of new/existing ScheduledCommand object.
-     *
-     * @param Request               $request
-     * @param ScheduledCommand|null $scheduledCommand
-     *
-     * @return Response
      */
     public function edit(Request $request, ScheduledCommand $scheduledCommand = null): Response
     {

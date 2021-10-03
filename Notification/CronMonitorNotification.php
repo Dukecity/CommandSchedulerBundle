@@ -16,12 +16,6 @@ class CronMonitorNotification extends Notification implements EmailNotificationI
 {
     private array $scheduledCommands;
 
-    /**
-     * CronMonitorNotification constructor.
-     *
-     * @param array  $scheduledCommands
-     * @param string $subject
-     */
     #[Pure]
     public function __construct(array $scheduledCommands, private string $subject)
     {
@@ -62,12 +56,6 @@ class CronMonitorNotification extends Notification implements EmailNotificationI
         return "CronMonitoring: The following commands need to be checked.\n\n".$message;
     }
 
-    /**
-     * @param Recipient|EmailRecipientInterface $recipient
-     * @param string|null                       $transport
-     *
-     * @return EmailMessage|null
-     */
     public function asEmailMessage(
         Recipient | EmailRecipientInterface $recipient,
         string $transport = null

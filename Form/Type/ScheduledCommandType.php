@@ -19,10 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ScheduledCommandType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
@@ -107,9 +103,6 @@ class ScheduledCommandType extends AbstractType
         );
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
@@ -121,10 +114,6 @@ class ScheduledCommandType extends AbstractType
         );
     }
 
-    /**
-     * Fields prefix.
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return 'command_scheduler_detail';

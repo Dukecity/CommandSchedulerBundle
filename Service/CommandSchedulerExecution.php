@@ -42,15 +42,6 @@ class CommandSchedulerExecution
     private KernelInterface $kernel;
     private Application $application;
 
-    /**
-     * CommandParser constructor.
-     * @param KernelInterface $kernel
-     * @param ContainerInterface $container
-     * @param LoggerInterface $logger
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param ManagerRegistry $managerRegistry
-     * @param string $managerName
-     */
     public function __construct(
         KernelInterface $kernel,
         ContainerInterface $container,
@@ -73,10 +64,6 @@ class CommandSchedulerExecution
     }
 
 
-    /**
-     * @param $scheduledCommand
-     * @return Command|null
-     */
     private function getCommand($scheduledCommand): ?Command
     {
         try {
@@ -89,11 +76,6 @@ class CommandSchedulerExecution
         return $command;
     }
 
-    /**
-     * @param ScheduledCommand $scheduledCommand
-     * @param int $commandsVerbosity
-     * @return OutputInterface
-     */
     private function getLog(
         ScheduledCommand $scheduledCommand,
         int $commandsVerbosity = OutputInterface::OUTPUT_NORMAL
@@ -119,9 +101,6 @@ class CommandSchedulerExecution
 
     /**
      * - Find command
-     *
-     * @param $scheduledCommand
-     * @return Command|null
      */
     private function prepareCommandExecution($scheduledCommand): ?Command
     {
@@ -140,11 +119,6 @@ class CommandSchedulerExecution
      * - call the command with args and environment
      * - merge the definition of the commands
      * - Disable interactive mode
-     *
-     * @param ScheduledCommand $scheduledCommand
-     * @param Command $command
-     * @param string $env
-     * @return StringInput
      */
     private function getInputCommand(ScheduledCommand $scheduledCommand, Command $command, string $env): StringInput
     {
@@ -173,10 +147,6 @@ class CommandSchedulerExecution
 
     /**
      * Do the real execution of a command
-     *
-     * @param ScheduledCommand $scheduledCommand
-     * @param int $commandsVerbosity
-     * @return int Result
      */
     private function doExecution(ScheduledCommand $scheduledCommand, int $commandsVerbosity): int
     {
@@ -217,9 +187,6 @@ class CommandSchedulerExecution
     }
 
 
-    /**
-     * @param ScheduledCommand $scheduledCommand
-     */
     private function prepareExecution(ScheduledCommand $scheduledCommand)
     {
         //reload command from database before every execution to avoid parallel execution
@@ -256,14 +223,6 @@ class CommandSchedulerExecution
         }
     }
 
-    /**
-     * Excecute a command
-     *
-     * @param ScheduledCommand $scheduledCommand
-     * @param string $env
-     * @param string $commandsVerbosity
-     * @return int Result
-     */
     public function executeCommand(
         ScheduledCommand $scheduledCommand,
         string $env,

@@ -36,10 +36,6 @@ class ExecuteCommand extends Command
     const SUCCESS = 0;
     const FAILURE = 1;
 
-    /**
-     * @var string
-     */
-    protected static $defaultName = 'scheduler:execute';
     //private ObjectManager | EntityManager $em;
     private ObjectManager $em;
     private EventDispatcherInterface $eventDispatcher;
@@ -48,26 +44,14 @@ class ExecuteCommand extends Command
     private $output;
     private InputInterface $input;
     private CommandSchedulerExecution $commandSchedulerExecution;
-    /**
-     * @var bool|string|string[]|null
-     */
     private null|bool|array|string $env;
 
-    /**
-     * ExecuteCommand constructor.
-     *
-     * @param CommandSchedulerExecution $commandSchedulerExecution
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param ManagerRegistry $managerRegistry
-     * @param string $managerName
-     * @param string | bool $logPath
-     */
     public function __construct(
         CommandSchedulerExecution $commandSchedulerExecution,
         EventDispatcherInterface $eventDispatcher,
         ManagerRegistry $managerRegistry,
         string $managerName,
-    private string | bool $logPath
+        private string | bool $logPath
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->em = $managerRegistry->getManager($managerName);
@@ -102,9 +86,6 @@ HELP
 
     /**
      * Initialize parameters and services used in execute function.
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
      */
     protected function initialize(InputInterface $input, OutputInterface $output): void
     {
@@ -179,7 +160,6 @@ HELP
         $commandsToExceute = $this->em->getRepository(ScheduledCommand::class)
             ->findCommandsToExecute();
         $amountCommands = count($commandsToExceute);
-
 
 
 

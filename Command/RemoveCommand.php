@@ -23,17 +23,9 @@ class RemoveCommand extends Command
     const SUCCESS = 0;
     const FAILURE = 1;
 
-    /** @var string */
-    protected static $defaultName = 'scheduler:remove';
     private ObjectManager $em;
     private SymfonyStyle $io;
 
-    /**
-     * UnlockCommand constructor.
-     *
-     * @param ManagerRegistry $managerRegistry
-     * @param string          $managerName
-     */
     public function __construct(ManagerRegistry $managerRegistry, string $managerName)
     {
         $this->em = $managerRegistry->getManager($managerName);
@@ -66,7 +58,6 @@ HELP
            ;
     }
 
-
     protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         $this->io = new SymfonyStyle($input, $output);
@@ -94,11 +85,6 @@ HELP
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     *
      * @throws \Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output): int

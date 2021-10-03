@@ -25,9 +25,11 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
+    $services->defaults()
+        ->public(false)
+        ->autowire(true);
+
     $services->set(DetailController::class)
-        ->public()
-        ->autowire()
         ->call('setManagerRegistry', [service('doctrine')])
         ->call('setManagerName', ['%dukecity_command_scheduler.doctrine_manager%'])
         ->call('setTranslator', [service('translator')])
@@ -35,8 +37,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->tag('controller.service_arguments');
 
     $services->set(ListController::class)
-        ->public()
-        ->autowire()
         ->call('setManagerRegistry', [service('doctrine')])
         ->call('setManagerName', ['%dukecity_command_scheduler.doctrine_manager%'])
         ->call('setTranslator', [service('translator')])
@@ -44,8 +44,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->call('setLogger', [service('logger')])
         ->tag('container.service_subscriber')
         ->tag('controller.service_arguments');
-
-
 
     $services->set(CommandParser::class)
         ->args(
@@ -57,8 +55,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         );
 
     $services->set(ApiController::class)
-        ->public()
-        ->autowire()
         ->call('setManagerRegistry', [service('doctrine')])
         ->call('setManagerName', ['%dukecity_command_scheduler.doctrine_manager%'])
         ->call('setTranslator', [service('translator')])
@@ -83,7 +79,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     ;
 
     $services->set(CommandChoiceType::class)
-        ->autowire()
         ->tag('form.type', ['alias' => 'command_choice']);
 
     $services->set(ExecuteCommand::class)

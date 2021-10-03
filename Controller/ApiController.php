@@ -20,41 +20,23 @@ class ApiController extends AbstractBaseController
 {
     private int $lockTimeout = 3600;
     private LoggerInterface $logger;
-    /**
-     * @var CommandParser
-     */
     private CommandParser $commandParser;
 
-    /**
-     * @param int $lockTimeout
-     */
     public function setLockTimeout(int $lockTimeout): void
     {
         $this->lockTimeout = $lockTimeout;
     }
 
-    /**
-     * @param LoggerInterface $logger
-     */
     public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
     }
 
-    /**
-     * @param CommandParser $commandParser
-     */
     public function setCommandParser(CommandParser $commandParser): void
     {
         $this->commandParser = $commandParser;
     }
 
-
-    /**
-     * @param array $commands
-     *
-     * @return array
-     */
     private function getCommandsAsArray(array $commands): array
     {
         $jsonArray = [];
@@ -81,7 +63,6 @@ class ApiController extends AbstractBaseController
     /**
      * List all available (with the allowed namespaces) symfony console commands.
      * The commands are grouped by namespaces (like the regular "list" command from symfony
-     * @return JsonResponse
      */
     public function getConsoleCommands(): JsonResponse
     {
@@ -102,7 +83,6 @@ class ApiController extends AbstractBaseController
      *
      * @param string $commands all | list of commands , separated
      * @example cache:clear,assets:install
-     * @return JsonResponse
      */
     public function getConsoleCommandsDetails(string $commands="all"): JsonResponse
     {
@@ -126,8 +106,6 @@ class ApiController extends AbstractBaseController
 
     /**
      * List all commands.
-     *
-     * @return JsonResponse
      */
     public function listAction(): JsonResponse
     {
@@ -144,8 +122,6 @@ class ApiController extends AbstractBaseController
      * method checks if there are jobs which are enabled but did not return 0 on last execution or are locked.
      * if a match is found, HTTP status 417 is sent along with an array
      * if no matches found, HTTP status 200 is sent with an empty array.
-     *
-     * @return JsonResponse
      */
     public function monitorAction(): JsonResponse
     {
@@ -180,11 +156,9 @@ class ApiController extends AbstractBaseController
     /**
      * Translate cron expression
      *
-     * @param string $cronExpression
-     * @param string $lang
      * @return JsonResponse Status = 0 (ok)
      */
-    public function translateCronExpression(string $cronExpression, string $lang): JsonResponse
+    public function translateCronExpression(string $cronExpression, string $lang = 'en'): JsonResponse
     {
         try{
             if(CronExpressionLib::isValidExpression($cronExpression))

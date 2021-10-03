@@ -14,16 +14,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CommandChoiceType extends AbstractType
 {
-    /**
-     * CommandChoiceType constructor.
-     * @param CommandParser $commandParser
-     */
     public function __construct(private CommandParser $commandParser)
     {
     }
 
     /**
-     * @param OptionsResolver $resolver
      * @throws \Exception
      */
     public function configureOptions(OptionsResolver $resolver): void

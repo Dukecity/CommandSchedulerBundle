@@ -4,11 +4,6 @@ namespace Dukecity\CommandSchedulerBundle\Event;
 
 class SchedulerCommandFailedEvent
 {
-    /**
-     * List of failed commands.
-     *
-     * @param array $failedCommands
-     */
     public function __construct(private array $failedCommands = [])
     {
     }

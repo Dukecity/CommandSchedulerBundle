@@ -48,8 +48,8 @@
         "lorisleiva/cron-translator": "^0.2"
     },
     "require-dev": {
-        "ext-pcntl": "*",
         "phpunit/phpunit": "^9.5.9",
+        "symfony/phpunit-bridge": "^5.4 || ^6.0",
         "doctrine/doctrine-fixtures-bundle": "^3.4.0",
         "symfony/debug-bundle": "^5.4|^6.0",
         "symfony/dom-crawler": "^5.4|^6.0",

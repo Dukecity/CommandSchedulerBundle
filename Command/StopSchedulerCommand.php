@@ -23,16 +23,11 @@ class StopSchedulerCommand extends Command
     const FAILURE = 1;
 
     /**
-     * @var string
-     */
-    protected static $defaultName = 'scheduler:stop';
-    /**
      * {@inheritdoc}
      */
     protected function configure(): void
     {
-        $this->setDescription('Stops command scheduler')
-        ->setHelp(<<<'HELP'
+        $this->setHelp(<<<'HELP'
 The <info>%command.name%</info> stopps the manual scheduler which was startet via <comment>scheduler:start</comment>
 
 HELP

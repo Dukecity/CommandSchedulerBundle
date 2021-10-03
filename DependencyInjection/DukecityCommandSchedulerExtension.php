@@ -23,8 +23,6 @@ class DukecityCommandSchedulerExtension extends Extension
         // Default
         $config = $this->processConfiguration(new Configuration(), $configs);
 
-        // Custom
-        //$loader->load(__DIR__ . '/../Resources/config/events.php');
         $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.php');
 

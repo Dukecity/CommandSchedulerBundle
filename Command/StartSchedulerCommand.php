@@ -23,10 +23,6 @@ class StartSchedulerCommand extends Command
     const SUCCESS = 0;
     const FAILURE = 1;
 
-    /**
-     * @var string
-     */
-    protected static $defaultName = 'scheduler:start';
     const PID_FILE = '.cron-pid';
 
     /**
@@ -97,8 +93,6 @@ HELP
     }
 
     /**
-     * @param OutputInterface $output
-     * @param ?string $pidFile
      * @throws \Symfony\Component\Console\Exception\ExceptionInterface
      */
     private function scheduler(OutputInterface $output, ?string $pidFile): void

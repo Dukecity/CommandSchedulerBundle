@@ -19,17 +19,11 @@ class ListController extends AbstractBaseController
     private int $lockTimeout = 3600;
     private LoggerInterface $logger;
 
-    /**
-     * @param int $lockTimeout
-     */
     public function setLockTimeout(int $lockTimeout): void
     {
         $this->lockTimeout = $lockTimeout;
     }
 
-    /**
-     * @param LoggerInterface $logger
-     */
     public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
@@ -48,11 +42,6 @@ class ListController extends AbstractBaseController
         );
     }
 
-    /**
-     * @param ScheduledCommand $scheduledCommand
-     *
-     * @return RedirectResponse
-     */
     public function removeAction(ScheduledCommand $scheduledCommand): RedirectResponse
     {
         $entityManager = $this->getDoctrineManager();
@@ -65,13 +54,6 @@ class ListController extends AbstractBaseController
         return $this->redirectToRoute('dukecity_command_scheduler_list');
     }
 
-    /**
-     * Toggle enabled/disabled.
-     *
-     * @param ScheduledCommand $scheduledCommand
-     *
-     * @return RedirectResponse
-     */
     public function toggleAction(ScheduledCommand $scheduledCommand): RedirectResponse
     {
         $scheduledCommand->setDisabled(!$scheduledCommand->isDisabled());
@@ -80,12 +62,6 @@ class ListController extends AbstractBaseController
         return $this->redirectToRoute('dukecity_command_scheduler_list');
     }
 
-    /**
-     * @param ScheduledCommand $scheduledCommand
-     * @param Request          $request
-     *
-     * @return RedirectResponse
-     */
     public function executeAction(ScheduledCommand $scheduledCommand, Request $request): RedirectResponse
     {
         $scheduledCommand->setExecuteImmediately(true);
@@ -101,12 +77,6 @@ class ListController extends AbstractBaseController
         return $this->redirectToRoute('dukecity_command_scheduler_list');
     }
 
-    /**
-     * @param ScheduledCommand $scheduledCommand
-     * @param Request          $request
-     *
-     * @return RedirectResponse
-     */
     public function unlockAction(ScheduledCommand $scheduledCommand, Request $request): RedirectResponse
     {
         $scheduledCommand->setLocked(false);

@@ -24,14 +24,6 @@ class SchedulerCommandSubscriber implements EventSubscriberInterface
 
     /**
      * TODO check if parameters needed
-     * SchedulerCommandSubscriber constructor.
-     *
-     * @param ContainerInterface     $container
-     * @param LoggerInterface        $logger
-     * @param EntityManagerInterface $em
-     * @param NotifierInterface|null $notifier
-     * @param array                  $monitor_mail
-     * @param string                 $monitor_mail_subject
      */
     public function __construct(ContainerInterface $container, LoggerInterface $logger, EntityManagerInterface $em, NotifierInterface|null $notifier = null, private array $monitor_mail = [], private string $monitor_mail_subject = 'CronMonitor:')
     {

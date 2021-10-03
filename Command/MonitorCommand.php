@@ -30,25 +30,10 @@ class MonitorCommand extends Command
     const SUCCESS = 0;
     const FAILURE = 1;
 
-    /**
-     * @var string
-     */
-    protected static $defaultName = 'scheduler:monitor';
     private ObjectManager $em;
     private EventDispatcherInterface $eventDispatcher;
     //private ParameterBagInterface $params;
 
-    /**
-     * MonitorCommand constructor.
-     *
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param ManagerRegistry          $managerRegistry
-     * @param string                   $managerName
-     * @param int | bool               $lockTimeout
-     * @param array                    $receiver
-     * @param string                   $mailSubject
-     * @param bool                     $sendMailIfNoError
-     */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         ManagerRegistry $managerRegistry,
@@ -125,9 +110,6 @@ HELP);
 
     /**
      * Print a table of locked Commands to console.
-     *
-     * @param OutputInterface $output
-     * @param array           $failedCommands
      *
      * @throws \Exception
      */

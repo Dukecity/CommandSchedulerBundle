@@ -18,13 +18,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class CommandParser
 {
-    /**
-     * CommandParser constructor.
-     *
-     * @param KernelInterface $kernel
-     * @param array      $excludedNamespaces
-     * @param array      $includedNamespaces
-     */
     public function __construct(private KernelInterface $kernel,
         private array $excludedNamespaces = [],
         private array $includedNamespaces = [])
@@ -37,9 +30,6 @@ class CommandParser
 
     /**
      * There could be only whitelisting or blacklisting
-     * @param array $excludedNamespaces
-     * @param array $includedNamespaces
-     * @return bool
      */
     #[Pure]
     public function isNamespacingValid(array $excludedNamespaces, array $includedNamespaces): bool
@@ -50,17 +40,12 @@ class CommandParser
                 );
     }
 
-    /**
-     * @param array $namespaces
-     */
+
     public function setExcludedNamespaces(array $namespaces = [])
     {
         $this->excludedNamespaces = $namespaces;
     }
 
-    /**
-     * @param array $namespaces
-     */
     public function setIncludedNamespaces(array $namespaces = [])
     {
         $this->includedNamespaces = $namespaces;
@@ -69,9 +54,6 @@ class CommandParser
     /**
      * Get all available commands from symfony
      *
-     * @param string $format txt|xml|json|md
-     * @param string $env test|dev|prod
-     * @return string|array
      * @throws Exception
      */
     public function getAvailableCommands(string $format="xml", string $env="prod"): string|array
@@ -105,6 +87,7 @@ class CommandParser
                 JSON_THROW_ON_ERROR
             );}
 
+            throw new \InvalidArgumentException('Only xml and json are allowed');
         } catch (\Throwable) {
             throw new Exception('Listing of commands could not be read');
         }
@@ -131,8 +114,6 @@ class CommandParser
     /**
      * Get Details for the commands, for the allowed Namespaces
      *
-     * @param string $env
-     * @return array
      * @throws Exception
      */
     public function getAllowedCommandDetails(string $env="prod"): array
@@ -144,9 +125,6 @@ class CommandParser
 
     /**
      * Is the command-List wrapped in namespaces?
-     *
-     * @param array $commands
-     * @return array
      */
     public function reduceNamespacedCommands(array $commands): array
     {
@@ -173,11 +151,6 @@ class CommandParser
         return $commands;
     }
 
-    /**
-     * @param array $commands
-     * @return array
-     * @throws Exception
-     */
     public function getCommandDetails(array $commands): array
     {
         $availableCommands = $this->getAvailableCommands("json", "prod");
@@ -213,8 +186,6 @@ class CommandParser
      *  [0]
      *     ["id"] => cache
      *     ["commands"] => ["cache:clear", "cache:warmup", ...]
-     *
-     * @return array
      */
     private function extractCommands(array $commands): array
     {

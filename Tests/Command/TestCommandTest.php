@@ -12,9 +12,6 @@ use Dukecity\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData;
  */
 class TestCommandTest extends AbstractCommandTest
 {
-    /**
-     *
-     */
     public function testExecute()
     {
         // DataFixtures create 4 records
