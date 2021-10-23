@@ -14,8 +14,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['8.0', '8.1']
+        #php: ['8.0', '8.1']
+        php: ['8.0']
         stability: [ prefer-lowest, prefer-stable ]
+        symfony-version: ['5.3']
+        experimental: [false]
+        include:
+          - php: '8.1'
+            stability: prefer-stable
+            experimental: true
+    continue-on-error: ${{ matrix.experimental }}
 
     name: PHP ${{ matrix.php }} - ${{ matrix.stability }} tests
     steps:
@@ -33,12 +41,18 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: pcov, dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
-          coverage: pcov # none, disable xdebug, pcov
+          coverage: pcov
 
       - name: Install dependencies
+        env:
+          SYMFONY_REQUIRE: ${{ matrix.symfony-version }}
+        run: |
+          composer global require --no-progress --no-scripts --no-plugins symfony/flex
+          composer update --no-interaction --prefer-dist --optimize-autoloader
+          vendor/bin/simple-phpunit install
         #run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
         # To install laminas/code Version 4.5.x with php 8.1 support
-        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --with-all-dependencies
+        #run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --with-all-dependencies
 
       - name: Execute tests
         env:

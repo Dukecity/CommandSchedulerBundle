@@ -38,25 +38,20 @@ class ExecuteCommand extends Command
 
     //private ObjectManager | EntityManager $em;
     private ObjectManager $em;
-    private EventDispatcherInterface $eventDispatcher;
     private string $dumpMode;
     private ?int $commandsVerbosity = null;
     private $output;
     private InputInterface $input;
-    private CommandSchedulerExecution $commandSchedulerExecution;
     private null|bool|array|string $env;
 
     public function __construct(
-        CommandSchedulerExecution $commandSchedulerExecution,
-        EventDispatcherInterface $eventDispatcher,
+        private CommandSchedulerExecution $commandSchedulerExecution,
+        private EventDispatcherInterface $eventDispatcher,
         ManagerRegistry $managerRegistry,
         string $managerName,
         private string | bool $logPath
     ) {
-        $this->eventDispatcher = $eventDispatcher;
         $this->em = $managerRegistry->getManager($managerName);
-
-        $this->commandSchedulerExecution = $commandSchedulerExecution;
 
         // If logpath is not set to false, append the directory separator to it
         if (false !== $this->logPath) {

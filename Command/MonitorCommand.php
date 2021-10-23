@@ -31,11 +31,11 @@ class MonitorCommand extends Command
     const FAILURE = 1;
 
     private ObjectManager $em;
-    private EventDispatcherInterface $eventDispatcher;
+
     //private ParameterBagInterface $params;
 
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
+        private EventDispatcherInterface $eventDispatcher,
         ManagerRegistry $managerRegistry,
         string $managerName,
         private int | bool $lockTimeout,
@@ -44,7 +44,6 @@ class MonitorCommand extends Command
         private bool $sendMailIfNoError = false
     ) {
         $this->em = $managerRegistry->getManager($managerName);
-        $this->eventDispatcher = $eventDispatcher;
         parent::__construct();
     }
 

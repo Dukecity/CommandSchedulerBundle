@@ -41,19 +41,17 @@ class ApiController extends AbstractBaseController
     {
         $jsonArray = [];
 
-        if (is_iterable($commands)) {
-            foreach ($commands as $command) {
-                $jsonArray[$command->getName()] = [
-                    'NAME' => $command->getName(),
-                    'COMMAND' => $command->getCommand(),
-                    'ARGUMENTS' => $command->getArguments(),
-                    'LAST_RETURN_CODE' => $command->getLastReturnCode(),
-                    'B_LOCKED' => $command->getLocked(),
-                    'DH_LAST_EXECUTION' => $command->getLastExecution(),
-                    'DH_NEXT_EXECUTION' => $command->getNextRunDate(),
-                    'LOGFILE' => $command->getLogFile(),
-                ];
-            }
+        foreach ($commands as $command) {
+            $jsonArray[$command->getName()] = [
+                'NAME' => $command->getName(),
+                'COMMAND' => $command->getCommand(),
+                'ARGUMENTS' => $command->getArguments(),
+                'LAST_RETURN_CODE' => $command->getLastReturnCode(),
+                'B_LOCKED' => $command->getLocked(),
+                'DH_LAST_EXECUTION' => $command->getLastExecution(),
+                'DH_NEXT_EXECUTION' => $command->getNextRunDate(),
+                'LOGFILE' => $command->getLogFile(),
+            ];
         }
 
         return $jsonArray;

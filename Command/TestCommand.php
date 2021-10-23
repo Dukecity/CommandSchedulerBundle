@@ -37,9 +37,6 @@ class TestCommand extends Command
 
     /**
      * Initialize parameters and services used in execute function.
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
      */
     protected function initialize(InputInterface $input, OutputInterface $output): void
     {
