@@ -19,6 +19,7 @@ use Dukecity\CommandSchedulerBundle\Form\Type\CommandChoiceType;
 use Dukecity\CommandSchedulerBundle\Service\CommandParser;
 use Dukecity\CommandSchedulerBundle\Command\ListCommand;
 use Dukecity\CommandSchedulerBundle\Service\CommandSchedulerExecution;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
@@ -173,4 +174,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ]
         )
         ->tag('kernel.event_subscriber');
+
+    /** to remove deprecation warning since Symfony 5.1 (@see https://stackoverflow.com/questions/63860123/symfony-explicit-define-container-in-service) */
+    $services->alias('service_container', ContainerInterface::class);
 };

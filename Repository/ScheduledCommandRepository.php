@@ -119,7 +119,7 @@ class ScheduledCommandRepository extends EntityRepository
     }
 
     /**
-     * Find all enabled commands that need to be exceuted ordered by priority.
+     * Find all enabled commands that need to be executed ordered by priority.
      *
      * @throws \Exception
      */
@@ -151,12 +151,6 @@ class ScheduledCommandRepository extends EntityRepository
         return $commands;
     }
 
-
-    /**
-     * @param int|bool $lockTimeout
-     *
-     * @return array
-     */
     public function findFailedAndTimeoutCommands(int | bool $lockTimeout = false): array
     {
         // Fist, get all failed commands (return != 0)
@@ -177,10 +171,6 @@ class ScheduledCommandRepository extends EntityRepository
     }
 
     /**
-     * @param ScheduledCommand $command
-     *
-     * @return ScheduledCommand | null
-     *
      * @throws NonUniqueResultException
      * @throws TransactionRequiredException
      */

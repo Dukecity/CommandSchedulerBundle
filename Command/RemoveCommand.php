@@ -9,6 +9,9 @@ use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Completion\CompletionInput;
+use Symfony\Component\Console\Completion\CompletionSuggestions;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -108,6 +111,24 @@ HELP
             $io->error(sprintf('Could not find/delete the command %s', $commandName));
 
             return self::FAILURE;
+        }
+    }
+
+    public function getCommandNames(): array
+    {
+        $return = [];
+        $commands = $this->em->getRepository(ScheduledCommand::class)->findAll();
+        foreach ($commands as $command){
+            $return[] = $command->getName();
+        }
+
+        return $return;
+    }
+
+    public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
+    {
+        if ($input->mustSuggestArgumentValuesFor('name')) {
+            $suggestions->suggestValues($this->getCommandNames());
         }
     }
 }

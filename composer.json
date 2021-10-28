@@ -54,7 +54,7 @@
         "symfony/debug-bundle": "^4.4.31 || ^5.3 || ^6.0",
         "symfony/dom-crawler": "^4.4.31 || ^5.3 || ^6.0",
         "symfony/css-selector": "^4.4.31 || ^5.3 || ^6.0",
-        "liip/test-fixtures-bundle": "^2.0.1",
+        "liip/test-fixtures-bundle": "^2.1.0",
         "symfony/browser-kit": "^4.4.31 || ^5.3 || ^6.0",
         "symfony/maker-bundle": "^1.33",
         "jetbrains/phpstorm-attributes": "^1.0"
@@ -87,5 +87,7 @@
             "allow-contrib": false,
             "require": "^4.4.31 || ^5.3 || ^6.0"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": false
 }

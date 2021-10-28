@@ -18,7 +18,7 @@ if (is_dir(__DIR__.'/../build')) {
 
     foreach ($files as $fileinfo) {
         $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
-        $todo($fileinfo->getRealPath());
+        @$todo($fileinfo->getRealPath());
     }
 } else {
     // Creating the build dir, to output some potential datas, and the code coverage if wanted
