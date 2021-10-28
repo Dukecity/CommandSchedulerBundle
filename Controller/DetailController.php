@@ -16,9 +16,15 @@ class DetailController extends AbstractBaseController
 {
     /**
      * Handle display of new/existing ScheduledCommand object.
+     *
+     * @param Request               $request
+     * @param $id
+     *
+     * @return Response
      */
-    public function edit(Request $request, ScheduledCommand $scheduledCommand = null): Response
+    public function edit(Request $request, $id = null): Response
     {
+        $scheduledCommand = $id ? $this->getDoctrineManager()->getRepository(ScheduledCommand::class)->find($id) : null;
         if (!$scheduledCommand) {
             $scheduledCommand = new ScheduledCommand();
         }
@@ -34,7 +40,7 @@ class DetailController extends AbstractBaseController
                 return $this->redirectToRoute('dukecity_command_scheduler_list');
             }
 
-            $em = $this->getDoctrineManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($scheduledCommand);
             $em->flush();
 
