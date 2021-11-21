@@ -42,9 +42,6 @@ return static function (RoutingConfigurator $routingConfigurator): void {
     $routingConfigurator->add('dukecity_command_scheduler_action_unlock', '/command-scheduler/action/unlock/{id}')
         ->defaults(['_controller' => 'Dukecity\CommandSchedulerBundle\Controller\ListController::unlockAction']);
 
-    $routingConfigurator->add('dukecity_command_scheduler_detail_index', '/command-scheduler/detail/view/')
-        ->defaults(['_controller' => 'Dukecity\CommandSchedulerBundle\Controller\DetailController::indexAction']);
-
     $routingConfigurator->add('dukecity_command_scheduler_detail_edit', '/command-scheduler/detail/edit/{id}')
         ->defaults(['_controller' => 'Dukecity\CommandSchedulerBundle\Controller\DetailController::edit']);
 
