@@ -19,7 +19,6 @@ use Dukecity\CommandSchedulerBundle\Form\Type\CommandChoiceType;
 use Dukecity\CommandSchedulerBundle\Service\CommandParser;
 use Dukecity\CommandSchedulerBundle\Command\ListCommand;
 use Dukecity\CommandSchedulerBundle\Service\CommandSchedulerExecution;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
@@ -62,13 +61,15 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->call('setLockTimeout', ['%dukecity_command_scheduler.lock_timeout%'])
         ->call('setLogger', [service('logger')])
         ->call('setCommandParser', [service(CommandParser::class)])
-        ->tag('controller.service_arguments');
+        ->tag('container.service_subscriber')
+        ->tag('controller.service_arguments')
+    ;
 
     $services->set(CommandSchedulerExecution::class)
         ->args(
             [
                 service('kernel'),
-                service('service_container'),
+                service('parameter_bag'),
                 service('logger'),
                 service('event_dispatcher'),
                 service('doctrine'),
@@ -85,7 +86,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(ExecuteCommand::class)
         ->args(
             [
-                service('Dukecity\CommandSchedulerBundle\Service\CommandSchedulerExecution'),
+                service(CommandSchedulerExecution::class),
                 service('event_dispatcher'),
                 service('doctrine'),
                 '%dukecity_command_scheduler.doctrine_manager%',
@@ -165,7 +166,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(SchedulerCommandSubscriber::class)
         ->args(
             [
-                service('service_container'),
                 service('logger'),
                 service('doctrine.orm.default_entity_manager'),
                 $notifier,
@@ -174,7 +174,4 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ]
         )
         ->tag('kernel.event_subscriber');
-
-    /** to remove deprecation warning since Symfony 5.1 (@see https://stackoverflow.com/questions/63860123/symfony-explicit-define-container-in-service) */
-    $services->alias('service_container', ContainerInterface::class);
 };

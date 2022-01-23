@@ -10,7 +10,6 @@ use Dukecity\CommandSchedulerBundle\Event\SchedulerCommandFailedEvent;
 use Dukecity\CommandSchedulerBundle\Event\SchedulerCommandPreExecutionEvent;
 use Dukecity\CommandSchedulerBundle\Notification\CronMonitorNotification;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Notifier\Recipient\Recipient;
@@ -19,15 +18,13 @@ class SchedulerCommandSubscriber implements EventSubscriberInterface
 {
     protected LoggerInterface $logger;
     protected EntityManagerInterface $em;
-    protected ContainerInterface $container;
     protected NotifierInterface|null $notifier;
 
     /**
      * TODO check if parameters needed
      */
-    public function __construct(ContainerInterface $container, LoggerInterface $logger, EntityManagerInterface $em, NotifierInterface|null $notifier = null, private array $monitor_mail = [], private string $monitor_mail_subject = 'CronMonitor:')
+    public function __construct(LoggerInterface $logger, EntityManagerInterface $em, NotifierInterface|null $notifier = null, private array $monitor_mail = [], private string $monitor_mail_subject = 'CronMonitor:')
     {
-        $this->container = $container;
         $this->logger = $logger;
         $this->em = $em;
         $this->notifier = $notifier;

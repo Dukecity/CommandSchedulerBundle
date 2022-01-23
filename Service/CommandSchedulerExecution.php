@@ -22,6 +22,7 @@ use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Console\Command\Command;
@@ -36,7 +37,6 @@ class CommandSchedulerExecution
     private EventDispatcherInterface $eventDispatcher;
     private ManagerRegistry $managerRegistry;
     private string $env;
-    private ContainerInterface $container;
     private null|string $logPath;
     private ObjectManager $em;
     private KernelInterface $kernel;
@@ -44,7 +44,7 @@ class CommandSchedulerExecution
 
     public function __construct(
         KernelInterface $kernel,
-        ContainerInterface $container,
+        protected ParameterBagInterface $parameterBag,
         LoggerInterface $logger,
         EventDispatcherInterface $eventDispatcher,
         ManagerRegistry $managerRegistry,
@@ -55,8 +55,7 @@ class CommandSchedulerExecution
         $this->eventDispatcher = $eventDispatcher;
         $this->managerRegistry = $managerRegistry;
         $this->em = $managerRegistry->getManager($managerName);
-        $this->container = $container;
-        $this->logPath = $this->container->getParameter('dukecity_command_scheduler.log_path');
+        $this->logPath = $this->parameterBag->get('dukecity_command_scheduler.log_path');
         $this->kernel = $kernel;
 
         $this->application = new Application($kernel);
@@ -231,6 +230,7 @@ class CommandSchedulerExecution
         $this->env = $env;
         $this->prepareExecution($scheduledCommand);
 
+        /** @var $scheduledCommand ScheduledCommand */
         $scheduledCommand = $this->em->find(ScheduledCommand::class, $scheduledCommand);
 
         $result = $this->doExecution($scheduledCommand, $commandsVerbosity);
@@ -249,7 +249,6 @@ class CommandSchedulerExecution
         $scheduledCommand->setExecuteImmediately(false);
         $this->em->persist($scheduledCommand);
         $this->em->flush();
-
 
         /*
          * This clear() is necessary to avoid conflict between commands and to be sure that none entity are managed

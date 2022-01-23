@@ -19,17 +19,11 @@ class ListController extends AbstractBaseController
     private int $lockTimeout = 3600;
     private LoggerInterface $logger;
 
-    /**
-     * @param int $lockTimeout
-     */
     public function setLockTimeout(int $lockTimeout): void
     {
         $this->lockTimeout = $lockTimeout;
     }
 
-    /**
-     * @param LoggerInterface $logger
-     */
     public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
@@ -48,11 +42,6 @@ class ListController extends AbstractBaseController
         );
     }
 
-    /**
-     * @param $id
-     *
-     * @return RedirectResponse
-     */
     public function removeAction($id): RedirectResponse
     {
         $entityManager = $this->getDoctrineManager();
@@ -68,10 +57,6 @@ class ListController extends AbstractBaseController
 
     /**
      * Toggle enabled/disabled.
-     *
-     * @param $id
-     *
-     * @return RedirectResponse
      */
     public function toggleAction($id): RedirectResponse
     {
@@ -82,12 +67,6 @@ class ListController extends AbstractBaseController
         return $this->redirectToRoute('dukecity_command_scheduler_list');
     }
 
-    /**
-     * @param $id
-     * @param Request          $request
-     *
-     * @return RedirectResponse
-     */
     public function executeAction($id, Request $request): RedirectResponse
     {
         $scheduledCommand = $this->getDoctrineManager()->getRepository(ScheduledCommand::class)->find($id);
@@ -104,12 +83,6 @@ class ListController extends AbstractBaseController
         return $this->redirectToRoute('dukecity_command_scheduler_list');
     }
 
-    /**
-     * @param $id
-     * @param Request          $request
-     *
-     * @return RedirectResponse
-     */
     public function unlockAction($id, Request $request): RedirectResponse
     {
         $scheduledCommand = $this->getDoctrineManager()->getRepository(ScheduledCommand::class)->find($id);

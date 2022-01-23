@@ -23,9 +23,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'scheduler:remove', description: 'Remove a scheduled command', aliases:['scheduler:delete'])]
 class RemoveCommand extends Command
 {
-    const SUCCESS = 0;
-    const FAILURE = 1;
-
     private ObjectManager $em;
     private SymfonyStyle $io;
 
@@ -106,11 +103,11 @@ HELP
 
             $io->success(sprintf('The Command %s is deleted successfully', $commandName));
 
-            return self::SUCCESS;
+            return Command::SUCCESS;
         } catch (\Exception) {
             $io->error(sprintf('Could not find/delete the command %s', $commandName));
 
-            return self::FAILURE;
+            return Command::FAILURE;
         }
     }
 

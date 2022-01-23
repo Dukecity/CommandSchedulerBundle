@@ -21,9 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'scheduler:list', description: 'List scheduled commands')]
 class ListCommand extends Command
 {
-    const SUCCESS = 0;
-    const FAILURE = 1;
-
     private ObjectManager $em;
 
     public function __construct(ManagerRegistry $managerRegistry, string $managerName)
@@ -86,6 +83,6 @@ class ListCommand extends Command
 
         $table->render();
 
-        return self::SUCCESS;
+        return Command::SUCCESS;
     }
 }

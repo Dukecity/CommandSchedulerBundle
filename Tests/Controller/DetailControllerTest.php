@@ -67,7 +67,7 @@ class DetailControllerTest extends WebTestCase
     /**
      * Test new scheduling creation.
      */
-    public function testNewSave()
+    public function testNewSave(): void
     {
         $this->databaseTool->loadFixtures([]);
 
@@ -77,7 +77,7 @@ class DetailControllerTest extends WebTestCase
 
         $form->setValues([
             'command_scheduler_detail[name]' => 'wtc',
-            'command_scheduler_detail[command]' => 'translation:update',
+            'command_scheduler_detail[command]' => 'about',
             'command_scheduler_detail[arguments]' => '--help',
             'command_scheduler_detail[cronExpression]' => '@daily',
             'command_scheduler_detail[logFile]' => 'wtc.log',

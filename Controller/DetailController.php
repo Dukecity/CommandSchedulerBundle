@@ -16,11 +16,6 @@ class DetailController extends AbstractBaseController
 {
     /**
      * Handle display of new/existing ScheduledCommand object.
-     *
-     * @param Request               $request
-     * @param $id
-     *
-     * @return Response
      */
     public function edit(Request $request, $id = null): Response
     {
@@ -34,13 +29,13 @@ class DetailController extends AbstractBaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // check if we have an xml-read error for commands
-            if ('error' == $scheduledCommand->getCommand()) {
+            if ('error' === $scheduledCommand->getCommand()) {
                 $this->addFlash('error', 'ERROR: please check php bin/console list --format=xml');
 
                 return $this->redirectToRoute('dukecity_command_scheduler_list');
             }
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrineManager();
             $em->persist($scheduledCommand);
             $em->flush();
 

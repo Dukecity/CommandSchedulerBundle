@@ -58,6 +58,7 @@ abstract class AbstractCommandTest extends WebTestCase
         $commandTester = new CommandTester($command);
         */
 
+        dump($commandClass);
         $cmd = static::getContainer()->get($commandClass);
         $cmd->setApplication(new Application('Test'));
 
@@ -77,7 +78,7 @@ abstract class AbstractCommandTest extends WebTestCase
         return $commandTester;
     }
 
-    protected function loadScheduledCommandFixtures()
+    protected function loadScheduledCommandFixtures(): void
     {
         $this->databaseTool->loadFixtures([LoadScheduledCommandData::class]);
     }

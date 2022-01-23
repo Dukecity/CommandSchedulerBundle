@@ -27,9 +27,6 @@ use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
 #[AsCommand(name: 'scheduler:monitor', description: 'Monitor scheduled commands')]
 class MonitorCommand extends Command
 {
-    const SUCCESS = 0;
-    const FAILURE = 1;
-
     private ObjectManager $em;
 
     //private ParameterBagInterface $params;
@@ -68,11 +65,6 @@ HELP);
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     *
      * @throws \Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -82,7 +74,7 @@ HELP);
         if (!$dumpMode && 0 === count($this->receiver)) {
             $output->writeln('<error>Please add receiver in configuration. Or use --dump option</error>');
 
-            return self::FAILURE;
+            return Command::FAILURE;
         }
 
         // Fist, get all failed or potential timeout
@@ -104,7 +96,7 @@ HELP);
             $this->sendMails('No errors found.');
         }*/
 
-        return self::SUCCESS;
+        return Command::SUCCESS;
     }
 
     /**

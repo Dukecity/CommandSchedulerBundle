@@ -33,9 +33,6 @@ class ExecuteCommand extends Command
 {
     use LockableTrait;
 
-    const SUCCESS = 0;
-    const FAILURE = 1;
-
     //private ObjectManager | EntityManager $em;
     private ObjectManager $em;
     private string $dumpMode;
@@ -122,7 +119,7 @@ HELP
         if (!$this->lock()) {
             $this->output->writeln('The command is already running in another process.');
 
-            return self::SUCCESS;
+            return Command::SUCCESS;
         }
 
        # For Unittests ;(
@@ -149,24 +146,24 @@ HELP
                 $this->logPath.' not found or not writable. Check `log_path` in your config.yml'
             );
 
-            return self::FAILURE;
+            return Command::FAILURE;
         }
 
-        $commandsToExceute = $this->em->getRepository(ScheduledCommand::class)
+        $commandsToExecute = $this->em->getRepository(ScheduledCommand::class)
             ->findCommandsToExecute();
-        $amountCommands = count($commandsToExceute);
+        $amountCommands = count($commandsToExecute);
 
 
 
         $io->title('Start : '.($this->dumpMode ? 'Dump' : 'Execute').' of '.$amountCommands.' scheduled command(s)');
 
 
-        if (is_iterable($commandsToExceute) && $amountCommands >= 1)
+        if (is_iterable($commandsToExecute) && $amountCommands >= 1)
         {
         # dry-run ?
         if ($this->input->getOption('dump'))
         {
-            foreach ($commandsToExceute as $command)
+            foreach ($commandsToExecute as $command)
             {
                 $io->info($command->getName().': '.$command->getCommand().' '.$command->getArguments());
             }
@@ -179,7 +176,7 @@ HELP
             $progress->setMessage('Start');
             $progress->start($amountCommands);
 
-                foreach ($commandsToExceute as $command) {
+                foreach ($commandsToExecute as $command) {
 
                     $progress->setMessage('Start Execution of '.$command->getCommand().' '.$command->getArguments());
                     $io->comment('Start Execution of '.$command->getCommand().' '.$command->getArguments());
@@ -210,6 +207,6 @@ HELP
 
         $this->release();
 
-        return self::SUCCESS;
+        return Command::SUCCESS;
     }
 }

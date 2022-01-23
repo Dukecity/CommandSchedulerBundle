@@ -16,9 +16,6 @@ use Dukecity\CommandSchedulerBundle\Service\SymfonyStyleWrapper as SymfonyStyle;
 #[AsCommand(name: 'scheduler:test', description: 'long running command', hidden: true)]
 class TestCommand extends Command
 {
-    const SUCCESS = 0;
-    const FAILURE = 1;
-
     private SymfonyStyle $io;
     private int $runtime;
     private bool|int $returnFail;
@@ -63,12 +60,12 @@ class TestCommand extends Command
         # fake fail?
         if ($this->returnFail)
         {
-         $this->io->info('Response-Code is forced to '.self::FAILURE);
-         return self::FAILURE;
+         $this->io->info('Response-Code is forced to '.Command::FAILURE);
+         return Command::FAILURE;
         }
         else
         {
-         return self::SUCCESS;
+         return Command::SUCCESS;
         }
     }
 }

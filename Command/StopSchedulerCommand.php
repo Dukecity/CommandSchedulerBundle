@@ -19,9 +19,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'scheduler:stop', description: 'Stops command scheduler')]
 class StopSchedulerCommand extends Command
 {
-    const SUCCESS = 0;
-    const FAILURE = 1;
-
     /**
      * {@inheritdoc}
      */
@@ -43,7 +40,7 @@ HELP
         if (!file_exists($pidFile)) {
             $output->writeln(sprintf('<info>%s</info>', 'Command scheduler is not running'));
 
-            return self::SUCCESS;
+            return Command::SUCCESS;
         }
         if (!extension_loaded('pcntl')) {
             throw new \RuntimeException('This command needs the pcntl extension to run.');
@@ -54,11 +51,11 @@ HELP
             }
             $output->writeln(sprintf('<comment>%s</comment>', 'Unable to kill command scheduler process. Scheduler will be stopped before the next run.'));
 
-            return self::SUCCESS;
+            return Command::SUCCESS;
         }
         unlink($pidFile);
         $output->writeln(sprintf('<info>%s</info>', 'Command scheduler is stopped.'));
 
-        return self::SUCCESS;
+        return Command::SUCCESS;
     }
 }

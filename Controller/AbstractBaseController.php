@@ -17,14 +17,14 @@ abstract class AbstractBaseController extends AbstractController
     private string $managerName;
     private ManagerRegistry $managerRegistry;
 
-    public function setManagerRegistry(ManagerRegistry $managerRegistry)
+    public function setManagerRegistry(ManagerRegistry $managerRegistry): void
     {
         $this->managerRegistry = $managerRegistry;
     }
 
     protected ContractsTranslatorInterface $translator;
 
-    public function setManagerName(string $managerName)
+    public function setManagerName(string $managerName): void
     {
         $this->managerName = $managerName;
     }
@@ -34,7 +34,7 @@ abstract class AbstractBaseController extends AbstractController
         return $this->managerName;
     }
 
-    public function setTranslator(ContractsTranslatorInterface $translator)
+    public function setTranslator(ContractsTranslatorInterface $translator): void
     {
         $this->translator = $translator;
     }

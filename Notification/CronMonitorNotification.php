@@ -2,7 +2,6 @@
 
 namespace Dukecity\CommandSchedulerBundle\Notification;
 
-use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Notifier\Message\ChatMessage;
 use Symfony\Component\Notifier\Message\EmailMessage;
 use Symfony\Component\Notifier\Notification\ChatNotificationInterface;
@@ -16,7 +15,6 @@ class CronMonitorNotification extends Notification implements EmailNotificationI
 {
     private array $scheduledCommands;
 
-    #[Pure]
     public function __construct(array $scheduledCommands, private string $subject)
     {
         $this->scheduledCommands = $scheduledCommands;

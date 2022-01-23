@@ -3,7 +3,6 @@
 namespace Dukecity\CommandSchedulerBundle\Service;
 
 use Exception;
-use JetBrains\PhpStorm\Pure;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Exception\CommandNotFoundException;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -31,7 +30,6 @@ class CommandParser
     /**
      * There could be only whitelisting or blacklisting
      */
-    #[Pure]
     public function isNamespacingValid(array $excludedNamespaces, array $includedNamespaces): bool
     {
         return !(
@@ -41,12 +39,12 @@ class CommandParser
     }
 
 
-    public function setExcludedNamespaces(array $namespaces = [])
+    public function setExcludedNamespaces(array $namespaces = []): void
     {
         $this->excludedNamespaces = $namespaces;
     }
 
-    public function setIncludedNamespaces(array $namespaces = [])
+    public function setIncludedNamespaces(array $namespaces = []): void
     {
         $this->includedNamespaces = $namespaces;
     }
@@ -76,10 +74,10 @@ class CommandParser
 
             rewind($output->getStream());
 
-            if($format=="xml")
+            if($format === "xml")
             {return stream_get_contents($output->getStream());}
 
-            if($format=="json")
+            if($format === "json")
             {return json_decode(
                 stream_get_contents($output->getStream()),
                 true,
@@ -96,7 +94,6 @@ class CommandParser
     /**
      * Execute the console command "list" and parse the output to have all available command.
      *
-     * @param string $env
      * @return array[] ["Namespace1" => ["Command1", "Command2"]]
      *
      * @throws Exception
@@ -128,7 +125,7 @@ class CommandParser
      */
     public function reduceNamespacedCommands(array $commands): array
     {
-        if(count($commands)==0)
+        if(count($commands)===0)
         {return [];}
 
         # is namespaced?
@@ -169,7 +166,7 @@ class CommandParser
             }
         }
 
-        if(count($result)==0)
+        if(count($result)===0)
         {throw new CommandNotFoundException('Cannot find a command with this names');}
 
         return $result;
@@ -189,7 +186,7 @@ class CommandParser
      */
     private function extractCommands(array $commands): array
     {
-        if (count($commands) == 0) {
+        if (count($commands) === 0) {
             return [];
         }
 

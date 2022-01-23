@@ -23,9 +23,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class AddCommand extends Command
 {
     #use CommandReturnTrait;
-    const SUCCESS = 0;
-    const FAILURE = 1;
-
     private ObjectManager $em;
 
     public function __construct(ManagerRegistry $managerRegistry, string $managerName)
@@ -90,17 +87,17 @@ class AddCommand extends Command
             } else {
                 $io->error(sprintf('Could not add the command %s (allready exists)', $commandName));
 
-                return self::FAILURE;
+                return Command::FAILURE;
             }
 
             $io->success(sprintf('The Command %s is added successfully', $commandName));
 
-            return self::SUCCESS;
+            return Command::SUCCESS;
         } catch (\Exception $e) {
             $io->error(sprintf('Could not add the command %s', $commandName));
             #var_dump($e->getMessage());
 
-            return self::FAILURE;
+            return Command::FAILURE;
         }
     }
 }

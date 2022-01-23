@@ -23,9 +23,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'scheduler:unlock', description: 'Unlock one or all scheduled commands that have surpassed the lock timeout.')]
 class UnlockCommand extends Command
 {
-    const SUCCESS = 0;
-    const FAILURE = 1;
-
     private ObjectManager $em;
     const DEFAULT_LOCK_TIME = 3600; // 1 hour
     private SymfonyStyle $io;
@@ -92,7 +89,7 @@ class UnlockCommand extends Command
             $this->io->error('Either the name of a scheduled command or the --all option must be set.'.
                         PHP_EOL.'List all locked Commands: php console scheduler:monitor --dump');
 
-            return self::FAILURE;
+            return Command::FAILURE;
         }
 
         $repository = $this->em->getRepository(ScheduledCommand::class);
@@ -116,7 +113,7 @@ class UnlockCommand extends Command
                     )
                 );
 
-                return self::FAILURE;
+                return Command::FAILURE;
             }
 
             $this->unlock($scheduledCommand);
@@ -124,7 +121,7 @@ class UnlockCommand extends Command
 
         $this->em->flush();
 
-        return self::SUCCESS;
+        return Command::SUCCESS;
     }
 
     /**

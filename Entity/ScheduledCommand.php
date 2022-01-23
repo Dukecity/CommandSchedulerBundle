@@ -8,8 +8,6 @@ use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Dukecity\CommandSchedulerBundle\Repository\ScheduledCommandRepository;
-use JetBrains\PhpStorm\Pure;
-use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Dukecity\CommandSchedulerBundle\Validator\Constraints as AssertDukecity;
@@ -92,7 +90,6 @@ class ScheduledCommand
         $this->version = 1;
     }
 
-    #[Pure]
     public function __toString(): string
     {
         return $this->getName();

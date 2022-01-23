@@ -2,7 +2,6 @@
 
 namespace Dukecity\CommandSchedulerBundle\Tests\Constraints;
 
-use JetBrains\PhpStorm\Pure;
 use Dukecity\CommandSchedulerBundle\Validator\Constraints\CronExpression;
 use Dukecity\CommandSchedulerBundle\Validator\Constraints\CronExpressionValidator;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
@@ -12,7 +11,6 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
  */
 class CronExpressionValidatorTest extends ConstraintValidatorTestCase
 {
-    #[Pure]
     protected function createValidator(): CronExpressionValidator
     {
         return new CronExpressionValidator();
