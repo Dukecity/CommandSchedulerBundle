@@ -9,16 +9,17 @@ See [Wiki](https://github.com/Dukecity/CommandSchedulerBundle/wiki) for Details
 
 ## Versions & Dependencies
 
-Version 4.x has the goal to use modern Php and Symfony features and low maintenance.
-So only Php >= 8.0 and Symfony ^4.4.20|^5.3 are supported at the moment.
+Version 5.x has the goal to use modern Php and Symfony features and low maintenance.
+So only Php >= 8.0 and Symfony ^5.4|^6.0 are supported at the moment.
 
 The following table shows the compatibilities of different versions of the bundle :
 
-| Version                                                                               | Symfony          | PHP    |
-| ------------------------------------------------------------------------------------- |  --------------- | ------ |
-| [4.0 (master)](https://github.com/Dukecity/CommandSchedulerBundle/tree/master)        | ^4.4.20\|^5.3    | >=8.0  |
-| [3.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/3.x)                    | ^4.4.20\|^5.3    | >=7.3  |
-| [2.2.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/2.2)                  | ^3.4\|^4.3       | ^7.1   |
+| Version                                                                        | Symfony        | PHP   |
+|--------------------------------------------------------------------------------|----------------|-------|
+| [5.0 (master)](https://github.com/Dukecity/CommandSchedulerBundle/tree/master) | ^5.4 + ^6.0    | >=8.0 |
+| [4.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/4.x)             | ^4.4.20 + ^5.3 | >=8.0 |
+| [3.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/3.x)             | ^4.4.20 + ^5.3 | >=7.3 |
+| [2.2.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/2.2)           | ^3.4 + ^4.3    | ^7.1  |
 
 
 ## Install
@@ -53,6 +54,9 @@ Check new URL /command-scheduler/list
 
 ## Features
 
+### New in Version 5:
+- Drop support of Symfony < 5.4
+
 ### New in Version 4:
 - API for all functions (in development)
 - Event-Handling (preExecution, postExecution). You can subscribe to this [Events](Resources/doc/integrations/events/index.md)
@@ -61,7 +65,6 @@ Check new URL /command-scheduler/list
 - Handled error in Command Parsing. So there is no 500 Error while parsing commands.
 - You CLI-commands for add, remove and list scheduled commands
 - Improved UI of command-execution in cli
-
 
 ### Version 3:
 - An admin interface to add, edit, enable/disable or delete scheduled commands.
@@ -76,7 +79,7 @@ Check new URL /command-scheduler/list
 - Locking system, to stop scheduling a command that has returned an error
 - Monitoring with timeout or failed commands (Json URL and command with mailing)
 - Translated in french, english, german and spanish
-- An [EasyAdmin](https://github.com/EasyCorp/EasyAdminBundle) 2 + 3 configuration template available [here](Resources/doc/integrations/easyadmin/index.md)
+- An [EasyAdmin](https://github.com/EasyCorp/EasyAdminBundle) configuration template available [here](Resources/doc/integrations/easyadmin/index.md)
 - **Beta** - Handle commands with a deamon (unix only) if you don't want to use a cronjob
 
 ## Screenshots
