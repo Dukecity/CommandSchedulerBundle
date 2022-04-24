@@ -26,7 +26,7 @@ class ScheduledCommand
     #private ?int $id = null;
 
     // see https://www.doctrine-project.org/projects/doctrine-orm/en/2.9/reference/transactions-and-concurrency.html
-    #[ORM\Version()]
+    #[ORM\Version]
     #[ORM\Column(type: Types::INTEGER)]
     private int $version = 0;
 

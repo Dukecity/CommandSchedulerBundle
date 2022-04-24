@@ -66,7 +66,6 @@ class AddCommandTest extends AbstractCommandTest
      * Test scheduler:add with given command name.
      *
      * @dataProvider getValidValues
-     * @param array $command
      */
     public function testAdd(array $command): void
     {
@@ -83,10 +82,7 @@ class AddCommandTest extends AbstractCommandTest
         $this->assertInstanceOf(ScheduledCommand::class, $cmd_check);
     }
 
-
-    /**
-     * @return array
-     */
+    /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
     public function getValidValues(): array
     {
         return [
