@@ -25,9 +25,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  */
 class ScheduledCommandCrudController extends AbstractCrudController
 {
-    /**
-     * @param CommandParser $commandParser
-     */
     public function __construct(private CommandParser $commandParser)
     {
     }
@@ -64,7 +61,7 @@ class ScheduledCommandCrudController extends AbstractCrudController
 
         $logFile = TextField::new('logFile');
         $priority = IntegerField::new('priority');
-        $lastExecution = DateTimeField::new('lastExecution');;
+        $lastExecution = DateTimeField::new('lastExecution');
         $lastReturnCode = IntegerField::new('lastReturnCode');
         $disabled = BooleanField::new('disabled');
         $locked = BooleanField::new('locked');

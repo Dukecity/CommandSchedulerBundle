@@ -7,16 +7,17 @@ use Dukecity\CommandSchedulerBundle\DependencyInjection\DukecityCommandScheduler
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 
 /**
  * Class DukecityCommandSchedulerBundle.
  */
 class DukecityCommandSchedulerBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
-        $ormCompilerClass = 'Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass';
+        $ormCompilerClass = DoctrineOrmMappingsPass::class;
 
         if (class_exists($ormCompilerClass))
         {
@@ -26,7 +27,7 @@ class DukecityCommandSchedulerBundle extends Bundle
             $enabledParameter = false;
             $aliasMap = ['CommandSchedulerBundle' => 'Dukecity\CommandSchedulerBundle\Entity'];
 
-            $driver = new Definition('Doctrine\ORM\Mapping\Driver\AttributeDriver', [$directories]);
+            $driver = new Definition(AttributeDriver::class, [$directories]);
 
             $container->addCompilerPass(
                 new DoctrineOrmMappingsPass(

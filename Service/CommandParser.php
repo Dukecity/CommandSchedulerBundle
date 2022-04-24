@@ -69,7 +69,7 @@ class CommandParser
 
         try {
             Debug::enable();
-            $output = new StreamOutput(fopen('php://memory', 'w+'));
+            $output = new StreamOutput(fopen('php://memory', 'wb+'));
             $application->run($input, $output);
 
             rewind($output->getStream());
@@ -150,7 +150,7 @@ class CommandParser
 
     public function getCommandDetails(array $commands): array
     {
-        $availableCommands = $this->getAvailableCommands("json", "prod");
+        $availableCommands = $this->getAvailableCommands("json");
         $result = [];
         #$command->getDefinition();
 
@@ -160,7 +160,7 @@ class CommandParser
         foreach ($availableCommands["commands"] as $command)
         {
             #var_dump($command);
-            if(in_array($command["name"], $commands))
+            if(in_array($command["name"], $commands, true))
             {
                 $result[$command["name"]] = $command;
             }
@@ -197,9 +197,9 @@ class CommandParser
                 $namespaceId = (string) $namespace["id"];
 
                 # Blacklisting and Whitelisting
-                if ((count($this->excludedNamespaces) > 0 && in_array($namespaceId, $this->excludedNamespaces))
+                if ((count($this->excludedNamespaces) > 0 && in_array($namespaceId, $this->excludedNamespaces, true))
                     ||
-                    (count($this->includedNamespaces) > 0 && !in_array($namespaceId, $this->includedNamespaces))
+                    (count($this->includedNamespaces) > 0 && !in_array($namespaceId, $this->includedNamespaces, true))
                 ) {
                     continue;
                 }

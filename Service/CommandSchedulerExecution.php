@@ -4,7 +4,7 @@ namespace Dukecity\CommandSchedulerBundle\Service;
 
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\TransactionRequiredException;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Persistence\ObjectManager;
@@ -27,36 +27,24 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Console\Command\Command;
 
-/**
- * Class CommandScheduler.
- *
- */
 class CommandSchedulerExecution
 {
-    private LoggerInterface|null $logger = null;
-    private EventDispatcherInterface $eventDispatcher;
-    private ManagerRegistry $managerRegistry;
     private string $env;
     private null|string $logPath;
     private ObjectManager $em;
-    private KernelInterface $kernel;
     private Application $application;
 
     public function __construct(
-        KernelInterface $kernel,
-        protected ParameterBagInterface $parameterBag,
-        LoggerInterface $logger,
-        EventDispatcherInterface $eventDispatcher,
-        ManagerRegistry $managerRegistry,
-        string $managerName
+        private KernelInterface          $kernel,
+        protected ParameterBagInterface  $parameterBag,
+        private ?LoggerInterface         $logger,
+        private EventDispatcherInterface $eventDispatcher,
+        private ManagerRegistry          $managerRegistry,
+        string                           $managerName
         )
     {
-        $this->logger = $logger;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->managerRegistry = $managerRegistry;
         $this->em = $managerRegistry->getManager($managerName);
         $this->logPath = $this->parameterBag->get('dukecity_command_scheduler.log_path');
-        $this->kernel = $kernel;
 
         $this->application = new Application($kernel);
         $this->application->setAutoExit(false);
@@ -88,7 +76,7 @@ class CommandSchedulerExecution
             $logOutput = new StreamOutput(
                 fopen(
                     $this->logPath.$scheduledCommand->getLogFile(),
-                    'a',
+                    'ab',
                     false
                 ),
                 $commandsVerbosity
@@ -186,7 +174,7 @@ class CommandSchedulerExecution
     }
 
 
-    private function prepareExecution(ScheduledCommand $scheduledCommand)
+    private function prepareExecution(ScheduledCommand $scheduledCommand): void
     {
         //reload command from database before every execution to avoid parallel execution
         $this->em->getConnection()->beginTransaction();
@@ -199,7 +187,7 @@ class CommandSchedulerExecution
             //$notLockedCommand will be locked for avoiding parallel calls:
             // http://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html
             if (null === $notLockedCommand) {
-                throw new \Exception();
+                throw new \RuntimeException();
             }
 
             $scheduledCommand = $notLockedCommand;
@@ -235,10 +223,9 @@ class CommandSchedulerExecution
 
         $result = $this->doExecution($scheduledCommand, $commandsVerbosity);
 
-
         if (false === $this->em->isOpen()) {
             #$this->output->writeln('<comment>Entity manager closed by the last command.</comment>');
-            $this->em = $this->em->create($this->em->getConnection(), $this->em->getConfiguration());
+            $this->em = $this->em::create($this->em->getConnection(), $this->em->getConfiguration());
         }
 
         // Reactivate the command in DB

@@ -77,7 +77,7 @@ class ScheduledCommandRepository extends EntityRepository
         }
 
         # sort it by "order"
-        usort($commands, function($a, $b) {
+        usort($commands, static function($a, $b) {
             return $a['order'] <=> $b['order'];
         });
 

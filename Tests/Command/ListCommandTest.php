@@ -13,7 +13,7 @@ class ListCommandTest extends AbstractCommandTest
     /**
      * Test scheduler:list
      */
-    public function testListCommand()
+    public function testListCommand(): void
     {
         // DataFixtures create 4 records
         $this->loadScheduledCommandFixtures();

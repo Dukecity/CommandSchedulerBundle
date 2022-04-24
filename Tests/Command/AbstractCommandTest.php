@@ -58,7 +58,6 @@ abstract class AbstractCommandTest extends WebTestCase
         $commandTester = new CommandTester($command);
         */
 
-        dump($commandClass);
         $cmd = static::getContainer()->get($commandClass);
         $cmd->setApplication(new Application('Test'));
 

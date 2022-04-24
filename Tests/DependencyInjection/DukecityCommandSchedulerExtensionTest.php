@@ -16,7 +16,7 @@ class DukecityCommandSchedulerExtensionTest extends TestCase
      * @param array  $config
      * @param array  $expected
      */
-    public function testConfiguration(string $rootNode, array $config, array $expected)
+    public function testConfiguration(string $rootNode, array $config, array $expected): void
     {
         $builder = new ContainerBuilder();
 

@@ -3,16 +3,11 @@
 namespace Dukecity\CommandSchedulerBundle\Tests\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Dukecity\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
-use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ListControllerTest.
@@ -29,19 +24,16 @@ class ListControllerTest extends WebTestCase
     public function setUp(): void
     {
         $this->client = self::createClient();
-        $this->client->followRedirects(true);
+        $this->client->followRedirects();
 
-        $this->em = static::$kernel->getContainer()
-            ->get('doctrine')
-            ->getManager();
-
+        $this->em = static::$kernel->getContainer()->get('doctrine')->getManager();
         $this->databaseTool = $this->client->getContainer()->get(DatabaseToolCollection::class)->get();
     }
 
     /**
      * Test list display.
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         // DataFixtures create 4 records
         $this->databaseTool->loadFixtures([LoadScheduledCommandData::class]);
@@ -53,7 +45,7 @@ class ListControllerTest extends WebTestCase
     /**
      * Test permanent deletion on command.
      */
-    public function testRemove()
+    public function testRemove(): void
     {
         // DataFixtures create 4 records
         $this->databaseTool->loadFixtures([LoadScheduledCommandData::class]);
@@ -67,7 +59,7 @@ class ListControllerTest extends WebTestCase
     /**
      * Test On/Off toggle on list.
      */
-    public function testToggle()
+    public function testToggle(): void
     {
         // DataFixtures create 4 records
         $this->databaseTool->loadFixtures([LoadScheduledCommandData::class]);
@@ -86,7 +78,7 @@ class ListControllerTest extends WebTestCase
     /**
      * Test Execute now button on list.
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         // DataFixtures create 4 records
         $this->databaseTool->loadFixtures([LoadScheduledCommandData::class]);
@@ -104,7 +96,7 @@ class ListControllerTest extends WebTestCase
     /**
      * Test unlock button on list.
      */
-    public function testUnlock()
+    public function testUnlock(): void
     {
         // DataFixtures create 4 records
         $this->databaseTool->loadFixtures([LoadScheduledCommandData::class]);

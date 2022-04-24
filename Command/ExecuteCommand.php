@@ -183,7 +183,7 @@ HELP
 
                     $result = $this->commandSchedulerExecution->executeCommand($command, $this->env, $this->commandsVerbosity);
 
-                if($result==0)
+                if($result===0)
                 {$io->success($command->getName().': '.$command->getCommand().' '.$command->getArguments());}
                 else
                 {$io->error($command->getName().': ERROR '.$result.': '.$command->getCommand().' '.$command->getArguments());}

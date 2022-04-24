@@ -9,7 +9,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class SymfonyStyleWrapper extends SymfonyStyle
 {
-    public function info($message)
+    public function info($message): void
     {
         if(method_exists(SymfonyStyle::class, "info"))
         {

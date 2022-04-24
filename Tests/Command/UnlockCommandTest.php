@@ -15,7 +15,7 @@ class UnlockCommandTest extends AbstractCommandTest
     /**
      * Test scheduler:unlock without --all option.
      */
-    public function testUnlockAll()
+    public function testUnlockAll(): void
     {
         // DataFixtures create 4 records
         $this->loadScheduledCommandFixtures();
@@ -40,7 +40,7 @@ class UnlockCommandTest extends AbstractCommandTest
     /**
      * Test scheduler:unlock with given command name.
      */
-    public function testUnlockByName()
+    public function testUnlockByName(): void
     {
         // DataFixtures create 4 records
         $this->loadScheduledCommandFixtures();
@@ -63,7 +63,7 @@ class UnlockCommandTest extends AbstractCommandTest
     /**
      * Test scheduler:unlock with given command name and timeout.
      */
-    public function testUnlockByNameWithTimout()
+    public function testUnlockByNameWithTimout(): void
     {
         // DataFixtures create 4 records
         $this->loadScheduledCommandFixtures();

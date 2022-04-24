@@ -26,7 +26,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
     $services->defaults()
-        ->public(false)
+        ->public()
         ->autowire(true);
 
     $services->set(DetailController::class)

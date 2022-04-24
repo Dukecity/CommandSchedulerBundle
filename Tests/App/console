@@ -1,5 +1,5 @@
 #!/usr/bin/env php
-<?php
+/** @noinspection PhpUnhandledExceptionInspection */<?php
 
 // used from symfony 5.2.2
 use Symfony\Bundle\FrameworkBundle\Console\Application;

@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
 
 namespace Dukecity\CommandSchedulerBundle\Tests\Command;
 
@@ -34,7 +34,7 @@ class AddCommandTest extends AbstractCommandTest
     /**
      * Check
      */
-    public function testDuplicateAdd()
+    public function testDuplicateAdd(): void
     {
         // DataFixtures create 4 records
         $this->loadScheduledCommandFixtures();
@@ -68,7 +68,7 @@ class AddCommandTest extends AbstractCommandTest
      * @dataProvider getValidValues
      * @param array $command
      */
-    public function testAdd(array $command)
+    public function testAdd(array $command): void
     {
         // DataFixtures create 4 records
         $this->loadScheduledCommandFixtures();
@@ -121,7 +121,7 @@ class AddCommandTest extends AbstractCommandTest
 
 
 
-    public function testInvalidArguments()
+    public function testInvalidArguments(): void
     {
         $command = $this->testCommand;
         $command['xxxx'] = 'avc';
@@ -131,9 +131,8 @@ class AddCommandTest extends AbstractCommandTest
 
     /**
      * @dataProvider getInvalidRuntimeValues
-     * @param array $command
      */
-    public function testInvalidRuntimeValues(array $command)
+    public function testInvalidRuntimeValues(array $command): void
     {
         $this->expectException(RuntimeException::class);
         $this->executeCommand(AddCommand::class, $command)->getDisplay();
@@ -157,9 +156,8 @@ class AddCommandTest extends AbstractCommandTest
 
     /**
      * @dataProvider getInvalidValues
-     * @param array $command
      */
-    public function testInvalidValues(array $command)
+    public function testInvalidValues(array $command): void
     {
         $output = $this->executeCommand(AddCommand::class, $command, [], 1)->getDisplay();
         # Could not add the command

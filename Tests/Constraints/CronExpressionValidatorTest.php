@@ -20,7 +20,7 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
      * @dataProvider getValidValues
      * @param string $value
      */
-    public function testValidValues(string $value)
+    public function testValidValues(string $value): void
     {
         $this->validator->validate($value, new CronExpression(['message' => '']));
 
@@ -41,7 +41,7 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
      * @dataProvider getInvalidValues
      * @param string $value
      */
-    public function testInvalidValues(string $value)
+    public function testInvalidValues(string $value): void
     {
         $constraint = new CronExpression(['message' => 'myMessage']);
 

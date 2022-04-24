@@ -50,12 +50,12 @@ class SchedulerCommandSubscriber implements EventSubscriberInterface
     }
 
     // TODO check if useful (could be handled by doctrine lifecycle events)
-    public function onScheduledCommandCreated(SchedulerCommandCreatedEvent $event)
+    public function onScheduledCommandCreated(SchedulerCommandCreatedEvent $event): void
     {
         $this->logger->info('ScheduledCommandCreated', ['name' => $event->getCommand()->getName()]);
     }
 
-    public function onScheduledCommandFailed(SchedulerCommandFailedEvent $event)
+    public function onScheduledCommandFailed(SchedulerCommandFailedEvent $event): void
     {
         # notifier is optional
         if($this->notifier)
@@ -72,13 +72,13 @@ class SchedulerCommandSubscriber implements EventSubscriberInterface
         //$this->logger->warning('SchedulerCommandFailedEvent', ['details' => $event->getMessage()]);
     }
 
-    public function onScheduledCommandPreExecution(SchedulerCommandPreExecutionEvent $event)
+    public function onScheduledCommandPreExecution(SchedulerCommandPreExecutionEvent $event): void
     {
         #var_dump('ScheduledCommandPreExecution');
         $this->logger->info('ScheduledCommandPreExecution', ['name' => $event->getCommand()->getName()]);
     }
 
-    public function onScheduledCommandPostExecution(SchedulerCommandPostExecutionEvent $event)
+    public function onScheduledCommandPostExecution(SchedulerCommandPostExecutionEvent $event): void
     {
         #var_dump('ScheduledCommandPostExecution');
 

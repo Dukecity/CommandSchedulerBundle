@@ -28,7 +28,7 @@ class TestCommand extends Command
         $this
             ->addArgument('runtime', InputArgument::OPTIONAL, 'Runtime in Seconds', 10)
             ->addArgument('returnFail', InputArgument::OPTIONAL, 'Fake Fail Return', false)
-            ->setHidden(true)
+            ->setHidden()
         ;
     }
 

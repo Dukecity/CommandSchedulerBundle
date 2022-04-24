@@ -24,7 +24,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class UnlockCommand extends Command
 {
     private ObjectManager $em;
-    const DEFAULT_LOCK_TIME = 3600; // 1 hour
+    public const DEFAULT_LOCK_TIME = 3600; // 1 hour
     private SymfonyStyle $io;
 
     private bool $unlockAll;
@@ -71,9 +71,9 @@ class UnlockCommand extends Command
         $this->unlockAll = (bool) $input->getOption('all');
         $this->scheduledCommandName = (string) $input->getArgument('name');
 
-        $this->lockTimeout = intval($input->getOption('lock-timeout'));
+        $this->lockTimeout = (int)$input->getOption('lock-timeout');
 
-        if (0 == $this->lockTimeout) {
+        if (0 === $this->lockTimeout) {
             $this->lockTimeout = self::DEFAULT_LOCK_TIME;
         }
 

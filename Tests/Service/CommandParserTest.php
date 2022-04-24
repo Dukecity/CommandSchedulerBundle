@@ -1,4 +1,8 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+
+/** @noinspection PhpUnhandledExceptionInspection */
 
 namespace Dukecity\CommandSchedulerBundle\Tests\Service;
 
@@ -23,7 +27,7 @@ class CommandParserTest extends WebTestCase
         $this->commandParser = $specialContainer->get(CommandParser::class);
     }
 
-    public function testGetCommandDetails()
+    public function testGetCommandDetails(): void
     {
         # Single parameter
         $commandDetails = $this->commandParser->getCommandDetails(["help"]);
@@ -48,7 +52,7 @@ class CommandParserTest extends WebTestCase
         $this->assertArrayHasKey('definition', $command);
     }
 
-    public function testGetCommandDetailsFailed()
+    public function testGetCommandDetailsFailed(): void
     {
         $this->expectException(CommandNotFoundException::class);
         $this->commandParser->getCommandDetails(["abc:install"]);
@@ -61,7 +65,7 @@ class CommandParserTest extends WebTestCase
     /**
      * Check if we get the command-list correct (Default config in config_test.yml)
      */
-    public function testGetCommands()
+    public function testGetCommands(): void
     {
         $commands = $this->commandParser->getCommands();
 
@@ -73,7 +77,7 @@ class CommandParserTest extends WebTestCase
     /**
      * Check if we get the command-list correct (Default config in config_test.yml)
      */
-    public function testGetAllowedCommands()
+    public function testGetAllowedCommands(): void
     {
         $commands = $this->commandParser->getAllowedCommandDetails();
 
@@ -89,7 +93,7 @@ class CommandParserTest extends WebTestCase
     /**
      * Check if we get the command-list correct
      */
-    public function testIsNamespacingValid()
+    public function testIsNamespacingValid(): void
     {
         $this->assertTrue($this->commandParser->isNamespacingValid(["debug", "doctrine"], []));
         $this->assertTrue($this->commandParser->isNamespacingValid([], ["debug", "doctrine"]));
@@ -101,7 +105,7 @@ class CommandParserTest extends WebTestCase
     /**
      * Check if we get the command-list correct
      */
-    public function testBlacklistingGetCommands()
+    public function testBlacklistingGetCommands(): void
     {
         $this->commandParser->setExcludedNamespaces(["debug", "doctrine"]);
         $this->commandParser->setIncludedNamespaces([]);
@@ -117,7 +121,7 @@ class CommandParserTest extends WebTestCase
     /**
      * Check if we get the command-list correct
      */
-    public function testWhitelistingGetCommands()
+    public function testWhitelistingGetCommands(): void
     {
         $this->commandParser->setExcludedNamespaces([]);
         $this->commandParser->setIncludedNamespaces(["cache", "debug"]);

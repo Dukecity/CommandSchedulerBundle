@@ -35,7 +35,7 @@ class CronMonitorNotification extends Notification implements EmailNotificationI
         }
 
         return new ChatMessage('[CronMonitoring] The following commands need to be checked. 
-            '.join(', ', $arrFailedCommandNames));
+            '.implode(', ', $arrFailedCommandNames));
     }
 
     public function getContent(): string

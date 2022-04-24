@@ -14,7 +14,7 @@ class MonitorCommandTest extends AbstractCommandTest
     /**
      * Test scheduler:execute without option.
      */
-    public function testExecuteWithError()
+    public function testExecuteWithError(): void
     {
         // DataFixtures create 4 records
         $this->loadScheduledCommandFixtures();
@@ -29,7 +29,7 @@ class MonitorCommandTest extends AbstractCommandTest
     /**
      * Test scheduler:execute without option.
      */
-    public function testExecuteWithoutError()
+    public function testExecuteWithoutError(): void
     {
         // DataFixtures create 4 records
         $this->loadScheduledCommandFixtures();

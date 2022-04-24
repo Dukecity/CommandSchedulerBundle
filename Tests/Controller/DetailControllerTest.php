@@ -23,7 +23,7 @@ class DetailControllerTest extends WebTestCase
     public function setUp(): void
     {
         $this->client = self::createClient();
-        $this->client->followRedirects(true);
+        $this->client->followRedirects();
 
         $this->databaseTool = $this->client->getContainer()->get(DatabaseToolCollection::class)->get();
     }
@@ -31,7 +31,7 @@ class DetailControllerTest extends WebTestCase
     /**
      * Test "Create a new command" button.
      */
-    public function testInitNewScheduledCommand()
+    public function testInitNewScheduledCommand(): void
     {
         $crawler = $this->client->request('GET', '/command-scheduler/detail/edit');
         $this->assertEquals(1, $crawler->filter('button[id="command_scheduler_detail_save"]')->count());
@@ -40,7 +40,7 @@ class DetailControllerTest extends WebTestCase
     /**
      * Test "Edit a command" action.
      */
-    public function testInitEditScheduledCommand()
+    public function testInitEditScheduledCommand(): void
     {
         // DataFixtures create 4 records
         $this->databaseTool->loadFixtures([LoadScheduledCommandData::class]);
@@ -92,7 +92,7 @@ class DetailControllerTest extends WebTestCase
     /**
      * Test "Edit and save a scheduling".
      */
-    public function testEditSave()
+    public function testEditSave(): void
     {
         // DataFixtures create 4 records
         $this->databaseTool->loadFixtures([LoadScheduledCommandData::class]);

@@ -4,7 +4,7 @@ namespace Dukecity\CommandSchedulerBundle\Tests\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Dukecity\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
@@ -13,9 +13,6 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class ApiControllerTest.
- */
 class ApiControllerTest extends WebTestCase
 {
     protected AbstractDatabaseTool $databaseTool;
@@ -28,7 +25,7 @@ class ApiControllerTest extends WebTestCase
     public function setUp(): void
     {
         $this->client = self::createClient();
-        $this->client->followRedirects(true);
+        $this->client->followRedirects();
         
         $this->em = static::$kernel->getContainer()
             ->get('doctrine')
@@ -40,11 +37,11 @@ class ApiControllerTest extends WebTestCase
     /**
      * Test list all command URL with should return json.
      */
-    public function testConsoleCommands()
+    public function testConsoleCommands(): void
     {
         // List all available console commands
         $this->client->request('GET', '/command-scheduler/api/console_commands');
-        $this->assertResponseIsSuccessful();
+        self::assertResponseIsSuccessful();
 
         $jsonResponse = $this->client->getResponse()->getContent();
         $jsonArray = json_decode($jsonResponse, true);
@@ -58,11 +55,11 @@ class ApiControllerTest extends WebTestCase
     /**
      * Test list all command URL with should return json.
      */
-    public function testConsoleCommandsDetailsAll()
+    public function testConsoleCommandsDetailsAll(): void
     {
         // List all available console commands
         $this->client->request('GET', '/command-scheduler/api/console_commands_details');
-        $this->assertResponseIsSuccessful();
+        self::assertResponseIsSuccessful();
 
         $jsonResponse = $this->client->getResponse()->getContent();
         $commands = json_decode($jsonResponse, true);
@@ -78,11 +75,11 @@ class ApiControllerTest extends WebTestCase
     /**
      * Test list all command URL with should return json.
      */
-    public function testConsoleCommandsDetails()
+    public function testConsoleCommandsDetails(): void
     {
         // List all available console commands
         $this->client->request('GET', '/command-scheduler/api/console_commands_details/about,list,cache:clear,asserts:install');
-        $this->assertResponseIsSuccessful();
+        self::assertResponseIsSuccessful();
 
         $jsonResponse = $this->client->getResponse()->getContent();
         $commands = json_decode($jsonResponse, true);
@@ -98,43 +95,43 @@ class ApiControllerTest extends WebTestCase
     /**
      * Test list all command URL with should return json.
      */
-    public function testList()
+    public function testList(): void
     {
         // DataFixtures create 4 records
         $this->databaseTool->loadFixtures([LoadScheduledCommandData::class]);
 
         // List 4 Commands
         $this->client->request('GET', '/command-scheduler/api/list');
-        $this->assertResponseIsSuccessful();
+        self::assertResponseIsSuccessful();
 
         $jsonResponse = $this->client->getResponse()->getContent();
         $jsonArray = json_decode($jsonResponse, true);
-        $this->assertEquals(5, count($jsonArray));
+        $this->assertCount(5, $jsonArray);
         $this->assertSame('CommandTestOne', $jsonArray['CommandTestOne']['NAME']);
     }
 
     /**
      * Test monitoring URL with json.
      */
-    public function testMonitorWithErrors()
+    public function testMonitorWithErrors(): void
     {
         // DataFixtures create 4 records
         $this->databaseTool->loadFixtures([LoadScheduledCommandData::class]);
 
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
         $this->client->request('GET', '/command-scheduler/monitor');
-        $this->assertResponseStatusCodeSame(Response::HTTP_EXPECTATION_FAILED);
+        self::assertResponseStatusCodeSame(Response::HTTP_EXPECTATION_FAILED);
 
         // We expect 2 commands
         $jsonResponse = $this->client->getResponse()->getContent();
         $jsonArray = json_decode($jsonResponse, true);
-        $this->assertEquals(2, count($jsonArray));
+        $this->assertCount(2, $jsonArray);
     }
 
     /**
      * Test monitoring URL with json.
      */
-    public function testMonitorWithoutErrors()
+    public function testMonitorWithoutErrors(): void
     {
         // DataFixtures create 4 records
         $this->databaseTool->loadFixtures([LoadScheduledCommandData::class]);
@@ -151,7 +148,7 @@ class ApiControllerTest extends WebTestCase
 
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
         $this->client->request('GET', '/command-scheduler/monitor');
-        $this->assertResponseIsSuccessful();
+        self::assertResponseIsSuccessful();
 
         $jsonResponse = $this->client->getResponse()->getContent();
         $jsonArray = json_decode($jsonResponse, true);
@@ -161,10 +158,10 @@ class ApiControllerTest extends WebTestCase
     /**
      * Test translations
      */
-    public function testTranslateCronExpression()
+    public function testTranslateCronExpression(): void
     {
         $this->client->request('GET', '/command-scheduler/api/trans_cron_expression/* * * * */en');
-        $this->assertResponseIsSuccessful();
+        self::assertResponseIsSuccessful();
 
         $jsonResponse = $this->client->getResponse()->getContent();
         $jsonArray = json_decode($jsonResponse, true);
