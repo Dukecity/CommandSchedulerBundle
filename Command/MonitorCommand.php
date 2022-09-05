@@ -2,6 +2,7 @@
 
 namespace Dukecity\CommandSchedulerBundle\Command;
 
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -101,7 +102,7 @@ class MonitorCommand extends Command
         }
 
         // Fist, get all failed or potential timeout
-        $failedCommands = $this->em->getRepository('DukecityCommandSchedulerBundle:ScheduledCommand')
+        $failedCommands = $this->em->getRepository(ScheduledCommand::class)
             ->findFailedAndTimeoutCommands($this->lockTimeout);
 
         // Commands in error
