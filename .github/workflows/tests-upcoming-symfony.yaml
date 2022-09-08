@@ -12,13 +12,13 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        symfony-version: ['6.1.x@dev']
+        symfony-version: ['6.2.x@dev']
     steps:
       - name: 'Checkout code'
-        uses: actions/checkout@v2.3.3
+        uses: actions/checkout@v3.0.2
 
       - name: 'Install PHP with extensions'
-        uses: shivammathur/setup-php@2.7.0
+        uses: shivammathur/setup-php@2.21.2
         with:
           coverage: none
           php-version: '8.1'
@@ -30,6 +30,7 @@ jobs:
         #env:
           #SYMFONY_REQUIRE: ${{ matrix.symfony-version }}
         run: |
+          composer global config --no-plugins allow-plugins.symfony/flex true
           composer global require --no-progress --no-scripts --no-plugins symfony/flex
           composer config minimum-stability dev
           composer config prefer-stable false
