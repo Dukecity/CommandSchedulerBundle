@@ -14,6 +14,7 @@ framework:
     form:            true
     csrf_protection: false
     validation:      { enable_annotations: true }
+    http_method_override: false
     session:
         handler_id: null
         cookie_secure: auto
