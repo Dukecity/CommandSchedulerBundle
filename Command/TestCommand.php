@@ -7,8 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Dukecity\CommandSchedulerBundle\Service\SymfonyStyleWrapper as SymfonyStyle;
-#use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command is just for testing.
@@ -37,8 +36,8 @@ class TestCommand extends Command
      */
     protected function initialize(InputInterface $input, OutputInterface $output): void
     {
-        $this->runtime = (int) $input->getArgument('runtime') ?? 10;
-        $this->returnFail = (bool) $input->getArgument('returnFail') ?? false;
+        $this->runtime = (int) ($input->getArgument('runtime') ?? 10);
+        $this->returnFail = (bool) ($input->getArgument('returnFail') ?? false);
 
         $this->io = new SymfonyStyle($input, $output);
     }
@@ -63,9 +62,7 @@ class TestCommand extends Command
          $this->io->info('Response-Code is forced to '.Command::FAILURE);
          return Command::FAILURE;
         }
-        else
-        {
-         return Command::SUCCESS;
-        }
+
+        return Command::SUCCESS;
     }
 }

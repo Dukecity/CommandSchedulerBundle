@@ -100,8 +100,8 @@ HELP
         $command = $console->find('scheduler:execute');
 
         while (true) {
-            $now = microtime(true);
-            usleep((60 - ($now % 60) + (int) $now - $now) * 1_000_000.0);
+            $now = (int) microtime(false);
+            usleep((int) ((60 - ($now % 60) + (int) $now - $now) * 1_000_000.0));
 
             if (null !== $pidFile && !file_exists($pidFile)) {
                 break;

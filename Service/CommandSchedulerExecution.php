@@ -2,26 +2,18 @@
 
 namespace Dukecity\CommandSchedulerBundle\Service;
 
-use Doctrine\DBAL\ConnectionException;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\Exception\ORMException;
-use Doctrine\ORM\TransactionRequiredException;
-use Doctrine\Persistence\Mapping\MappingException;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
-use Exception;
 use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Dukecity\CommandSchedulerBundle\Event\SchedulerCommandPostExecutionEvent;
 use Dukecity\CommandSchedulerBundle\Event\SchedulerCommandPreExecutionEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Exception\ExceptionInterface;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -31,6 +23,7 @@ class CommandSchedulerExecution
 {
     private string $env;
     private null|string $logPath;
+    #private EntityManagerInterface $em;
     private ObjectManager $em;
     private Application $application;
 
@@ -51,7 +44,7 @@ class CommandSchedulerExecution
     }
 
 
-    private function getCommand($scheduledCommand): ?Command
+    private function getCommand(ScheduledCommand $scheduledCommand): ?Command
     {
         try {
             $command = $this->application->find($scheduledCommand->getCommand());
@@ -69,7 +62,7 @@ class CommandSchedulerExecution
         ): OutputInterface
     {
         // Use a StreamOutput or NullOutput to redirect write() and writeln() in a log file
-        if (false === $this->logPath || empty($scheduledCommand->getLogFile())) {
+        if (!$this->logPath || empty($scheduledCommand->getLogFile())) {
             $logOutput = new NullOutput();
         } else {
             // log into a file
@@ -89,7 +82,7 @@ class CommandSchedulerExecution
     /**
      * - Find command
      */
-    private function prepareCommandExecution($scheduledCommand): ?Command
+    private function prepareCommandExecution(ScheduledCommand $scheduledCommand): ?Command
     {
         if(!($command = $this->getCommand($scheduledCommand)))
         {
@@ -218,7 +211,7 @@ class CommandSchedulerExecution
         $this->env = $env;
         $this->prepareExecution($scheduledCommand);
 
-        /** @var $scheduledCommand ScheduledCommand */
+        /** @var ScheduledCommand $scheduledCommand */
         $scheduledCommand = $this->em->find(ScheduledCommand::class, $scheduledCommand);
 
         $result = $this->doExecution($scheduledCommand, $commandsVerbosity);
@@ -229,6 +222,7 @@ class CommandSchedulerExecution
         }
 
         // Reactivate the command in DB
+        /** @var ScheduledCommand $scheduledCommand */
         $scheduledCommand = $this->em->find(ScheduledCommand::class, $scheduledCommand);
 
         $scheduledCommand->setLastReturnCode($result);

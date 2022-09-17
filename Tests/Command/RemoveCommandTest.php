@@ -49,6 +49,7 @@ class RemoveCommandTest extends AbstractCommandTest
 
     /**
      * @dataProvider provideCompletionSuggestions
+     * @param array<string, mixed> $input
      */
     public function testComplete(array $input, array $expectedSuggestions): void
     {
@@ -63,11 +64,6 @@ class RemoveCommandTest extends AbstractCommandTest
 
     public function provideCompletionSuggestions(): \Generator
     {
-        /*yield 'name' => [
-            ['CommandTestT'],
-            ['CommandTestThree']
-        ];*/
-
         yield 'name' => [
             ['CommandTestT'],
             ['CommandTestOne', 'CommandTestFour', 'CommandTestFive', 'CommandTestThree']

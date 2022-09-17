@@ -111,6 +111,9 @@ HELP
         }
     }
 
+    /**
+     * @return string[]
+     */
     public function getCommandNames(): array
     {
         $return = [];

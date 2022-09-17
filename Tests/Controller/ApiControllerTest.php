@@ -44,7 +44,7 @@ class ApiControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
 
         $jsonResponse = $this->client->getResponse()->getContent();
-        $jsonArray = json_decode($jsonResponse, true);
+        $jsonArray = json_decode($jsonResponse, true, 512, JSON_THROW_ON_ERROR);
 
         $this->assertGreaterThanOrEqual(1, count($jsonArray));
         $this->assertArrayHasKey('_global', $jsonArray);
@@ -62,7 +62,7 @@ class ApiControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
 
         $jsonResponse = $this->client->getResponse()->getContent();
-        $commands = json_decode($jsonResponse, true);
+        $commands = json_decode($jsonResponse, true, 512, JSON_THROW_ON_ERROR);
 
         $this->assertIsArray($commands);
         $this->assertArrayHasKey('about', $commands);
@@ -82,7 +82,7 @@ class ApiControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
 
         $jsonResponse = $this->client->getResponse()->getContent();
-        $commands = json_decode($jsonResponse, true);
+        $commands = json_decode($jsonResponse, true, 512, JSON_THROW_ON_ERROR);
 
         $this->assertIsArray($commands);
         $this->assertArrayHasKey('about', $commands);
@@ -105,7 +105,7 @@ class ApiControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
 
         $jsonResponse = $this->client->getResponse()->getContent();
-        $jsonArray = json_decode($jsonResponse, true);
+        $jsonArray = json_decode($jsonResponse, true, 512, JSON_THROW_ON_ERROR);
         $this->assertCount(5, $jsonArray);
         $this->assertSame('CommandTestOne', $jsonArray['CommandTestOne']['NAME']);
     }
@@ -124,7 +124,7 @@ class ApiControllerTest extends WebTestCase
 
         // We expect 2 commands
         $jsonResponse = $this->client->getResponse()->getContent();
-        $jsonArray = json_decode($jsonResponse, true);
+        $jsonArray = json_decode($jsonResponse, true, 512, JSON_THROW_ON_ERROR);
         $this->assertCount(2, $jsonArray);
     }
 
@@ -151,7 +151,7 @@ class ApiControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
 
         $jsonResponse = $this->client->getResponse()->getContent();
-        $jsonArray = json_decode($jsonResponse, true);
+        $jsonArray = json_decode($jsonResponse, true, 512, JSON_THROW_ON_ERROR);
         $this->assertCount(0, $jsonArray);
     }
 
@@ -164,7 +164,7 @@ class ApiControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
 
         $jsonResponse = $this->client->getResponse()->getContent();
-        $jsonArray = json_decode($jsonResponse, true);
+        $jsonArray = json_decode($jsonResponse, true, 512, JSON_THROW_ON_ERROR);
 
         $this->assertSame(0, $jsonArray["status"]);
         $this->assertSame("Every minute", $jsonArray["message"]);

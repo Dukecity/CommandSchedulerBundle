@@ -135,7 +135,7 @@ class UnlockCommand extends Command
             return false;
         }
 
-        if (false !== $this->lockTimeout &&
+        if ($this->lockTimeout &&
             null !== $command->getLastExecution() &&
             $command->getLastExecution() >= (new \DateTime())->sub(
                 new \DateInterval(sprintf('PT%dS', $this->lockTimeout))

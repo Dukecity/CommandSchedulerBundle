@@ -7,7 +7,6 @@ use Dukecity\CommandSchedulerBundle\Event\SchedulerCommandPostExecutionEvent;
 use Dukecity\CommandSchedulerBundle\Event\SchedulerCommandFailedEvent;
 use Dukecity\CommandSchedulerBundle\Event\SchedulerCommandPreExecutionEvent;
 use Dukecity\CommandSchedulerBundle\EventSubscriber\SchedulerCommandSubscriber;
-use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * Example to Subscribe to Events from the Dukecity\CommandSchedulerBundle
@@ -17,12 +16,6 @@ class CustomSchedulerCommandSubscriber extends SchedulerCommandSubscriber
     /**
      * {@inheritdoc}
      */
-    #[ArrayShape([
-        SchedulerCommandCreatedEvent::class => 'array',
-        SchedulerCommandFailedEvent::class => 'array',
-        SchedulerCommandPreExecutionEvent::class => 'array',
-        SchedulerCommandPostExecutionEvent::class => 'array',
-    ])]
     public static function getSubscribedEvents(): array
     {
         return [

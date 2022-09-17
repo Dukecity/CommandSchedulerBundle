@@ -37,6 +37,11 @@ class ApiController extends AbstractBaseController
         $this->commandParser = $commandParser;
     }
 
+    /**
+     * @param ScheduledCommand[] $commands
+     * @return array<string, mixed>
+     * @throws \Exception
+     */
     private function getCommandsAsArray(array $commands): array
     {
         $jsonArray = [];
@@ -115,7 +120,7 @@ class ApiController extends AbstractBaseController
     }
 
     /**
-     * External check to monitor the health of the sheduled commands.
+     * External check to monitor the health of the scheduled commands.
      *
      * method checks if there are jobs which are enabled but did not return 0 on last execution or are locked.
      * if a match is found, HTTP status 417 is sent along with an array
@@ -164,11 +169,9 @@ class ApiController extends AbstractBaseController
                 $msg = CronTranslator::translate($cronExpression, $lang);
                 return new JsonResponse(["status" => 0, "message" => $msg]);
             }
-            else
-            {
-                $msg = "Not a valid Cron-Expression";
-                return new JsonResponse(["status" => -1, "message" => $msg]);
-            }
+
+            $msg = "Not a valid Cron-Expression";
+            return new JsonResponse(["status" => -1, "message" => $msg]);
         }
         catch (\Exception)
         {

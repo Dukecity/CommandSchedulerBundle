@@ -85,7 +85,7 @@ class AddCommand extends Command
                 $this->em->persist($cmd);
                 $this->em->flush();
             } else {
-                $io->error(sprintf('Could not add the command %s (allready exists)', $commandName));
+                $io->error(sprintf('Could not add the command %s (already exists)', $commandName));
 
                 return Command::FAILURE;
             }

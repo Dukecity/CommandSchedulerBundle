@@ -20,6 +20,7 @@ class ScheduledCommandRepository extends EntityRepository
 {
     /**
      * Find all enabled command ordered by priority.
+     * @return ScheduledCommand[]|null
      */
     public function findEnabledCommand(): ?array
     {
@@ -28,6 +29,7 @@ class ScheduledCommandRepository extends EntityRepository
 
     /**
      * findAll override to implement the default orderBy clause.
+     * @inheritdoc
      */
     public function findAll(): ?array
     {
@@ -39,6 +41,7 @@ class ScheduledCommandRepository extends EntityRepository
      * Find all commands ordered by next run time
      *
      * @throws \Exception
+     * @return ScheduledCommand[]|null
      */
     public function findAllSortedByNextRuntime(): ?array
     {
@@ -122,6 +125,7 @@ class ScheduledCommandRepository extends EntityRepository
      * Find all enabled commands that need to be executed ordered by priority.
      *
      * @throws \Exception
+     * @return ScheduledCommand[]|null
      */
     public function findCommandsToExecute(): ?array
     {
@@ -151,6 +155,9 @@ class ScheduledCommandRepository extends EntityRepository
         return $commands;
     }
 
+    /**
+     * @return ScheduledCommand[]
+     */
     public function findFailedAndTimeoutCommands(int | bool $lockTimeout = false): array
     {
         // Fist, get all failed commands (return != 0)

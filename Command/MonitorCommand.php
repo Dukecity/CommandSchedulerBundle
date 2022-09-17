@@ -31,6 +31,9 @@ class MonitorCommand extends Command
 
     //private ParameterBagInterface $params;
 
+    /**
+     * @param string[] $receiver
+     */
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,
         ManagerRegistry $managerRegistry,
@@ -102,6 +105,7 @@ HELP);
     /**
      * Print a table of locked Commands to console.
      *
+     * @param ScheduledCommand[] $failedCommands
      * @throws \Exception
      */
     private function dump(OutputInterface $output, array $failedCommands): void

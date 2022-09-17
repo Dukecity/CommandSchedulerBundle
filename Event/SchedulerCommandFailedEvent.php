@@ -2,12 +2,20 @@
 
 namespace Dukecity\CommandSchedulerBundle\Event;
 
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+
 class SchedulerCommandFailedEvent
 {
+    /**
+     * @param ScheduledCommand[] $failedCommands
+     */
     public function __construct(private array $failedCommands = [])
     {
     }
 
+    /**
+     * @return ScheduledCommand[]
+     */
     public function getFailedCommands(): array
     {
         return $this->failedCommands;

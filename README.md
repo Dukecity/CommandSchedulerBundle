@@ -80,7 +80,7 @@ Check new URL /command-scheduler/list
 - Monitoring with timeout or failed commands (Json URL and command with mailing)
 - Translated in french, english, german and spanish
 - An [EasyAdmin](https://github.com/EasyCorp/EasyAdminBundle) configuration template available [here](Resources/doc/integrations/easyadmin/index.md)
-- **Beta** - Handle commands with a deamon (unix only) if you don't want to use a cronjob
+- **Beta** - Handle commands with a daemon (unix only) if you don't want to use a cronjob
 
 ## Screenshots
 ![list](Resources/doc/images/scheduled-list.png)
@@ -96,5 +96,3 @@ See the [documentation here](https://github.com/Dukecity/CommandSchedulerBundle/
 ## License
 
 This bundle is under the MIT license. See the [complete license](Resources/meta/LICENCE) for info.
-
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDukecity%2FCommandSchedulerBundle.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2FDukecity%2FCommandSchedulerBundle?ref=badge_small)

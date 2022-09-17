@@ -5,7 +5,6 @@ namespace Dukecity\CommandSchedulerBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class CronExpression.
  * @Annotation
  */
 #[\Attribute] class CronExpression extends Constraint

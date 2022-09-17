@@ -15,7 +15,7 @@ jobs:
         symfony-version: ['6.2.x@dev']
     steps:
       - name: 'Checkout code'
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v3
 
       - name: 'Install PHP with extensions'
         uses: shivammathur/setup-php@2.21.2

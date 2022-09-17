@@ -20,7 +20,7 @@ jobs:
           SYMFONY_DEPRECATIONS_HELPER: 'weak'
         run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
-      - uses: codecov/codecov-action@v1.3.1
+      - uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: build/logs/clover.xml

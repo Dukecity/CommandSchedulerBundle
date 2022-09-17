@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
-<!-- Symfony: xsi:noNamespaceSchemaLocation="bin/.phpunit/phpunit.xsd" -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
-         backupGlobals="false"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          colors="true"
-         backupStaticAttributes="false"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
          bootstrap="Tests/bootstrap.php"
   >
   <php>
@@ -26,7 +18,7 @@
     <ini name="zend.enable_gc" value="0"/>
   </php>
 
-  <coverage processUncoveredFiles="false">
+  <coverage>
     <include>
       <directory suffix=".php">./Command</directory>
       <directory suffix=".php">./Controller</directory>
@@ -54,30 +46,9 @@
 
   <testsuites>
     <testsuite name="DukecityCommandSchedulerBundle test suite">
-      <directory suffix="Test.php">Tests</directory>
+      <directory>Tests</directory>
     </testsuite>
   </testsuites>
 
   <logging/>
-
-  <!--
-    <extensions>
-      <extension class="Symfony\Component\Panther\ServerExtension" />
-    </extensions>
-
-
-    <filter>
-      <whitelist>
-        <directory>src</directory>
-      </whitelist>
-    </filter>
-
-    <listeners>
-      <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
-    </listeners>
-
-    <extensions>
-       <extension class="\DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
-    </extensions>
-  -->
 </phpunit>

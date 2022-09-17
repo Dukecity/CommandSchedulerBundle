@@ -1,7 +1,23 @@
 parameters:
-    #phpVersion: 80000
+    editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+
+    level: 6
+    paths:
+        - Command
+        - Controller
+        - DependencyInjection
+        - Entity
+        - Event
+        - EventSubscriber
+        - Form
+        - Notification
+        - Resources/config
+        - Service
+        - Validator
+        #- Tests
+
     #https://phpstan.org/config-reference
-    excludes_analyse:
+    excludePaths:
         - %currentWorkingDirectory%/.github/*
         - %currentWorkingDirectory%/build/*.php
         - %currentWorkingDirectory%/vendor/*.php
@@ -10,24 +26,7 @@ parameters:
         - %currentWorkingDirectory%/Tests/App/AppKernel.php
 
     ignoreErrors:
-        - '#Call to an undefined method Doctrine\\Persistence\\ObjectManager::getConnection\(\).#'
-        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\).#'
-        - message: '#Call to an undefined method Doctrine\\Persistence\\ObjectRepository<Dukecity\\CommandSchedulerBundle\\Entity\\ScheduledCommand>::findFailedAndTimeoutCommands\(\).$#'
-          path: Controller/ListController.php
-        - message: '#Call to an undefined method Doctrine\\Persistence\\ObjectRepository<Dukecity\\CommandSchedulerBundle\\Entity\\ScheduledCommand>::findLockedCommand\(\).$#'
-          path: Command/UnlockCommand.php
-        - message: '#Call to an undefined method Doctrine\\Persistence\\ObjectRepository<Dukecity\\CommandSchedulerBundle\\Entity\\ScheduledCommand>::findFailedAndTimeoutCommands\(\).$#'
-          path: Command/MonitorCommand.php
-        - message: '#Call to an undefined method Doctrine\\Persistence\\ObjectRepository<Dukecity\\CommandSchedulerBundle\\Entity\\ScheduledCommand>::findEnabledCommand\(\).$#'
-          path: Command/ExecuteCommand.php
-        - message: '#Call to an undefined method Doctrine\\Persistence\\ObjectRepository<Dukecity\\CommandSchedulerBundle\\Entity\\ScheduledCommand>::getNotLockedCommand\(\).$#'
-          path: Command/ExecuteCommand.php
-        - message: '#Call to an undefined method Doctrine\\Persistence\\ObjectManager::isOpen\(\).$#'
-          path: Command/ExecuteCommand.php
-        - message: '#Call to an undefined method Doctrine\\Persistence\\ObjectManager::create\(\).$#'
-          path: Command/ExecuteCommand.php
-        - message: '#Call to an undefined method Doctrine\\Persistence\\ObjectManager::getConfiguration\(\).$#'
-          path: Command/ExecuteCommand.php
+
 
 #includes:
     #- vendor/phpstan/phpstan-phpunit/extension.neon

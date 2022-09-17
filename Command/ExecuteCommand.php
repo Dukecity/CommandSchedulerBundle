@@ -17,8 +17,7 @@ use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Dukecity\CommandSchedulerBundle\Service\SymfonyStyleWrapper as SymfonyStyle;
-#use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\StreamOutput;
@@ -37,9 +36,9 @@ class ExecuteCommand extends Command
     private ObjectManager $em;
     private string $dumpMode;
     private ?int $commandsVerbosity = null;
-    private $output;
+    private OutputInterface $output;
     private InputInterface $input;
-    private null|bool|array|string $env;
+    private string $env;
 
     public function __construct(
         private CommandSchedulerExecution $commandSchedulerExecution,

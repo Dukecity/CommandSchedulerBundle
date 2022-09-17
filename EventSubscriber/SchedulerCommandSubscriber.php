@@ -3,7 +3,6 @@
 namespace Dukecity\CommandSchedulerBundle\EventSubscriber;
 
 use Doctrine\ORM\EntityManagerInterface;
-use JetBrains\PhpStorm\ArrayShape;
 use Dukecity\CommandSchedulerBundle\Event\SchedulerCommandCreatedEvent;
 use Dukecity\CommandSchedulerBundle\Event\SchedulerCommandPostExecutionEvent;
 use Dukecity\CommandSchedulerBundle\Event\SchedulerCommandFailedEvent;
@@ -16,36 +15,27 @@ use Symfony\Component\Notifier\Recipient\Recipient;
 
 class SchedulerCommandSubscriber implements EventSubscriberInterface
 {
-    protected LoggerInterface $logger;
-    protected EntityManagerInterface $em;
-    protected NotifierInterface|null $notifier;
-
     /**
      * TODO check if parameters needed
      */
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $em, NotifierInterface|null $notifier = null, private array $monitor_mail = [], private string $monitor_mail_subject = 'CronMonitor:')
+    public function __construct(protected LoggerInterface        $logger,
+                                protected EntityManagerInterface $em,
+                                protected NotifierInterface|null $notifier = null,
+                                private array                    $monitor_mail = [],
+                                private string                   $monitor_mail_subject = 'CronMonitor:')
     {
-        $this->logger = $logger;
-        $this->em = $em;
-        $this->notifier = $notifier;
     }
 
     /**
      * {@inheritdoc}
      */
-    #[ArrayShape([
-        SchedulerCommandCreatedEvent::class => 'array',
-        SchedulerCommandFailedEvent::class => 'array',
-        SchedulerCommandPreExecutionEvent::class => 'array',
-        SchedulerCommandPostExecutionEvent::class => 'array',
-    ])]
     public static function getSubscribedEvents(): array
     {
         return [
-            SchedulerCommandCreatedEvent::class => ['onScheduledCommandCreated',    -10],
-            SchedulerCommandFailedEvent::class => ['onScheduledCommandFailed',     20],
-            SchedulerCommandPreExecutionEvent::class => ['onScheduledCommandPreExecution',   10],
-            SchedulerCommandPostExecutionEvent::class => ['onScheduledCommandPostExecution',   30],
+            SchedulerCommandCreatedEvent::class         => ['onScheduledCommandCreated',        -10],
+            SchedulerCommandFailedEvent::class          => ['onScheduledCommandFailed',         20],
+            SchedulerCommandPreExecutionEvent::class    => ['onScheduledCommandPreExecution',   10],
+            SchedulerCommandPostExecutionEvent::class   => ['onScheduledCommandPostExecution',  30],
         ];
     }
 

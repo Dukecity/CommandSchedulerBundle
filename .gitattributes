@@ -2,5 +2,5 @@
 /.github export-ignore
 /.gitignore export-ignore
 /Tests export-ignore
-/phpcs.xml.dist export-ignore
+/.php-cs-fixer.dist.php export-ignore
 /phpunit.xml.dist export-ignore

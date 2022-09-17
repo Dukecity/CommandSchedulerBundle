@@ -49,22 +49,11 @@ abstract class AbstractCommandTest extends WebTestCase
 
         if(!is_subclass_of($commandClass, Command::class))
         {throw new InvalidArgumentException("Not a command class");}
-        #$this->assertInstanceOf(Command::class, $commandClass);
-
-        /* https://symfony.com/doc/current/console.html#testing-commands
-        $kernel = static::createKernel();
-        $application = new Application($kernel);
-        $command = $application->find('app:create-user');
-        $commandTester = new CommandTester($command);
-        */
 
         $cmd = static::getContainer()->get($commandClass);
         $cmd->setApplication(new Application('Test'));
 
-        #var_dump($cmd->getDefinition()); die();
-        # scheduler:add <name> <cmd> <arguments> <cronExpression> [<logFile> [<priority> [<executeImmediately> [<disabled>]]]]
-        #var_dump($cmd->getSynopsis()()); die();
-
+        /** @var Command $cmd */
         $commandTester = new CommandTester($cmd);
         $commandTester->setInputs($inputs);
         $result = $commandTester->execute($arguments, ["capture_stderr_separately"]);
@@ -72,7 +61,10 @@ abstract class AbstractCommandTest extends WebTestCase
         $this->assertSame($expectedExitCode, $result);
 
         if($result !== $expectedExitCode)
-        {var_dump($commandTester->getErrorOutput());}
+        {
+            /** @noinspection ForgottenDebugOutputInspection */
+            var_dump($commandTester->getErrorOutput());
+        }
 
         return $commandTester;
     }

@@ -47,19 +47,20 @@ class ListCommand extends Command
 
         $table = new Table($output);
         $table->setStyle('box');
-        $table->setHeaders(['Name', 'Command', 'Arguments',
-            'Locked', 'LastExecution', 'NextExecution' ]);
+        $table->setHeaders(['Name', 'Command', 'Arguments', 'Locked', 'LastExecution', 'NextExecution']);
 
-        foreach ($commands as $command) {
+        foreach ($commands as $command)
+        {
             $lockedInfo = match ($command->getLocked())
             {
                 true => '<error>LOCKED</error>',
                 default => '<info>NO</info>'
             };
 
-                $lastReturnName = match ($command->getLastReturnCode()) {
-                '', false, null, 0 => '<info>'.$command->getName().'</info>',
-                default => '<error>'.$command->getName().'</error>'
+                $lastReturnName = match ($command->getLastReturnCode())
+                {
+                    '', false, null, 0 => '<info>'.$command->getName().'</info>',
+                    default => '<error>'.$command->getName().'</error>'
                 };
 
                 if($nextRunDate = $command->getNextRunDate())

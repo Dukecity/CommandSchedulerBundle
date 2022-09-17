@@ -54,8 +54,6 @@ class DukecityCommandSchedulerBundle extends Bundle
 
     /**
      * {@inheritdoc}
-     *
-     * @return DukecityCommandSchedulerExtension
      */
     public function getContainerExtension(): DukecityCommandSchedulerExtension
     {
