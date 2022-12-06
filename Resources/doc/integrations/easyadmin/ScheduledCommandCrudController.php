@@ -16,12 +16,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * @link https://symfony.com/doc/current/bundles/EasyAdminBundle/actions.html
  * @link https://github.com/Dukecity/CommandSchedulerBundle/wiki/Integrations
- * @Security("is_granted('ROLE_ADMIN')")
+ * #[IsGranted('ROLE_ADMIN')]
  */
 class ScheduledCommandCrudController extends AbstractCrudController
 {
