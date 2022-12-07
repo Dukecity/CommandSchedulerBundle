@@ -1,10 +1,6 @@
 parameters:
     database_path: "%kernel.project_dir%/build/test.db"
 
-sensio_framework_extra:
-    router:
-        annotations: false
-
 framework:
     translator:      ~
     assets:
