@@ -12,7 +12,7 @@ jobs:
         php: ['8.0']
         stability: [ prefer-stable ]
         symfony-version: ['5.4', '6.0']
-
+        experimental: [false]
         include:
           - php: '8.0'
             stability: prefer-lowest
