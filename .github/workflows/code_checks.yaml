@@ -12,14 +12,17 @@ jobs:
         php: ['8.0']
         stability: [ prefer-stable ]
         symfony-version: ['5.4', '6.0']
-        experimental: [false]
+
         include:
           - php: '8.0'
             stability: prefer-lowest
+            experimental: false
           - php: '8.1'
             symfony-version: 6.1
+            experimental: false
           - php: '8.2'
             symfony-version: 6.2
+            experimental: false
 
     continue-on-error: ${{ matrix.experimental }}
 
