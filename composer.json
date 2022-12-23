@@ -20,7 +20,7 @@
         "symfony/console": "^5.4.12 || ^6.0",
         "doctrine/orm": "^2.9",
         "doctrine/doctrine-bundle": "^2.7",
-        "doctrine/collections": "^1.7.2",
+        "doctrine/collections": "^1.7.2 || ^2.0",
         "doctrine/dbal": "^2.13.3 || ^3.4",
         "doctrine/persistence": "^2.5.4 || ^3.0",
         "laminas/laminas-code": "^4.4",
