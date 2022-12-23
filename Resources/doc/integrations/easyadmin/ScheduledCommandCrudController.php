@@ -21,8 +21,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 /**
  * @link https://symfony.com/doc/current/bundles/EasyAdminBundle/actions.html
  * @link https://github.com/Dukecity/CommandSchedulerBundle/wiki/Integrations
- * #[IsGranted('ROLE_ADMIN')]
  */
+#[IsGranted('ROLE_ADMIN')]
 class ScheduledCommandCrudController extends AbstractCrudController
 {
     public function __construct(private CommandParser $commandParser)
