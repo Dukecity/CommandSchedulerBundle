@@ -25,9 +25,13 @@ if (is_dir(__DIR__.'/../build')) {
     mkdir(__DIR__.'/../build');
 }
 
+// Legacy for doctrine/annotation v1
 // Registers automatically all doctrine annotations when required
-AnnotationRegistry::registerLoader(function ($class) use ($autoload) {
-    $autoload->loadClass($class);
+if(method_exists(AnnotationRegistry::class, 'registerLoader'))
+{
+    AnnotationRegistry::registerLoader(function ($class) use ($autoload) {
+        $autoload->loadClass($class);
 
-    return class_exists($class, false);
-});
+        return class_exists($class, false);
+    });
+}
