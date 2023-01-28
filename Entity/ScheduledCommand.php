@@ -173,7 +173,7 @@ class ScheduledCommand
         return $this->logFile;
     }
 
-    public function setLogFile(string $logFile): ScheduledCommand
+    public function setLogFile(?string $logFile): ScheduledCommand
     {
         $this->logFile = $logFile;
 
