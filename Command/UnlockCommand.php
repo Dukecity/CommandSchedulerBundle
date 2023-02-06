@@ -100,7 +100,11 @@ class UnlockCommand extends Command
 
             if ($failedCommands) {
                 foreach ($failedCommands as $failedCommand) {
-                    $this->unlock($failedCommand);
+
+                    // @see https://github.com/Dukecity/CommandSchedulerBundle/issues/46
+                    if ($failedCommand->getCommand() !== self::getDefaultName()) {
+                        $this->unlock($failedCommand);
+                    }
                 }
             }
         } else {
