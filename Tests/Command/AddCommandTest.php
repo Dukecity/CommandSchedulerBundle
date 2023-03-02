@@ -160,7 +160,7 @@ class AddCommandTest extends AbstractCommandTest
         $this->assertStringNotContainsString('successfully', $output);
     }
 
-    public function getInvalidValues(): array
+    public static function getInvalidValues(): array
     {
         return [
             'cmdNotAvailable' => ["command" => [
