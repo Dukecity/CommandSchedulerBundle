@@ -74,7 +74,7 @@ HELP
             'If you prefer to not use this interactive wizard, provide the',
             'arguments required by this command as follows:',
             '',
-            ' <info>$ php bin/console '.self::$defaultName.' name</info>',
+            ' <info>$ php bin/console '.self::getDefaultName().' name</info>',
             '',
             'Now we\'ll ask you for the value of all the missing command arguments.',
             '',

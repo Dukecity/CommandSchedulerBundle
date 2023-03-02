@@ -50,6 +50,7 @@ class RemoveCommandTest extends AbstractCommandTest
     /**
      * @dataProvider provideCompletionSuggestions
      * @param array<string, mixed> $input
+     * @throws \Exception
      */
     public function testComplete(array $input, array $expectedSuggestions): void
     {
