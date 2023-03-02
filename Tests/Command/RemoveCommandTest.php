@@ -62,7 +62,7 @@ class RemoveCommandTest extends AbstractCommandTest
         $this->assertSame($expectedSuggestions, $suggestions);
     }
 
-    public function provideCompletionSuggestions(): \Generator
+    public static function provideCompletionSuggestions(): \Generator
     {
         yield 'name' => [
             ['CommandTestT'],

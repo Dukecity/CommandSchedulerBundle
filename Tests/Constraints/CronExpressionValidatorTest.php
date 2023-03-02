@@ -27,7 +27,7 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function getValidValues(): array
+    public static function getValidValues(): array
     {
         return [
             ['* * * * *'],
@@ -52,7 +52,7 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function getInvalidValues(): array
+    public static function getInvalidValues(): array
     {
         return [
             ['*/10 * * *'],
