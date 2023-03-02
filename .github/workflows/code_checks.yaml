@@ -11,14 +11,17 @@ jobs:
       matrix:
         php: ['8.0']
         stability: [ prefer-stable ]
-        symfony-version: ['5.4', '6.2']
+        symfony-version: ['5.4.*', '6.2.*']
         include:
           - php: '8.0'
+            symfony-version: 5.4.*
             stability: prefer-lowest
           - php: '8.1'
-            symfony-version: 6.2
+            symfony-version: 5.4.*
+          - php: '8.1'
+            symfony-version: 6.2.*
           - php: '8.2'
-            symfony-version: 6.2
+            symfony-version: 6.2.*
 
     name: PHP ${{ matrix.php }} - ${{ matrix.symfony-version }} - ${{ matrix.stability }}
     steps:
@@ -40,7 +43,7 @@ jobs:
 
       - name: Install dependencies
         env:
-          SYMFONY_REQUIRE: ${{ matrix.symfony-version }}.*
+          SYMFONY_REQUIRE: ${{ matrix.symfony-version }}
         run: |
           composer global config --no-plugins allow-plugins.symfony/flex true
           composer global require --no-progress --no-scripts --no-plugins symfony/flex
