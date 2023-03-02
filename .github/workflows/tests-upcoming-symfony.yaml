@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: 'Install PHP with extensions'
-        uses: shivammathur/setup-php@2.22.0
+        uses: shivammathur/setup-php@2.24.0
         with:
           coverage: none
           php-version: '8.2'
@@ -41,4 +41,4 @@ jobs:
         env:
           #SYMFONY_DEPRECATIONS_HELPER: 'max[indirect]=9999&max[direct]=0&max[self]=9999'
           SYMFONY_DEPRECATIONS_HELPER: 'weak'
-        run: vendor/bin/simple-phpunit -v || exit 0
+        run: vendor/bin/simple-phpunit || exit 0

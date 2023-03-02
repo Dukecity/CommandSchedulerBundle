@@ -34,7 +34,7 @@ class DukecityCommandSchedulerExtensionTest extends TestCase
      *
      * @return array
      */
-    public function provideConfiguration(): array
+    public static function provideConfiguration(): array
     {
         $rootNode = 'dukecity_command_scheduler';
 

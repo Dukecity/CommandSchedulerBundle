@@ -83,7 +83,7 @@ class AddCommandTest extends AbstractCommandTest
     }
 
     /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
-    public function getValidValues(): array
+    public static function getValidValues(): array
     {
         return [
             'command1' => ["command" => [
@@ -135,7 +135,7 @@ class AddCommandTest extends AbstractCommandTest
     }
 
 
-    public function getInvalidRuntimeValues(): array
+    public static function getInvalidRuntimeValues(): array
     {
         return [
             'requiredParameterMissing1' => ["command" => [
@@ -160,7 +160,7 @@ class AddCommandTest extends AbstractCommandTest
         $this->assertStringNotContainsString('successfully', $output);
     }
 
-    public function getInvalidValues(): array
+    public static function getInvalidValues(): array
     {
         return [
             'cmdNotAvailable' => ["command" => [

@@ -14,8 +14,9 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * Class AddCommandTest.
+ *
  */
-abstract class AbstractCommandTest extends WebTestCase
+class AbstractCommandTest extends WebTestCase
 {
     protected AbstractDatabaseTool $databaseTool;
     protected EntityManager $em;
@@ -36,6 +37,15 @@ abstract class AbstractCommandTest extends WebTestCase
             ->getManager();
 
         $this->databaseTool = static::$kernel->getContainer()->get(DatabaseToolCollection::class)->get();
+    }
+
+    /**
+     *  Just to silence PhpUnit 10 Warning
+     *  beStrictAboutTestsThatDoNotTestAnything="false"  is not working
+     */
+    public function testUseless(): void
+    {
+        self::assertTrue(true);
     }
 
     /**
