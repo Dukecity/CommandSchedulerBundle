@@ -53,7 +53,7 @@
         "symfony/dom-crawler": "^5.4 || ^6.0",
         "symfony/css-selector": "^5.4 || ^6.0",
         "symfony/var-dumper": "^5.4 || ^6.0",
-        "liip/test-fixtures-bundle": "^2.6",
+        "liip/test-fixtures-bundle": "^2.5",
         "symfony/browser-kit": "^5.4 || ^6.0",
         "symfony/notifier": "^5.4 || ^6.0",
         "symfony/maker-bundle": "^1.48"
