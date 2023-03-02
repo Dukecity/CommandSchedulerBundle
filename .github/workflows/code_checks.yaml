@@ -20,7 +20,7 @@ jobs:
           - php: '8.2'
             symfony-version: 6.2
 
-    name: PHP ${{ matrix.php }} - ${{ matrix.stability }} tests
+    name: PHP ${{ matrix.php }} - ${{ matrix.symfony-version }} - ${{ matrix.stability }}
     steps:
       # basically git clone
       - uses: actions/checkout@v3
@@ -40,7 +40,7 @@ jobs:
 
       - name: Install dependencies
         env:
-          SYMFONY_REQUIRE: ${{ matrix.symfony-version }}
+          SYMFONY_REQUIRE: ${{ matrix.symfony-version }}.*
         run: |
           composer global config --no-plugins allow-plugins.symfony/flex true
           composer global require --no-progress --no-scripts --no-plugins symfony/flex
