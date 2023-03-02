@@ -15,7 +15,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 /**
  * Class AddCommandTest.
  */
-abstract class AbstractCommandTest extends WebTestCase
+class AbstractCommandTest extends WebTestCase
 {
     protected AbstractDatabaseTool $databaseTool;
     protected EntityManager $em;

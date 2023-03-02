@@ -11,7 +11,7 @@ jobs:
       matrix:
         php: ['8.0']
         stability: [ prefer-stable ]
-        symfony-version: ['5.4.*', '6.2.*']
+        symfony-version: [6.2.*']
         include:
           - php: '8.0'
             symfony-version: 5.4.*
