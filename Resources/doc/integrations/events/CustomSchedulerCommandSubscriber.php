@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection ALL */
 namespace App\EventSubscriber;
 
 use Dukecity\CommandSchedulerBundle\Event\SchedulerCommandCreatedEvent;
