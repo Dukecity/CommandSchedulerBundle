@@ -9,9 +9,6 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 
-/**
- * Class DukecityCommandSchedulerBundle.
- */
 class DukecityCommandSchedulerBundle extends Bundle
 {
     public function build(ContainerBuilder $container): void
@@ -25,7 +22,6 @@ class DukecityCommandSchedulerBundle extends Bundle
             $directories = [realpath(__DIR__.'/Entity')];
             $managerParameters = [];
             $enabledParameter = false;
-            $aliasMap = ['CommandSchedulerBundle' => 'Dukecity\CommandSchedulerBundle\Entity'];
 
             $driver = new Definition(AttributeDriver::class, [$directories]);
 
@@ -34,8 +30,7 @@ class DukecityCommandSchedulerBundle extends Bundle
                     $driver,
                     $namespaces,
                     $managerParameters,
-                    $enabledParameter,
-                    $aliasMap
+                    $enabledParameter
                 )
             );
 
