@@ -33,7 +33,6 @@
         "symfony/asset": "^5.4 || ^6.0",
         "symfony/validator": "^5.4 || ^6.0",
         "nesbot/carbon": "^2.53",
-        "symfony/dotenv": "^5.4 || ^6.0",
         "symfony/lock": "^5.4 || ^6.0",
         "symfony/config": "^5.4 || ^6.0",
         "symfony/dependency-injection": "^5.4 || ^6.0",
