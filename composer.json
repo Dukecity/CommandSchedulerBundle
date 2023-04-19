@@ -44,7 +44,7 @@
         "lorisleiva/cron-translator": "^0.4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.6 || ^10.0",
+        "phpunit/phpunit": "^9.6 || ^10.0, < 10.1",
         "symfony/phpunit-bridge": "^5.4 || ^6.0",
         "doctrine/doctrine-fixtures-bundle": "^3.4.0",
         "phpstan/phpstan": "^1.10",
