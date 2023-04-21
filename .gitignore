@@ -4,6 +4,7 @@ build/
 .php_cs.cache
 .phpcs-cache
 .phpunit.result.cache
+.phpunit.cache
 composer.phar
 rector.php
 .idea/
