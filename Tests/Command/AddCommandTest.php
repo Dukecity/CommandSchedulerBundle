@@ -4,7 +4,6 @@ namespace Dukecity\CommandSchedulerBundle\Tests\Command;
 
 use Dukecity\CommandSchedulerBundle\Command\AddCommand;
 use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
-use Dukecity\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData;
 use InvalidArgumentException;
 use RuntimeException;
 
