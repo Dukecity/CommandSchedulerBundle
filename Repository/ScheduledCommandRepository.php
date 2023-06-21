@@ -63,19 +63,19 @@ class ScheduledCommandRepository extends EntityRepository
             if ($command->isExecuteImmediately()) {
 
                 $commands[] = ["order" => (new \DateTime())->format(DateTimeInterface::ATOM), "command" => $commands];
-            } else {
-                $cron = new CronExpression($command->getCronExpression());
-                try {
-                    $nextRunDate = $cron->getNextRunDate($command->getLastExecution());
+                continue;
+            }
 
-                    if ($nextRunDate)
-                    {$commands[] = ["order" => $nextRunDate->format(DateTimeInterface::ATOM), "command" => $command];}
-                    else
-                    {$commands[] = ["order" => $futureSort, "command" => $command];}
+            try {
+                $nextRunDate = $command->getNextRunDate();
 
-                } catch (\Exception $e) {
-                   $commands[] = ["order" => $futureSort, "command" => $command];
-                }
+                if ($nextRunDate)
+                {$commands[] = ["order" => $nextRunDate->format(DateTimeInterface::ATOM), "command" => $command];}
+                else
+                {$commands[] = ["order" => $futureSort, "command" => $command];}
+
+            } catch (\Exception $e) {
+               $commands[] = ["order" => $futureSort, "command" => $command];
             }
         }
 
@@ -131,7 +131,6 @@ class ScheduledCommandRepository extends EntityRepository
     {
         $enabledCommands = $this->findEnabledCommand();
         $commands = [];
-        $now = new \DateTime();
 
         # Get commands which runtime is in the past or
         # execution is forced onetimes via isExecuteImmediately
@@ -139,11 +138,10 @@ class ScheduledCommandRepository extends EntityRepository
             if ($command->isExecuteImmediately()) {
                 $commands[] = $command;
             } else {
-                $cron = new CronExpression($command->getCronExpression());
                 try {
-                    $nextRunDate = $cron->getNextRunDate($command->getLastExecution());
+                    $nextRunDate = $command->getNextRunDate();
 
-                    if ($nextRunDate < $now) {
+                    if ($nextRunDate && $nextRunDate <= new \DateTime('now')) {
                         $commands[] = $command;
                     }
                 } catch (\Exception $e) {
