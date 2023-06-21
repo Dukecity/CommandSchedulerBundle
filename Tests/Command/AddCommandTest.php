@@ -44,7 +44,7 @@ class AddCommandTest extends AbstractCommandTest
 
         // Check if in DB
         $cmd_check = $this->em->getRepository(ScheduledCommand::class)->findOneBy(['name' => $this->testCommand["name"]]);
-        self::assertIsScalar($this->testCommand["priority"], $cmd_check->getPriority());
+        self::assertSame($this->testCommand["priority"], $cmd_check->getPriority());
         //$this->assertInstanceOf($cmd_check, ScheduledCommand);
 
         // Fails now
@@ -77,8 +77,16 @@ class AddCommandTest extends AbstractCommandTest
 
         // Check if in DB
         $cmd_check = $this->em->getRepository(ScheduledCommand::class)->findOneBy(['name' => $command["name"]]);
-        self::assertIsScalar($command["cmd"], $cmd_check->getCommand());
+
         $this->assertInstanceOf(ScheduledCommand::class, $cmd_check);
+        self::assertSame($command["name"], $cmd_check->getName());
+        self::assertSame($command["cmd"], $cmd_check->getCommand());
+        self::assertSame($command["arguments"], $cmd_check->getArguments());
+        self::assertSame($command["cronExpression"], $cmd_check->getCronExpression());
+        self::assertSame($command["priority"] ?? 0, $cmd_check->getPriority());
+        self::assertSame($command["logFile"] ?? '', $cmd_check->getLogFile());
+        self::assertSame($command["executeImmediately"] ?? false, $cmd_check->getExecuteImmediately());
+        self::assertSame($command["disabled"] ?? false, $cmd_check->getDisabled());
     }
 
     /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */

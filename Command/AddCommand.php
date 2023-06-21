@@ -59,7 +59,7 @@ class AddCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $commandName = (string) $input->getArgument('name');
-        $command = (string) $input->getArgument('command');
+        $command = (string) $input->getArgument('cmd');
         $arguments = (string) $input->getArgument('arguments');
         $cronExpression = (string) $input->getArgument('cronExpression');
         $priority = (int) $input->getArgument('priority');
