@@ -55,6 +55,7 @@ Check new URL /command-scheduler/list
 ## Features
 
 ### New in Version 5:
+- Add command to disable commands (by name or all). Useful for staging environments
 - Drop support of Symfony < 5.4
 
 ### New in Version 4:

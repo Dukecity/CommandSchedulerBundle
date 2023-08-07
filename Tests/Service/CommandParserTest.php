@@ -1,8 +1,4 @@
 <?php /** @noinspection PhpUnhandledExceptionInspection */
-/** @noinspection PhpUnhandledExceptionInspection */
-/** @noinspection PhpUnhandledExceptionInspection */
-
-/** @noinspection PhpUnhandledExceptionInspection */
 
 namespace Dukecity\CommandSchedulerBundle\Tests\Service;
 

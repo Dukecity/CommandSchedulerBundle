@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Dukecity\CommandSchedulerBundle\Command\AddCommand;
+use Dukecity\CommandSchedulerBundle\Command\DisableCommand;
 use Dukecity\CommandSchedulerBundle\Command\ExecuteCommand;
 use Dukecity\CommandSchedulerBundle\Command\MonitorCommand;
 use Dukecity\CommandSchedulerBundle\Command\RemoveCommand;
@@ -157,6 +158,15 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->set(ScheduledCommand::class)
         ->tag('controller.service_arguments');
+
+    $services->set(DisableCommand::class)
+        ->args(
+            [
+                service('doctrine'),
+                '%dukecity_command_scheduler.doctrine_manager%'
+            ]
+        )
+        ->tag('console.command');
 
 
     if(class_exists(\Symfony\Component\Notifier\NotifierInterface::class))
