@@ -120,6 +120,10 @@
                 <source>detail.locked</source>
                 <target>Verrouillé</target>
             </trans-unit>
+            <trans-unit id="215">
+                <source>detail.nextRun</source>
+                <target>Prochaine exécution</target>
+            </trans-unit>
 
             <!-- Flashs messages -->
             <trans-unit id="300">
