@@ -18,6 +18,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Console\Command\Command;
+use function Symfony\Component\String\u;
 
 class CommandSchedulerExecution
 {
@@ -37,7 +38,7 @@ class CommandSchedulerExecution
         )
     {
         $this->em = $managerRegistry->getManager($managerName);
-        $this->logPath = $this->parameterBag->get('dukecity_command_scheduler.log_path');
+        $this->logPath = u($this->parameterBag->get('dukecity_command_scheduler.log_path'))->ensureEnd(DIRECTORY_SEPARATOR);
 
         $this->application = new Application($kernel);
         $this->application->setAutoExit(false);
@@ -68,7 +69,7 @@ class CommandSchedulerExecution
             // log into a file
             $logOutput = new StreamOutput(
                 fopen(
-                    $this->logPath.$scheduledCommand->getLogFile(),
+                    $this->logPath.u($scheduledCommand->getLogFile())->ensureEnd('.log'),
                     'ab',
                     false
                 ),
