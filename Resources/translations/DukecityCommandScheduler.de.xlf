@@ -64,6 +64,14 @@
                 <source>action.cancel</source>
                 <target>Stornieren</target>
             </trans-unit>
+            <trans-unit id="111">
+                <source>confirm.disable</source>
+                <target>Die Aufgabe könnte gerade ausgeführt werden. Möchtest du sie wirklich deaktivieren?</target>
+            </trans-unit>
+            <trans-unit id="112">
+                <source>action.disable</source>
+                <target>Aufgabe deaktivieren</target>
+            </trans-unit>
 
             <!-- Detail  -->
             <trans-unit id="201">
