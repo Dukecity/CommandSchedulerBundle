@@ -29,7 +29,7 @@
             <tr {% if command.disabled == true %}class="text-muted" {% endif %}>
                 <td {% if command.disabled == false %}data-search="active" data-order="0"{% else %}data-search="deactive" data-order="1"{% endif %}>
                     <a href="{{ path('dukecity_command_scheduler_action_toggle', {'id': command.id}) }}"
-                       data-toggle="confirmation" data-btn-ok-label="{{ "action.unlock"|trans }}" data-title="{{ "confirm.unlock"|trans }}">
+                       data-toggle="confirmation" data-btn-ok-label="{{ "action.disable"|trans }}" data-title="{{ "confirm.disable"|trans }}">
                     {% if command.disabled == true %}
                         <i class="bi bi-power text-danger" title="Activate command"></i>
                     {% else %}
