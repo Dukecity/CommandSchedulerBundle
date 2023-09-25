@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -20,14 +22,23 @@ class ScheduledCommandType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add(
-            'name',
-            TextType::class,
-            [
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
+            /** @var ScheduledCommand $scheduledCommand */
+            $scheduledCommand = $event->getData();
+            $form = $event->getForm();
+            $options = [
                 'label' => 'detail.name',
                 'required' => true,
-            ]
-        );
+            ];
+
+            if (! is_null($scheduledCommand->getId())) {
+                $options['attr'] = ['readonly' => 'readonly'];
+            }
+
+            $form->add('name',
+                TextType::class,
+                $options);
+        });
 
         $builder->add(
             'command',
