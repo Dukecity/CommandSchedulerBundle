@@ -14,12 +14,13 @@ So only Php >= 8.0 and Symfony ^5.4|^6.0 are supported at the moment.
 
 The following table shows the compatibilities of different versions of the bundle :
 
-| Version                                                                        | Symfony        | PHP   |
-|--------------------------------------------------------------------------------|----------------|-------|
+| Version                                                                       | Symfony        | PHP   |
+|-------------------------------------------------------------------------------|----------------|-------|
+| 6.x          | ^6.0    | >=8.0 |
 | [5.0 (master)](https://github.com/Dukecity/CommandSchedulerBundle/tree/master) | ^5.4 + ^6.0    | >=8.0 |
-| [4.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/4.x)             | ^4.4.20 + ^5.3 | >=8.0 |
-| [3.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/3.x)             | ^4.4.20 + ^5.3 | >=7.3 |
-| [2.2.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/2.2)           | ^3.4 + ^4.3    | ^7.1  |
+| [4.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/4.x)            | ^4.4.20 + ^5.3 | >=8.0 |
+| [3.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/3.x)            | ^4.4.20 + ^5.3 | >=7.3 |
+| [2.2.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/2.2)          | ^3.4 + ^4.3    | ^7.1  |
 
 
 ## Install
@@ -53,6 +54,9 @@ Add this line to your security config.
 Check new URL /command-scheduler/list
 
 ## Features
+
+### New in Version 6:
+- Ensure that the log file reside in the log directory and finish with a ".log" extension 
 
 ### New in Version 5:
 - Add command to disable commands (by name or all). Useful for staging environments
