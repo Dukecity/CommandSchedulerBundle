@@ -139,7 +139,7 @@
             </trans-unit>
             <trans-unit id="302">
                 <source>flash.execute</source>
-                <target>Aufgabe "%name%" wird beim nächsten "scheduler:execute" ausgeführt.</target>
+                <target>Aufgabe -%{name}- wird beim nächsten "scheduler:execute" ausgeführt.</target>
             </trans-unit>
             <trans-unit id="303">
                 <source>flash.unlocked</source>
