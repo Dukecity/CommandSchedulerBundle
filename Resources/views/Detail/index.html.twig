@@ -18,7 +18,7 @@
         <div class="col-lg-6 col-sm-12">
         <div class="card">
             <div class="card-header text-white bg-secondary">
-                Command
+                {{ 'card.header.title'|trans }}
             </div>
             <div class="card-body">
                 {{ form_row( scheduledCommandForm.name, {'attr': styleConfiguration|merge({'placeholder': 'name'}) } ) }}
@@ -38,7 +38,7 @@
         <div class="col-lg-6 col-sm-12">
         <div class="card">
             <div class="card-header text-white bg-secondary">
-                Command
+                {{ 'card.header.title'|trans }}
             </div>
             <div class="card-body">
                 {# Form's fields #}

@@ -62,7 +62,8 @@ class ScheduledCommandType extends AbstractType
             [
                 'label' => 'detail.logFile',
                 'required' => false,
-            ]
+                'help' => 'File will be stored to the root "log" folder and append ".log" if not provided.'
+            ],
         );
 
         $builder->add(
