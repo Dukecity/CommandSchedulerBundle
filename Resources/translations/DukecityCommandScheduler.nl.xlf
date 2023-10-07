@@ -64,6 +64,14 @@
                 <source>action.cancel</source>
                 <target>Annuleren</target>
             </trans-unit>
+            <trans-unit id="111">
+                <source>confirm.disable</source>
+                <target>Mogelijk wordt de taak uitgevoerd. Weet u zeker dat u dit wilt uitschakelen?</target>
+            </trans-unit>
+            <trans-unit id="112">
+                <source>action.disable</source>
+                <target>Schakel taak uit</target>
+            </trans-unit>
 
             <!-- Detail  -->
             <trans-unit id="201">
@@ -134,7 +142,7 @@
             </trans-unit>
             <trans-unit id="302">
                 <source>flash.execute</source>
-                <target>Het commando zal worden uitgevoerd tijdens de volgende "scheduler:execute".</target>
+                <target>Het commando "%name%" zal worden uitgevoerd tijdens de volgende "scheduler:execute".</target>
             </trans-unit>
             <trans-unit id="303">
                 <source>flash.unlocked</source>

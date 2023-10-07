@@ -64,6 +64,14 @@
                 <source>action.cancel</source>
                 <target>Cancelar</target>
             </trans-unit>
+            <trans-unit id="111">
+                <source>confirm.disable</source>
+                <target>Es posible que la tarea se esté ejecutando. ¿Estás seguro de que quieres desactivarlo?</target>
+            </trans-unit>
+            <trans-unit id="112">
+                <source>action.disable</source>
+                <target>Desactivar tarea</target>
+            </trans-unit>
 
             <!-- Detail  -->
             <trans-unit id="201">
@@ -135,7 +143,7 @@
             </trans-unit>
             <trans-unit id="302">
                 <source>flash.execute</source>
-                <target>El comando será ejecutado en el siguiente "scheduler:execute".</target>
+                <target>El comando "%name%" será ejecutado en el siguiente "scheduler:execute".</target>
             </trans-unit>
             <trans-unit id="303">
                 <source>flash.unlocked</source>

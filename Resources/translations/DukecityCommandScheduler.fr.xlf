@@ -62,6 +62,15 @@
                 <source>action.cancel</source>
                 <target>Annuler</target>
             </trans-unit>
+            <trans-unit id="111">
+                <source>confirm.disable</source>
+                <target>La tâche est peut-être en cours d'exécution. Etes-vous sûr de vouloir le désactiver ?</target>
+            </trans-unit>
+            <trans-unit id="112">
+                <source>action.disable</source>
+                <target>Désactiver la tâche</target>
+            </trans-unit>
+
             <trans-unit id="215">
                 <source>detail.nextRun</source>
                 <target>Prochaine éxécution</target>
@@ -144,7 +153,7 @@
             </trans-unit>
             <trans-unit id="302">
                 <source>flash.execute</source>
-                <target>Le traitement sera exécuté lors de la prochaine vérification (scheduler:execute).</target>
+                <target>Le traitement "%name%" sera exécuté lors de la prochaine vérification (scheduler:execute).</target>
             </trans-unit>
             <trans-unit id="303">
                 <source>flash.unlocked</source>

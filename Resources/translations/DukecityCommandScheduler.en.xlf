@@ -146,7 +146,7 @@
             </trans-unit>
             <trans-unit id="302">
                 <source>flash.execute</source>
-                <target>Command -%name%- will be executed during the next "scheduler:execute".</target>
+                <target>Command "%name%" will be executed during the next "scheduler:execute".</target>
             </trans-unit>
             <trans-unit id="303">
                 <source>flash.unlocked</source>
