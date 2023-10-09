@@ -62,7 +62,7 @@ class ScheduledCommand
     /** Log's file name (without path). */
     // #[Assert\NoSuspiciousCharacters] available in Symfony 6.3 only
     #[Assert\NotEqualTo('.log')]
-    #[Assert\Regex('/[\w_\-À-ÿ].*(\.log){1}')] // https://regex101.com/r/Pxkn66/2
+    #[Assert\Regex('/[\w_\-À-ÿ].*(\.log){1}/')] // https://regex101.com/r/Pxkn66/2
     #[ORM\Column(type: Types::STRING, length: 150, nullable: true)]
     private ?string $logFile = null;
 
