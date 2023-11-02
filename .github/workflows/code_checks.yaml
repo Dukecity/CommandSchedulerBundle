@@ -11,25 +11,22 @@ jobs:
       matrix:
         php: ['8.2']
         stability: [ prefer-stable ]
-        symfony-version: ['6.2.*']
+        symfony-version: ['6.3.*']
         include:
-          - php: '8.0'
-            symfony-version: 5.4.*
-            stability: prefer-lowest
-          - php: '8.1'
-            symfony-version: 5.4.*
-            stability: prefer-stable
-          - php: '8.1'
-            symfony-version: 6.2.*
-            stability: prefer-stable
           - php: '8.2'
-            symfony-version: 6.2.*
+            symfony-version: 6.3.*
+            stability: prefer-lowest
+          - php: '8.2'
+            symfony-version: 7.0.*
+            stability: prefer-stable
+          - php: '8.3'
+            symfony-version: 7.0.*
             stability: prefer-stable
 
     name: PHP ${{ matrix.php }} - ${{ matrix.symfony-version }} - ${{ matrix.stability }}
     steps:
       # basically git clone
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Cache dependencies
         uses: actions/cache@v3
@@ -62,7 +59,7 @@ jobs:
   #cs:
     #runs-on: ubuntu-latest
     #steps:
-      #- uses: actions/checkout@v3
+      #- uses: actions/checkout@v4
       #- uses: shivammathur/setup-php@v2
         #with:
           #php-version: 8.2
@@ -74,7 +71,7 @@ jobs:
   #phpstan:
     #runs-on: ubuntu-latest
     #steps:
-      #- uses: actions/checkout@v3
+      #- uses: actions/checkout@v4
       #- uses: shivammathur/setup-php@v2
         #with:
           #php-version: 8.2
