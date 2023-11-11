@@ -87,7 +87,7 @@ class ListControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/command-scheduler/action/execute/1');
 
         #
-        $this->assertStringContainsString('Command -CommandTestOne- will be executed during the next', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Command &quot;CommandTestOne&quot; will be executed during the next', $this->client->getResponse()->getContent());
 
         //$this->assertEquals(1, $crawler->filter('a[href="/command-scheduler/action/execute/1"] > span[class="text-muted glyphicon glyphicon-play"]')->count());
         //$this->assertEquals(1, $crawler->filterXPath('//div[contains("Command will be executed during the next")')->count());
