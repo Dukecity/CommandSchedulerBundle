@@ -71,15 +71,6 @@
                 <target>Désactiver la tâche</target>
             </trans-unit>
 
-            <trans-unit id="215">
-                <source>detail.nextRun</source>
-                <target>Prochaine éxécution</target>
-            </trans-unit>
-            <trans-unit id="216">
-                <source>card.header.title</source>
-                <target>Commande</target>
-            </trans-unit>
-
             <!-- Detail  -->
             <trans-unit id="201">
                 <source>detail.title</source>
