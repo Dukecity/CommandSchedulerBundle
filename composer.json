@@ -19,7 +19,7 @@
         "php": ">=8.2",
         "symfony/console": "^6.3 || ^7.0",
         "doctrine/orm": "^2.15",
-        "doctrine/doctrine-bundle": "^2.10",
+        "doctrine/doctrine-bundle": "^2.11",
         "doctrine/collections": "^2.1",
         "doctrine/dbal": "^3.7",
         "doctrine/persistence": "^3.2",
@@ -43,7 +43,7 @@
         "twig/twig": "^3.7"
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "^3.4.4",
+        "doctrine/doctrine-fixtures-bundle": "^3.5",
         "liip/test-fixtures-bundle": "^2.6",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^10.0, < 10.1",
