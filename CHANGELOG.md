@@ -4,6 +4,9 @@
 - Add command `scheduler:disable` to disable one or all scheduled commands
 - Add support of Symfony 7
 - Drop support of Symfony < 6.3
+- Drop support of php < 8.2
+- Bump minimum dependencies
+- rename branch `master` to `main`
 
 ### New in Version 5:
 - Add command to disable commands (by name or all). Useful for staging environments
