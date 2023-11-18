@@ -9,18 +9,20 @@ See [Wiki](https://github.com/Dukecity/CommandSchedulerBundle/wiki) for Details
 
 ## Versions & Dependencies
 
-Version 5.x has the goal to use modern Php and Symfony features and low maintenance.
-So only Php >= 8.0 and Symfony ^5.4|^6.0 are supported at the moment.
+Please read [Upgrade-News fpr Version 6](UPGRADE.md)
+
+Version 6.x has the goal to use modern Php and Symfony features and low maintenance.
+So only Php >= 8.2 and Symfony ^6.3|^7.0 are supported at the moment.
 
 The following table shows the compatibilities of different versions of the bundle :
 
-| Version                                                                       | Symfony        | PHP   |
-|-------------------------------------------------------------------------------|----------------|-------|
-| 6.x          | ^6.0    | >=8.0 |
-| [5.0 (master)](https://github.com/Dukecity/CommandSchedulerBundle/tree/master) | ^5.4 + ^6.0    | >=8.0 |
-| [4.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/4.x)            | ^4.4.20 + ^5.3 | >=8.0 |
-| [3.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/3.x)            | ^4.4.20 + ^5.3 | >=7.3 |
-| [2.2.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/2.2)          | ^3.4 + ^4.3    | ^7.1  |
+| Version                                                                        | Symfony        | PHP   |
+|--------------------------------------------------------------------------------|----------------|-------|
+| [6.x (master)](https://github.com/Dukecity/CommandSchedulerBundle/tree/master) | ^6.3 + ^7.0    | >=8.2 |
+| [5.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/5.x)             | ^5.4 + ^6.0    | >=8.0 |
+| [4.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/4.x)             | ^4.4.20 + ^5.3 | >=8.0 |
+| [3.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/3.x)             | ^4.4.20 + ^5.3 | >=7.3 |
+| [2.2.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/2.2)           | ^3.4 + ^4.3    | ^7.1  |
 
 
 ## Install
@@ -28,23 +30,31 @@ The following table shows the compatibilities of different versions of the bundl
 When using Symfony Flex there is an [installation recipe](https://github.com/symfony/recipes-contrib/tree/master/dukecity/command-scheduler-bundle/3.0).  
 To use it, you have to enable contrib recipes on your project : 
 
-    composer config extra.symfony.allow-contrib true
-    composer req dukecity/command-scheduler-bundle
+```sh
+composer config extra.symfony.allow-contrib true
+composer req dukecity/command-scheduler-bundle
+```
 
 #### Update Database
 
 If you're using DoctrineMigrationsBundle (recommended way):
 
-    php bin/console make:migration
-    php bin/console doctrine:migrations:migrate
+```sh
+php bin/console make:migration
+php bin/console doctrine:migrations:migrate
+```
 
 Without DoctrineMigrationsBundle:
 
-    php bin/console doctrine:schema:update --force
+```sh
+php bin/console doctrine:schema:update --force
+```
 
 #### Install Assets
 
-    php bin/console assets:install --symlink --relative public
+```sh
+php bin/console assets:install --symlink --relative public
+```
 
 #### Secure your route
 Add this line to your security config.
@@ -56,7 +66,10 @@ Check new URL /command-scheduler/list
 ## Features
 
 ### New in Version 6:
-- Ensure that the log file reside in the log directory and finish with a ".log" extension 
+- Read Upgrade
+- Ensure that the log file reside in the log directory and finish with a ".log" extension
+- Add support of Symfony 7
+- Drop support of Symfony < 6.3
 
 ### New in Version 5:
 - Add command to disable commands (by name or all). Useful for staging environments
