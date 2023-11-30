@@ -333,6 +333,9 @@ class ScheduledCommand
     public function getNextRunDateForHumans(): ?string
     {
         try{
+            if(!$this->getNextRunDate())
+            {return null;}
+
             return Carbon::instance($this->getNextRunDate())->diffForHumans();
         }
         catch (\Exception)
