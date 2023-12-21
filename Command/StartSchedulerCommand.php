@@ -2,6 +2,8 @@
 
 namespace Dukecity\CommandSchedulerBundle\Command;
 
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -21,6 +23,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 class StartSchedulerCommand extends Command
 {
     const PID_FILE = '.cron-pid';
+
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        string $managerName,
+    ) {
+        $this->em = $managerRegistry->getManager($managerName);
+
+        parent::__construct();
+    }
 
     /**
      * {@inheritdoc}
@@ -108,6 +119,7 @@ HELP
             }
 
             $command->run($input, $output);
+            $this->em->clear(ScheduledCommand::class);
         }
     }
 }

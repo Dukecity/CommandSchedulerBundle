@@ -148,6 +148,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->tag('console.command');
 
     $services->set(StartSchedulerCommand::class)
+        ->args(
+            [
+                service('doctrine'),
+                '%dukecity_command_scheduler.doctrine_manager%',
+            ]
+        )
         ->tag('console.command');
 
     $services->set(StopSchedulerCommand::class)
