@@ -191,8 +191,7 @@ HELP
 
             $progress->finish();
 
-
-            if(!is_a($this->output, StreamOutput::class))
+            if(method_exists($sectionProgressbar, 'clear'))
             {$sectionProgressbar->clear();}
 
             $io->section('Finished Executions');
