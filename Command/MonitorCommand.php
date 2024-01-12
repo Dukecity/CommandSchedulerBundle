@@ -4,9 +4,9 @@
 
 namespace Dukecity\CommandSchedulerBundle\Command;
 
-use Carbon\Carbon;
 use Doctrine\Persistence\ObjectManager;
 use Dukecity\CommandSchedulerBundle\Event\SchedulerCommandFailedEvent;
+use Knp\Bundle\TimeBundle\DateTimeFormatter;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -37,6 +37,7 @@ class MonitorCommand extends Command
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,
         ManagerRegistry $managerRegistry,
+        private readonly DateTimeFormatter $dateTimeFormatter,
         string $managerName,
         private int | bool $lockTimeout,
         private array $receiver,
@@ -132,7 +133,7 @@ HELP);
             if($lastRunDate)
             {
                 $lastRunDateText = $lastRunDate->format('Y-m-d H:i').' ('
-                    .Carbon::instance($command->getLastExecution())->diffForHumans().')';
+                    .$this->dateTimeFormatter->formatDiff($command->getLastExecution()).')';
             }
             else {
                 $lastRunDateText = '';
@@ -142,7 +143,7 @@ HELP);
             if($nextRunDate)
             {
                 $nextRunDateText = $nextRunDate->format('Y-m-d H:i').' ('
-                .Carbon::instance($nextRunDate)->diffForHumans().')';
+                 .$this->dateTimeFormatter->formatDiff($command->getLastExecution()).')';
             }
             else {
                 $nextRunDateText = '';

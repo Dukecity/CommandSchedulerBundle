@@ -4,9 +4,9 @@
 
 namespace Dukecity\CommandSchedulerBundle\Command;
 
-use Carbon\Carbon;
 use Doctrine\Persistence\ObjectManager;
 use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Knp\Bundle\TimeBundle\DateTimeFormatter;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -23,7 +23,7 @@ class ListCommand extends Command
 {
     private ObjectManager $em;
 
-    public function __construct(ManagerRegistry $managerRegistry, string $managerName)
+    public function __construct(ManagerRegistry $managerRegistry, private readonly DateTimeFormatter $dateTimeFormatter, string $managerName)
     {
         $this->em = $managerRegistry->getManager($managerName);
         parent::__construct();
@@ -64,11 +64,11 @@ class ListCommand extends Command
                 };
 
                 if($nextRunDate = $command->getNextRunDate())
-                {$nextRunDateText = Carbon::instance($nextRunDate)->diffForHumans();}
+                {$nextRunDateText = $this->dateTimeFormatter->formatDiff($nextRunDate);}
                 else {$nextRunDateText = "";}
 
                 if($lastRunDate = $command->getLastExecution())
-                {$lastRunDateText = Carbon::instance($lastRunDate)->diffForHumans();}
+                {$lastRunDateText = $this->dateTimeFormatter->formatDiff($lastRunDate);}
                 else {$lastRunDateText = "";}
 
                 $table->addRow([
@@ -77,8 +77,8 @@ class ListCommand extends Command
                 $command->getArguments(),
                 $lockedInfo,
                 $lastRunDateText,
-                $nextRunDateText,
-                $command->getNextRunDateForHumans(),
+                $nextRunDateText
+                // $command->getNextRunDateForHumans(),
                 ]);
         }
 

@@ -326,22 +326,4 @@ class ScheduledCommand
 
         return (new CronExpressionLib($this->getCronExpression()))->getNextRunDate();
     }
-
-    /**
-     * Get a human readable format of the next run of the scheduled command
-     */
-    public function getNextRunDateForHumans(): ?string
-    {
-        try{
-            if(!$this->getNextRunDate())
-            {return null;}
-
-            return Carbon::instance($this->getNextRunDate())->diffForHumans();
-        }
-        catch (\Exception)
-        {}
-
-        return null;
-    }
-
 }
