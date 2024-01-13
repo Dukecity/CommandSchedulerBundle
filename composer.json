@@ -46,7 +46,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.5",
         "liip/test-fixtures-bundle": "^2.7",
         "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^10.4",
+        "phpunit/phpunit": "^10.5",
         "nesbot/carbon": "3.x-dev as 3.0",
         "symfony/browser-kit": "^6.4 || ^7.0",
         "symfony/css-selector": "^6.4 || ^7.0",
@@ -61,9 +61,9 @@
     },
     "suggest": {
         "ext-pcntl": "For using the scheduler daemon",
-        "symfony/notifier": "Send Notifications (E-Mails) ^6.4 || ^7.0",
-        "twig/cssinliner-extra": "Needed for E-Mail Notification ^3.0",
-        "twig/inky-extra": "Needed for E-Mail Notification ^3.0",
+        "symfony/notifier": "Send Notifications (E-Mails)",
+        "twig/cssinliner-extra": "Needed for E-Mail Notification",
+        "twig/inky-extra": "Needed for E-Mail Notification",
         "ext-posix": "*"
     },
     "autoload": {
