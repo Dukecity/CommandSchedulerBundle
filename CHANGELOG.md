@@ -3,7 +3,7 @@
 - Ensure that the log file reside in the log directory and finish with a ".log" extension
 - Add command `scheduler:disable` to disable one or all scheduled commands
 - Add support of Symfony 7
-- Drop support of Symfony < 6.3
+- Drop support of Symfony 6
 - Drop support of php < 8.2
 - Bump minimum dependencies
 - rename branch `master` to `main`
