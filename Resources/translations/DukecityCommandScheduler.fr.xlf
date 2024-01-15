@@ -134,15 +134,15 @@
             </trans-unit>
             <trans-unit id="216">
                 <source>detail.pingBackUrl</source>
-                <target>PingBackUrl</target>
+                <target>URL de retour (succès)</target>
             </trans-unit>
             <trans-unit id="217">
                  <source>detail.pingBackFailedUrl</source>
-                 <target>PingBackFailedUrl</target>
+                 <target>URL de retour (erreur)</target>
             </trans-unit>
             <trans-unit id="218">
                  <source>detail.notes</source>
-                 <target>notes</target>
+                 <target>Notes</target>
             </trans-unit>
           
             <!-- Flashs messages -->
