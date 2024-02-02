@@ -19,12 +19,16 @@ class DetailController extends AbstractBaseController
      */
     public function edit(Request $request, $id = null): Response
     {
+        $validationGroups = [];
         $scheduledCommand = $id ? $this->getDoctrineManager()->getRepository(ScheduledCommand::class)->find($id) : null;
         if (!$scheduledCommand) {
             $scheduledCommand = new ScheduledCommand();
+            $validationGroups[] = 'new';
         }
 
-        $form = $this->createForm(ScheduledCommandType::class, $scheduledCommand);
+        $form = $this->createForm(ScheduledCommandType::class, $scheduledCommand, [
+            'validation_groups' => $validationGroups
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
