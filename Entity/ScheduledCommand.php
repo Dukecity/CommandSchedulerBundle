@@ -2,7 +2,6 @@
 
 namespace Dukecity\CommandSchedulerBundle\Entity;
 
-use Carbon\Carbon;
 use Cron\CronExpression as CronExpressionLib;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
@@ -17,7 +16,7 @@ use Dukecity\CommandSchedulerBundle\Validator\Constraints as AssertDukecity;
  */
 #[ORM\Entity(repositoryClass: ScheduledCommandRepository::class)]
 #[ORM\Table(name: "scheduled_command")]
-#[UniqueEntity(fields: ["name"])]
+#[UniqueEntity(fields: ["name"], groups: ['new'])]
 class ScheduledCommand
 {
     #[ORM\Id, ORM\Column(type: Types::INTEGER), ORM\GeneratedValue(strategy: 'AUTO')]
