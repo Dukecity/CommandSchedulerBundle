@@ -7,7 +7,7 @@ jobs:
   code_coverage:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
@@ -20,7 +20,7 @@ jobs:
           SYMFONY_DEPRECATIONS_HELPER: 'weak'
         run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: build/logs/clover.xml

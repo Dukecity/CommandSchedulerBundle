@@ -12,18 +12,18 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        symfony-version: ['6.3.x@dev']
+        symfony-version: ['6.4.x@dev']
     steps:
       - name: 'Checkout code'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 'Install PHP with extensions'
-        uses: shivammathur/setup-php@2.24.0
+        uses: shivammathur/setup-php@2.29.0
         with:
           coverage: none
           php-version: '8.2'
           tools: composer:v2
-          extensions: pcov, dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
+          extensions: pcov, curl, libxml, pcntl, pdo
           ini-values: date.timezone=UTC
 
       - name: 'Install project dependencies'
