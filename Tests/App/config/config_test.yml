@@ -28,6 +28,7 @@ doctrine:
         charset:  UTF8
         path:     "%database_path%"
         url:      null
+        use_savepoints: true
     orm:
         auto_generate_proxy_classes: true
         auto_mapping: false

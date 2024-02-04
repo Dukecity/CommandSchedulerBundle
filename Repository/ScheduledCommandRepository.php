@@ -31,11 +31,10 @@ class ScheduledCommandRepository extends EntityRepository
      * findAll override to implement the default orderBy clause.
      * @inheritdoc
      */
-    public function findAll(): ?array
+    public function findAll(): array
     {
         return $this->findBy([], ['disabled' => 'ASC', 'priority' => 'DESC']);
     }
-
 
     /**
      * Find all commands ordered by next run time

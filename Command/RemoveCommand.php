@@ -98,6 +98,9 @@ HELP
                 ['name' => $commandName]
             );
 
+            if(!$command)
+            {throw new \InvalidArgumentException('Command with that name not found');}
+
             $this->em->remove($command);
             $this->em->flush();
 
