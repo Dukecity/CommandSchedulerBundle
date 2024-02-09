@@ -2,7 +2,6 @@
 
 namespace Dukecity\CommandSchedulerBundle\Entity;
 
-use Carbon\Carbon;
 use Cron\CronExpression as CronExpressionLib;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
