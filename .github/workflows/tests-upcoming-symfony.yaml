@@ -23,7 +23,7 @@ jobs:
           coverage: none
           php-version: '8.3'
           tools: composer:v2
-          extensions: pcov, dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
+          extensions: pcov, curl, libxml, pcntl, pdo
           ini-values: date.timezone=UTC
 
       - name: 'Install project dependencies'
