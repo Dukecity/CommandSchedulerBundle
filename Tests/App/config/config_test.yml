@@ -42,6 +42,8 @@ doctrine:
                 is_bundle: false
                 prefix: Dukecity\CommandSchedulerBundle\Entity
                 alias: CommandSchedulerBundle
+        controller_resolver:
+            auto_mapping: true
 
 dukecity_command_scheduler:
     lock_timeout: 300
