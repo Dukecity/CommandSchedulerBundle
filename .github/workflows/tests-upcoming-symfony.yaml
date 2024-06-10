@@ -12,16 +12,16 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        symfony-version: ['7.1.x@dev']
+        symfony-version: ['7.2.x@dev']
     steps:
       - name: 'Checkout code'
         uses: actions/checkout@v4
 
       - name: 'Install PHP with extensions'
-        uses: shivammathur/setup-php@2.27.0
+        uses: shivammathur/setup-php@2.30.5
         with:
           coverage: none
-          php-version: '8.3'
+          php-version: '8.4'
           tools: composer:v2
           extensions: pcov, curl, libxml, pcntl, pdo
           ini-values: date.timezone=UTC
