@@ -50,10 +50,6 @@ dukecity_command_scheduler:
     excluded_command_namespaces:
         - scheduler
 
-liip_test_fixtures:
-    cache_db:
-        sqlite: liip_test_fixtures.services_database_backup.sqlite
-
 services:
     _defaults:
         autowire: true
