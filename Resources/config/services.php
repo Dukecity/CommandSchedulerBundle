@@ -101,7 +101,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             [
                 service('event_dispatcher'),
                 service('doctrine'),
-                service('time.datetime_formatter'),
+                service('time.datetime_formatter')->nullOnInvalid(),
                 '%dukecity_command_scheduler.doctrine_manager%',
                 '%dukecity_command_scheduler.lock_timeout%',
                 '%dukecity_command_scheduler.monitor_mail%',
@@ -115,7 +115,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->args(
             [
                 service('doctrine'),
-                service('time.datetime_formatter'),
+                service('time.datetime_formatter')->nullOnInvalid(),
                 '%dukecity_command_scheduler.doctrine_manager%',
             ]
         )

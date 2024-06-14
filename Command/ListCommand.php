@@ -23,7 +23,9 @@ class ListCommand extends Command
 {
     private ObjectManager $em;
 
-    public function __construct(ManagerRegistry $managerRegistry, private readonly DateTimeFormatter $dateTimeFormatter, string $managerName)
+    public function __construct(ManagerRegistry                         $managerRegistry,
+                                private readonly DateTimeFormatter|null $dateTimeFormatter,
+                                string                                  $managerName)
     {
         $this->em = $managerRegistry->getManager($managerName);
         parent::__construct();
@@ -36,6 +38,17 @@ class ListCommand extends Command
     {
         $this->setDescription('List scheduled commands')
             ->setHelp('This class is for listing all active commands.');
+    }
+
+    // https://github.com/Dukecity/CommandSchedulerBundle/issues/99
+    private function formatDiff(\DateTime $dateTime): string
+    {
+        if($this->dateTimeFormatter)
+        {
+            return $this->dateTimeFormatter->formatDiff($dateTime);
+        }
+
+        return $dateTime->format('Y-m-d H:i');
     }
 
     /**
@@ -64,11 +77,11 @@ class ListCommand extends Command
                 };
 
                 if($nextRunDate = $command->getNextRunDate())
-                {$nextRunDateText = $this->dateTimeFormatter->formatDiff($nextRunDate);}
+                {$nextRunDateText = $this->formatDiff($nextRunDate);}
                 else {$nextRunDateText = "";}
 
                 if($lastRunDate = $command->getLastExecution())
-                {$lastRunDateText = $this->dateTimeFormatter->formatDiff($lastRunDate);}
+                {$lastRunDateText = $this->formatDiff($lastRunDate);}
                 else {$lastRunDateText = "";}
 
                 $table->addRow([
