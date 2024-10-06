@@ -221,7 +221,7 @@ class CommandSchedulerExecution
 
         if (false === $this->em->isOpen()) {
             #$this->output->writeln('<comment>Entity manager closed by the last command.</comment>');
-            $this->em = $this->em->getConnection();
+            $this->em = $this->em::create($this->em->getConnection(), $this->em->getConfiguration());
         }
 
         // Reactivate the command in DB
