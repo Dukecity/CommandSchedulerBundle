@@ -22,7 +22,6 @@ parameters:
         - %currentWorkingDirectory%/build/*.php
         - %currentWorkingDirectory%/vendor/*.php
         - %currentWorkingDirectory%/Resources
-        - %currentWorkingDirectory%/Tests/app_test.php
         - %currentWorkingDirectory%/Tests/App/AppKernel.php
 
     ignoreErrors:
