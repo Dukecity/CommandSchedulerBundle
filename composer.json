@@ -20,8 +20,8 @@
         "doctrine/orm": "^2.19 || ^3.3",
         "doctrine/doctrine-bundle": "^2.13",
         "doctrine/collections": "^2.2",
-        "doctrine/dbal": "^3.9.1 || ^4.2",
-        "doctrine/persistence": "^3.3 || ^4.0",
+        "doctrine/dbal": "^3.9.3 || ^4.2",
+        "doctrine/persistence": "^3.4 || ^4.0",
         "dragonmantank/cron-expression": "^3.3",
         "knplabs/knp-time-bundle": "^2.4",
         "lorisleiva/cron-translator": "^0.4.5",
@@ -43,7 +43,7 @@
         "twig/twig": "^3.13"
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "^3.6",
+        "doctrine/doctrine-fixtures-bundle": "^4.0",
         "liip/test-fixtures-bundle": "^3.1",
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^10.5",
