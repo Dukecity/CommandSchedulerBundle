@@ -11,16 +11,16 @@ jobs:
       matrix:
         php: ['8.2']
         stability: [ prefer-stable ]
-        symfony-version: ['7.1.*']
+        symfony-version: ['7.2.*']
         include:
           - php: '8.2'
-            symfony-version: 7.1.*
+            symfony-version: 7.2.*
             stability: prefer-lowest
           - php: '8.3'
-            symfony-version: 7.1.*
+            symfony-version: 7.2.*
             stability: prefer-stable
           - php: '8.4'
-            symfony-version: 7.1.*
+            symfony-version: 7.2.*
             stability: prefer-stable
 
     name: PHP ${{ matrix.php }} - ${{ matrix.symfony-version }} - ${{ matrix.stability }}
@@ -62,7 +62,7 @@ jobs:
       #- uses: actions/checkout@v4
       #- uses: shivammathur/setup-php@v2
         #with:
-          #php-version: 8.3
+          #php-version: 8.4
           #coverage: none # disable xdebug, pcov
       #- run: composer install --no-progress
       #- run: composer cscheck
@@ -74,7 +74,7 @@ jobs:
       #- uses: actions/checkout@v4
       #- uses: shivammathur/setup-php@v2
         #with:
-          #php-version: 8.3
+          #php-version: 8.4
           #coverage: none # disable xdebug, pcov
       #- run: composer install --no-progress
       #- run: composer phpstan

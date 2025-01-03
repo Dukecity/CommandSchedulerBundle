@@ -22,41 +22,41 @@
         "doctrine/collections": "^2.2",
         "doctrine/dbal": "^3.9.3 || ^4.2",
         "doctrine/persistence": "^3.4 || ^4.0",
-        "dragonmantank/cron-expression": "^3.3",
+        "dragonmantank/cron-expression": "^3.4",
         "knplabs/knp-time-bundle": "^2.4",
         "lorisleiva/cron-translator": "^0.4.5",
-        "symfony/asset": "^7.1",
-        "symfony/config": "^7.1",
-        "symfony/console": "^7.1",
-        "symfony/framework-bundle": "^7.1",
-        "symfony/twig-bundle": "^7.1",
-        "symfony/translation": "^7.1",
-        "symfony/finder": "^7.1",
-        "symfony/form": "^7.1",
-        "symfony/validator": "^7.1",
-        "symfony/lock": "^7.1",
-        "symfony/dependency-injection": "^7.1",
-        "symfony/property-access": "^7.1",
-        "symfony/http-kernel": "^7.1",
-        "symfony/routing": "^7.1",
-        "symfony/yaml": "^7.1",
-        "twig/twig": "^3.13"
+        "symfony/asset": "^7.2",
+        "symfony/config": "^7.2",
+        "symfony/console": "^7.2",
+        "symfony/framework-bundle": "^7.2",
+        "symfony/twig-bundle": "^7.2",
+        "symfony/translation": "^7.2",
+        "symfony/finder": "^7.2",
+        "symfony/form": "^7.2",
+        "symfony/validator": "^7.2",
+        "symfony/lock": "^7.2",
+        "symfony/dependency-injection": "^7.2",
+        "symfony/property-access": "^7.2",
+        "symfony/http-kernel": "^7.2",
+        "symfony/routing": "^7.2",
+        "symfony/yaml": "^7.2",
+        "twig/twig": "^3.18"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^4.0",
         "liip/test-fixtures-bundle": "^3.1",
-        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan": "^2.1",
         "phpunit/phpunit": "^10.5",
-        "symfony/browser-kit": "^7.1",
-        "symfony/css-selector": "^7.1",
-        "symfony/debug-bundle": "^7.1",
-        "symfony/dom-crawler": "^7.1",
-        "symfony/dotenv": "^7.1",
-        "symfony/phpunit-bridge": "^7.1",
-        "symfony/http-client": "^7.1",
-        "symfony/notifier": "^7.1",
+        "symfony/browser-kit": "^7.2",
+        "symfony/css-selector": "^7.2",
+        "symfony/debug-bundle": "^7.2",
+        "symfony/dom-crawler": "^7.2",
+        "symfony/dotenv": "^7.2",
+        "symfony/phpunit-bridge": "^7.2",
+        "symfony/http-client": "^7.2",
+        "symfony/notifier": "^7.2",
         "symfony/maker-bundle": "^1.61",
-        "symfony/var-dumper": "^7.1"
+        "symfony/var-dumper": "^7.2"
     },
     "suggest": {
         "ext-pcntl": "For using the scheduler daemon",
@@ -87,7 +87,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "^7.1"
+            "require": "^7.2"
         }
     }
 }
