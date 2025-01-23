@@ -37,7 +37,7 @@ class MonitorCommand extends Command
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,
         ManagerRegistry $managerRegistry,
-        private readonly DateTimeFormatter $dateTimeFormatter,
+        private readonly DateTimeFormatter|null $dateTimeFormatter,
         string $managerName,
         private int | bool $lockTimeout,
         private array $receiver,
@@ -103,6 +103,17 @@ HELP);
         return Command::SUCCESS;
     }
 
+    // https://github.com/Dukecity/CommandSchedulerBundle/issues/99
+    private function formatDiff(\DateTime $dateTime): string
+    {
+        if($this->dateTimeFormatter)
+        {
+           return $this->dateTimeFormatter->formatDiff($dateTime);
+        }
+
+        return '';
+    }
+
     /**
      * Print a table of locked Commands to console.
      *
@@ -133,7 +144,7 @@ HELP);
             if($lastRunDate)
             {
                 $lastRunDateText = $lastRunDate->format('Y-m-d H:i').' ('
-                    .$this->dateTimeFormatter->formatDiff($command->getLastExecution()).')';
+                    .$this->formatDiff($command->getLastExecution()).')';
             }
             else {
                 $lastRunDateText = '';
@@ -143,7 +154,7 @@ HELP);
             if($nextRunDate)
             {
                 $nextRunDateText = $nextRunDate->format('Y-m-d H:i').' ('
-                 .$this->dateTimeFormatter->formatDiff($command->getLastExecution()).')';
+                 .$this->formatDiff($command->getLastExecution()).')';
             }
             else {
                 $nextRunDateText = '';
