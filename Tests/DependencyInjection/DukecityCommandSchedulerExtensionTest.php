@@ -3,6 +3,7 @@
 namespace App\Tests\DependencyInjection;
 
 use Dukecity\CommandSchedulerBundle\DependencyInjection\DukecityCommandSchedulerExtension;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Yaml;
@@ -10,12 +11,10 @@ use Symfony\Component\Yaml\Yaml;
 class DukecityCommandSchedulerExtensionTest extends TestCase
 {
     /**
-     * @dataProvider provideConfiguration
-     *
-     * @param string $rootNode
      * @param array  $config
      * @param array  $expected
      */
+    #[DataProvider('provideConfiguration')]
     public function testConfiguration(string $rootNode, array $config, array $expected): void
     {
         $builder = new ContainerBuilder();

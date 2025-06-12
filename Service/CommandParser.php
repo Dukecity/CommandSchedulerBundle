@@ -21,9 +21,9 @@ class CommandParser
      * @param string[] $excludedNamespaces
      * @param string[] $includedNamespaces
      */
-    public function __construct(private KernelInterface $kernel,
-        private array $excludedNamespaces = [],
-        private array $includedNamespaces = [])
+    public function __construct(private readonly KernelInterface $kernel,
+                                private array $excludedNamespaces = [],
+                                private array $includedNamespaces = [])
     {
         if (!$this->isNamespacingValid($excludedNamespaces, $includedNamespaces)) {
             throw new \InvalidArgumentException('Cannot combine excludedNamespaces with includedNamespaces');
@@ -75,7 +75,13 @@ class CommandParser
         );
 
         try {
-            Debug::enable();
+            # needed for PHPUnit > 10
+            # https://github.com/sebastianbergmann/phpunit/issues/5721
+            if($this->kernel->getEnvironment() !== 'test')
+            {
+                Debug::enable();
+            }
+
             $output = new StreamOutput(fopen('php://memory', 'wb+'));
             $application->run($input, $output);
 

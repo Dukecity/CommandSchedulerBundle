@@ -5,6 +5,7 @@ namespace Dukecity\CommandSchedulerBundle\Tests\Command;
 use Dukecity\CommandSchedulerBundle\Command\AddCommand;
 use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use RuntimeException;
 
 /**
@@ -63,10 +64,9 @@ class AddCommandTest extends AbstractCommandTest
 
     /**
      * Test scheduler:add with given command name.
-     *
-     * @dataProvider getValidValues
      */
-    public function testAdd(array $command): void
+    #[DataProvider('getValidValues')]
+    public function testAdd(array $command = []): void
     {
         // DataFixtures create 4 records
         $this->loadScheduledCommandFixtures();
@@ -132,10 +132,8 @@ class AddCommandTest extends AbstractCommandTest
         $this->executeCommand(AddCommand::class, $command)->getDisplay();
     }
 
-    /**
-     * @dataProvider getInvalidRuntimeValues
-     */
-    public function testInvalidRuntimeValues(array $command): void
+    #[DataProvider('getInvalidRuntimeValues')]
+    public function testInvalidRuntimeValues(array $command = []): void
     {
         $this->expectException(RuntimeException::class);
         $this->executeCommand(AddCommand::class, $command)->getDisplay();
@@ -156,13 +154,12 @@ class AddCommandTest extends AbstractCommandTest
         ];
     }
 
-
-    /**
-     * @dataProvider getInvalidValues
-     */
-    public function testInvalidValues(array $command): void
+    #[DataProvider('getInvalidValues')]
+    public function testInvalidValues(array $command = []): void
     {
         $output = $this->executeCommand(AddCommand::class, $command, [], 1)->getDisplay();
+
+        # Symfony\Component\Console\Exception\RuntimeException: Not enough arguments (missing: "name, cmd, arguments, cronExpression").
         # Could not add the command
         $this->assertStringNotContainsString('successfully', $output);
     }
