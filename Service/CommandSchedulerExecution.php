@@ -67,14 +67,21 @@ class CommandSchedulerExecution
             $logOutput = new NullOutput();
         } else {
             // log into a file
-            $logOutput = new StreamOutput(
-                fopen(
-                    $this->logPath.u($scheduledCommand->getLogFile())->ensureEnd('.log'),
-                    'ab',
-                    false
-                ),
-                $commandsVerbosity
-            );
+            try{
+                $logOutput = new StreamOutput(
+                    fopen(
+                        $this->logPath.u($scheduledCommand->getLogFile())->ensureEnd('.log'),
+                        'ab',
+                        false
+                    ),
+                    $commandsVerbosity
+                );
+            }
+            catch(\Exception $e)
+            {
+                # fallback
+                $logOutput = new NullOutput();
+            }
         }
 
         return $logOutput;
@@ -209,7 +216,7 @@ class CommandSchedulerExecution
     public function executeCommand(
         ScheduledCommand $scheduledCommand,
         string $env,
-        string $commandsVerbosity = OutputInterface::VERBOSITY_NORMAL): int
+        int $commandsVerbosity = OutputInterface::VERBOSITY_NORMAL): int
     {
         $this->env = $env;
         $this->prepareExecution($scheduledCommand);

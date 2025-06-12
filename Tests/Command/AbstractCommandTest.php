@@ -22,7 +22,7 @@ class AbstractCommandTest extends WebTestCase
     protected EntityManager $em;
     protected CommandTester | null $commandTester;
     protected array $infos = [
-        "commands" => 5,
+        'commands' => 5,
     ];
 
     /**
@@ -58,7 +58,7 @@ class AbstractCommandTest extends WebTestCase
         // this uses a special testing container that allows you to fetch private services
 
         if(!is_subclass_of($commandClass, Command::class))
-        {throw new InvalidArgumentException("Not a command class");}
+        {throw new InvalidArgumentException('Not a command class');}
 
         $cmd = static::getContainer()->get($commandClass);
         $cmd->setApplication(new Application('Test'));
@@ -66,15 +66,17 @@ class AbstractCommandTest extends WebTestCase
         /** @var Command $cmd */
         $commandTester = new CommandTester($cmd);
         $commandTester->setInputs($inputs);
-        $result = $commandTester->execute($arguments, ["capture_stderr_separately"]);
-
-        $this->assertSame($expectedExitCode, $result);
+        $result = $commandTester->execute($arguments, ['capture_stderr_separately' => true]);
 
         if($result !== $expectedExitCode)
         {
             /** @noinspection ForgottenDebugOutputInspection */
-            var_dump($commandTester->getErrorOutput());
+            #var_dump('error-output:');
+            var_dump($commandTester->getDisplay());
+            #var_dump($commandTester->getErrorOutput());
         }
+
+        $this->assertSame($expectedExitCode, $result);
 
         return $commandTester;
     }
