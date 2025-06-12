@@ -17,7 +17,7 @@ class DetailController extends AbstractBaseController
     /**
      * Handle display of new/existing ScheduledCommand object.
      */
-    public function edit(Request $request, $id = null): Response
+    public function edit(Request $request, ?int $id = null): Response
     {
         $validationGroups = [];
         $scheduledCommand = $id ? $this->getDoctrineManager()->getRepository(ScheduledCommand::class)->find($id) : null;
@@ -31,7 +31,8 @@ class DetailController extends AbstractBaseController
         ]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             // check if we have an xml-read error for commands
             if ('error' === $scheduledCommand->getCommand()) {
                 $this->addFlash('error', 'ERROR: please check php bin/console list --format=xml');

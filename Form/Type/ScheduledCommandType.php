@@ -113,6 +113,7 @@ class ScheduledCommandType extends AbstractType
             [
                 'label' => 'detail.pingBackUrl',
                 'required' => false,
+                'default_protocol' => null,
             ]
         );
 
@@ -122,6 +123,7 @@ class ScheduledCommandType extends AbstractType
             [
                 'label' => 'detail.pingBackFailedUrl',
                 'required' => false,
+                'default_protocol' => null,
             ]
         );
 
