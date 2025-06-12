@@ -77,7 +77,7 @@ class DisableCommand extends Command
                 foreach ($commands as $command) {
 
                     // @see https://github.com/Dukecity/CommandSchedulerBundle/issues/46
-                    if ($command->getCommand() !== self::getDefaultName()) {
+                    if ($command->getCommand() !== $this->getName()) {
                         $this->disable($command);
                     }
                 }

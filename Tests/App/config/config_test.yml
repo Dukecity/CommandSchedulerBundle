@@ -20,6 +20,10 @@ framework:
         enabled: false
         collect: false
 
+    property_info:
+        with_constructor_extractor: true
+
+
 doctrine:
     dbal:
         driver:   pdo_sqlite

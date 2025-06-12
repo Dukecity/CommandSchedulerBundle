@@ -75,7 +75,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 service('event_dispatcher'),
                 service('doctrine'),
                 '%dukecity_command_scheduler.doctrine_manager%',
-                '%dukecity_command_scheduler.log_path%',
             ]
         )
         #->alias("CommandSchedulerExecution")
@@ -91,7 +90,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 service('event_dispatcher'),
                 service('doctrine'),
                 '%dukecity_command_scheduler.doctrine_manager%',
-                '%dukecity_command_scheduler.log_path%',
             ]
         )
         ->tag('console.command');

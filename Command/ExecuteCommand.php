@@ -20,7 +20,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Output\StreamOutput;
 
 /**
  * Class ExecuteCommand : This class is the entry point to execute all scheduled command.
@@ -41,18 +40,12 @@ class ExecuteCommand extends Command
     private string $env;
 
     public function __construct(
-        private CommandSchedulerExecution $commandSchedulerExecution,
-        private EventDispatcherInterface $eventDispatcher,
-        ManagerRegistry $managerRegistry,
-        string $managerName,
-        private string | bool $logPath
+        private readonly CommandSchedulerExecution $commandSchedulerExecution,
+        private readonly EventDispatcherInterface  $eventDispatcher,
+        ManagerRegistry                            $managerRegistry,
+        string                                     $managerName
     ) {
         $this->em = $managerRegistry->getManager($managerName);
-
-        // If logpath is not set to false, append the directory separator to it
-        if (false !== $this->logPath) {
-            $this->logPath = rtrim($this->logPath, '/\\').DIRECTORY_SEPARATOR;
-        }
 
         parent::__construct();
     }
@@ -68,7 +61,7 @@ class ExecuteCommand extends Command
             ->setHelp(<<<'HELP'
 The <info>%command.name%</info> is the entry point to execute all scheduled command:
 
-You can list the commands with last and next exceution time with
+You can list the commands with last and next execution time with
 <info>php bin/console scheduler:list</info>
 
 HELP
@@ -134,23 +127,9 @@ HELP
             #$this->env="test";
         }
 
-
-        // Before continue, we check that the "log_path" is valid and writable (except for gaufrette)
-        if (false !== $this->logPath &&
-            !str_starts_with($this->logPath, 'gaufrette:') &&
-            !is_writable($this->logPath)
-        ) {
-            $io->error(
-                $this->logPath.' not found or not writable. Check `log_path` in your config.yml'
-            );
-
-            return Command::FAILURE;
-        }
-
         $commandsToExecute = $this->em->getRepository(ScheduledCommand::class)
             ->findCommandsToExecute();
         $amountCommands = count($commandsToExecute);
-
 
 
         $io->title('Start : '.($this->dumpMode ? 'Dump' : 'Execute').' of '.$amountCommands.' scheduled command(s)');
