@@ -17,9 +17,9 @@
     ],
     "require": {
         "php": ">=8.2",
-        "doctrine/orm": "^2.19 || ^3.3",
-        "doctrine/doctrine-bundle": "^2.13",
-        "doctrine/collections": "^2.2",
+        "doctrine/orm": "^2.20 || ^3.3",
+        "doctrine/doctrine-bundle": "^2.14",
+        "doctrine/collections": "^2.3",
         "doctrine/dbal": "^3.9.3 || ^4.2",
         "doctrine/persistence": "^3.4 || ^4.0",
         "dragonmantank/cron-expression": "^3.4",
@@ -40,11 +40,11 @@
         "symfony/http-kernel": "^7.2",
         "symfony/routing": "^7.2",
         "symfony/yaml": "^7.2",
-        "twig/twig": "^3.18"
+        "twig/twig": "^3.21"
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "^4.0",
-        "liip/test-fixtures-bundle": "^3.1",
+        "doctrine/doctrine-fixtures-bundle": "^4.1",
+        "liip/test-fixtures-bundle": "^3.4",
         "phpstan/phpstan": "^2.1",
         "phpunit/phpunit": "^10.5",
         "symfony/browser-kit": "^7.2",
@@ -55,7 +55,7 @@
         "symfony/phpunit-bridge": "^7.2",
         "symfony/http-client": "^7.2",
         "symfony/notifier": "^7.2",
-        "symfony/maker-bundle": "^1.61",
+        "symfony/maker-bundle": "^1.63",
         "symfony/var-dumper": "^7.2"
     },
     "suggest": {
