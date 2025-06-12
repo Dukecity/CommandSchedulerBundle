@@ -4,6 +4,7 @@ namespace Dukecity\CommandSchedulerBundle\Tests\Constraints;
 
 use Dukecity\CommandSchedulerBundle\Validator\Constraints\CronExpression;
 use Dukecity\CommandSchedulerBundle\Validator\Constraints\CronExpressionValidator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
@@ -16,9 +17,7 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
         return new CronExpressionValidator();
     }
 
-    /**
-     * @dataProvider getValidValues
-     */
+    #[DataProvider('getValidValues')]
     public function testValidValues(string $value): void
     {
         $this->validator->validate($value, new CronExpression(['message' => '']));
@@ -39,10 +38,7 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     * @param string $value
-     */
+    #[DataProvider('getInvalidValues')]
     public function testInvalidValues(string $value): void
     {
         $constraint = new CronExpression(['message' => 'myMessage']);

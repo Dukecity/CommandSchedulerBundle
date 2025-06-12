@@ -5,6 +5,7 @@ namespace Dukecity\CommandSchedulerBundle\Tests\Command;
 use Dukecity\CommandSchedulerBundle\Command\RemoveCommand;
 use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Dukecity\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Tester\CommandCompletionTester;
@@ -48,10 +49,11 @@ class RemoveCommandTest extends AbstractCommandTest
     }
 
     /**
-     * @dataProvider provideCompletionSuggestions
      * @param array<string, mixed> $input
+     *
      * @throws \Exception
      */
+    #[DataProvider('provideCompletionSuggestions')]
     public function testComplete(array $input, array $expectedSuggestions): void
     {
         $cmd = static::getContainer()->get(RemoveCommand::class);
@@ -73,7 +75,7 @@ class RemoveCommandTest extends AbstractCommandTest
 
     /**
      * @return MockObject&KernelInterface
-     */
+     *//*
     private function getKernel(): KernelInterface
     {
         $container = $this->createMock(ContainerInterface::class);
@@ -89,5 +91,5 @@ class RemoveCommandTest extends AbstractCommandTest
             ->willReturn([]);
 
         return $kernel;
-    }
+    }*/
 }
