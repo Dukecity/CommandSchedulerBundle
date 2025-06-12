@@ -11,16 +11,16 @@ jobs:
       matrix:
         php: ['8.2']
         stability: [ prefer-stable ]
-        symfony-version: ['7.2.*']
+        symfony-version: ['7.3.*']
         include:
           - php: '8.2'
-            symfony-version: 7.2.*
+            symfony-version: 7.3.*
             stability: prefer-lowest
           - php: '8.3'
-            symfony-version: 7.2.*
+            symfony-version: 7.3.*
             stability: prefer-stable
           - php: '8.4'
-            symfony-version: 7.2.*
+            symfony-version: 7.3.*
             stability: prefer-stable
 
     name: PHP ${{ matrix.php }} - ${{ matrix.symfony-version }} - ${{ matrix.stability }}
