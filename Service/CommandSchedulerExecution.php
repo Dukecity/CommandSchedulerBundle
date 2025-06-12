@@ -29,12 +29,12 @@ class CommandSchedulerExecution
     private Application $application;
 
     public function __construct(
-        private KernelInterface          $kernel,
-        protected ParameterBagInterface  $parameterBag,
-        private ?LoggerInterface         $logger,
-        private EventDispatcherInterface $eventDispatcher,
-        private ManagerRegistry          $managerRegistry,
-        string                           $managerName
+        private readonly KernelInterface          $kernel,
+        protected ParameterBagInterface           $parameterBag,
+        private readonly ?LoggerInterface         $logger,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ManagerRegistry          $managerRegistry,
+        string                                    $managerName
         )
     {
         $this->em = $managerRegistry->getManager($managerName);

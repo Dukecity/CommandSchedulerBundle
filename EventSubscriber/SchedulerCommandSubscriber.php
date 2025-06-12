@@ -20,15 +20,15 @@ class SchedulerCommandSubscriber implements EventSubscriberInterface
     /**
      * TODO check if parameters needed
      */
-    public function __construct(protected LoggerInterface        $logger,
-                                protected EntityManagerInterface $em,
+    public function __construct(protected LoggerInterface          $logger,
+                                protected EntityManagerInterface   $em,
                                 protected HttpClientInterface|null $httpClient = null,
-                                protected NotifierInterface|null $notifier = null,
-                                private array                    $monitor_mail = [],
-                                private string                   $monitor_mail_subject = 'CronMonitor:',
-                                private ?string                  $ping_back_provider = null,
-                                private bool                     $ping_back = true,
-                                private bool                     $ping_back_failed = true
+                                protected NotifierInterface|null   $notifier = null,
+                                private readonly array             $monitor_mail = [],
+                                private readonly string            $monitor_mail_subject = 'CronMonitor:',
+                                private readonly ?string           $ping_back_provider = null,
+                                private readonly bool              $ping_back = true,
+                                private readonly bool              $ping_back_failed = true
                                 )
     {
         $this->httpClient = $httpClient ?: HttpClient::create();

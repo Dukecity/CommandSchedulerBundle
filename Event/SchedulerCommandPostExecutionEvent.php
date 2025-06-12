@@ -11,11 +11,11 @@ class SchedulerCommandPostExecutionEvent extends AbstractSchedulerCommandEvent
      * @param array<string, mixed>|null $profiling
      */
     public function __construct(
-        private ScheduledCommand $command,
-        private int $result,
-        private ?OutputInterface $log = null,
-        private ?array $profiling = null,
-        private \Exception|\Error|\Throwable|null $exception = null)
+        private readonly ScheduledCommand                  $command,
+        private readonly int                               $result,
+        private readonly ?OutputInterface                  $log = null,
+        private readonly ?array                            $profiling = null,
+        private readonly \Exception|\Error|\Throwable|null $exception = null)
     {
         parent::__construct($command);
     }
