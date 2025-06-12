@@ -78,11 +78,11 @@ class ScheduledCommand
     #[ORM\Column(type: Types::BOOLEAN, nullable: false)]
     private bool $locked = false;
 
-    #[Assert\Url]
+    #[Assert\Url(requireTld: true)]
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $pingBackUrl = null;
 
-    #[Assert\Url]
+    #[Assert\Url(requireTld: true)]
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $pingBackFailedUrl = null;
 

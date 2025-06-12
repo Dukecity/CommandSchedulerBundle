@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CommandChoiceType extends AbstractType
 {
-    public function __construct(private CommandParser $commandParser)
+    public function __construct(private readonly CommandParser $commandParser)
     {
     }
 

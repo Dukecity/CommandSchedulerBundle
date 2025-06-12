@@ -27,7 +27,7 @@ class CronMonitorNotification extends Notification implements EmailNotificationI
         return self::IMPORTANCE_MEDIUM;
     }
 
-    public function asChatMessage(RecipientInterface $recipient, string $transport = null): ?ChatMessage
+    public function asChatMessage(RecipientInterface $recipient, ?string $transport = null): ?ChatMessage
     {
         $arrFailedCommandNames = [];
         foreach ($this->scheduledCommands as $cmd) {
@@ -56,7 +56,7 @@ class CronMonitorNotification extends Notification implements EmailNotificationI
 
     public function asEmailMessage(
         Recipient | EmailRecipientInterface $recipient,
-        string $transport = null
+        ?string $transport = null
     ): ?EmailMessage {
         return EmailMessage::fromNotification($this, $recipient);
     }
