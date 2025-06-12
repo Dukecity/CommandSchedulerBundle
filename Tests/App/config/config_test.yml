@@ -20,8 +20,9 @@ framework:
         enabled: false
         collect: false
 
-    property_info:
-        with_constructor_extractor: true
+    # since symfony 7.3
+    #property_info:
+        #with_constructor_extractor: true
 
 
 doctrine:
