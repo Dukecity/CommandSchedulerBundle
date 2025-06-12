@@ -9,7 +9,7 @@ class SchedulerCommandFailedEvent
     /**
      * @param ScheduledCommand[] $failedCommands
      */
-    public function __construct(private array $failedCommands = [])
+    public function __construct(private readonly array $failedCommands = [])
     {
     }
 

@@ -35,14 +35,14 @@ class MonitorCommand extends Command
      * @param string[] $receiver
      */
     public function __construct(
-        private EventDispatcherInterface $eventDispatcher,
-        ManagerRegistry $managerRegistry,
-        private readonly DateTimeFormatter $dateTimeFormatter,
-        string $managerName,
-        private int | bool $lockTimeout,
-        private array $receiver,
-        private string $mailSubject,
-        private bool $sendMailIfNoError = false
+        private readonly EventDispatcherInterface $eventDispatcher,
+        ManagerRegistry                           $managerRegistry,
+        private readonly DateTimeFormatter        $dateTimeFormatter,
+        string                                    $managerName,
+        private readonly int | bool               $lockTimeout,
+        private readonly array                    $receiver,
+        private readonly string                   $mailSubject,
+        private readonly bool                     $sendMailIfNoError = false
     ) {
         $this->em = $managerRegistry->getManager($managerName);
         parent::__construct();
