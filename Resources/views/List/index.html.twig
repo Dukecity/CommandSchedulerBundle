@@ -27,13 +27,14 @@
         <tbody>
         {% for command in scheduledCommands %}
             <tr {% if command.disabled == true %}class="text-muted" {% endif %}>
-                <td {% if command.disabled == false %}data-search="active" data-order="0"{% else %}data-search="deactive" data-order="1"{% endif %}>
+                <td {% if command.disabled == false %}data-search="active" data-order="0"{% else %}data-search="deactivate" data-order="1"{% endif %}>
                     <a href="{{ path('dukecity_command_scheduler_action_toggle', {'id': command.id}) }}"
-                       data-toggle="confirmation" data-btn-ok-label="{{ "action.disable"|trans }}" data-title="{{ "confirm.disable"|trans }}">
+                       onclick="return confirm('{{ "action.disable"|trans }}')"
+                    >
                     {% if command.disabled == true %}
                         <i class="bi bi-power text-danger" title="Activate command"></i>
                     {% else %}
-                        <i class="bi bi-power text-success" title="Deativate command"></i>
+                        <i class="bi bi-power text-success" title="Deactivate command"></i>
                     {% endif %}
                     </a>
                 </td>
@@ -72,9 +73,8 @@
                 <td style="min-width: 90px;" class="action-container text-right">
                     {% if command.locked == true %}
                         <a href="{{ path('dukecity_command_scheduler_action_unlock', {'id': command.id}) }}"
-                           data-toggle="confirmation"
-                           data-btn-ok-label="{{ "action.unlock"|trans }}"
-                           data-title="{{ "confirm.unlock"|trans }}" >
+                           onclick="return confirm('{{ "action.unlock"|trans }}')"
+                           >
                             <i class="bi bi-lock-fill text-danger" title="{{ "action.unlock"|trans }}"></i>
                         </a>
                     {% else %}
@@ -84,15 +84,12 @@
                         <i class="bi bi-pencil-square" title="{{ "action.edit"|trans }}"></i>
                     </a>
                     <a href="{{ path('dukecity_command_scheduler_action_remove', {'id': command.id}) }}"
-                       data-toggle="confirmation"
-                       data-btn-ok-label="{{ "action.delete"|trans }}"
-                       data-title="{{ "confirm.delete"|trans }}" >
+                       onclick="return confirm('{{ "confirm.delete"|trans }}')"
+                     >
                         <i class="bi bi-trash-fill text-danger" title="{{ "action.delete"|trans }}"></i>
                     </a>
                     <a href="{{ path('dukecity_command_scheduler_action_execute', {'id': command.id}) }}"
-                       data-toggle="confirmation"
-                       data-btn-ok-label="{{ "action.execute"|trans }}"
-                       data-title="{{ "confirm.execute"|trans }}"
+                       onclick="return confirm('{{ "confirm.execute"|trans }}')"
                     >
                         <i class="bi bi-file-play text-{% if command.executeImmediately == true %}muted{% else %}success{% endif %}" title="{{ "action.execute"|trans }}"></i>
                     </a>
