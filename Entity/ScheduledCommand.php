@@ -7,6 +7,7 @@ use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Dukecity\CommandSchedulerBundle\Repository\ScheduledCommandRepository;
+use Lorisleiva\CronTranslator\CronTranslator;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Dukecity\CommandSchedulerBundle\Validator\Constraints as AssertDukecity;
@@ -324,5 +325,14 @@ class ScheduledCommand
         }
 
         return (new CronExpressionLib($this->getCronExpression()))->getNextRunDate();
+    }
+
+    public function getCronExpressionTranslated(): string
+    {
+        try{
+        return CronTranslator::translate($this->getCronExpression());
+        }
+        catch(\Exception $e)
+        {return 'error: could not translate cron expression';}
     }
 }
