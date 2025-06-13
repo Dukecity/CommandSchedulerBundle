@@ -55,7 +55,7 @@
                     {{ command.command }} {{ command.arguments }}
                 </td>
                 <td>
-                    {{ command.cronExpression }}
+                    <span title="{{ command.getCronExpressionTranslated() }}">{{ command.cronExpression }}</span>
                 </td>
                 <td>
                     {{ command.logFile }}
