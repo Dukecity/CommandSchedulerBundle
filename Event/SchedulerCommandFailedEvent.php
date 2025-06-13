@@ -30,7 +30,7 @@ class SchedulerCommandFailedEvent
                 $command->getName(),
                 $command->getLastReturnCode(),
                 $command->getLocked(),
-                $command->getLastExecution()->format('Y-m-d H:i')
+                $command->getLastExecution()?->format('Y-m-d H:i') ?? 'Never'
             );
         }
 
