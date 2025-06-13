@@ -21,7 +21,11 @@
                 <th data-searchable="false" data-orderable="true">{{ "detail.lastExecution"|trans }}</th>
                 <th data-searchable="false" data-orderable="true">{{ "detail.nextRun"|trans }}</th>
                 <th data-searchable="false" data-orderable="true" class="text-right">{{ "detail.priority"|trans }}</th>
-                <th data-searchable="false" data-orderable="false" class="text-right">{{ "detail.actions"|trans }}</th>
+                <th data-visible="false" data-searchable="false" data-orderable="true" class="text-right">{{ "detail.locked"|trans }}</th>
+                <th data-visible="false" data-searchable="false" data-orderable="true" class="text-right">{{ "detail.notes"|trans }}</th>
+                <th data-visible="false" data-searchable="false" data-orderable="true" class="text-right">{{ "detail.pingBackUrl"|trans }}</th>
+                <th data-visible="false" data-searchable="false" data-orderable="true" class="text-right">{{ "detail.pingBackFailedUrl"|trans }}</th>
+                <th data-searchable="false" data-orderable="false" class="text-right" style="min-width: 150px;">{{ "detail.actions"|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -40,9 +44,9 @@
                 </td>
                 <td data-search="{{ command.name }}" data-order="{{ command.name }}">
                     <span style="font-size:14px;" {% if command.disabled == false %}
-                            class="badge badge-success" title="Command is active"
+                            class="badge bg-success" title="Command is active"
                             {% else %}
-                            class="badge badge-danger" title="Command is disabled"
+                            class="badge bg-danger" title="Command is disabled"
                             {% endif %}>
                     {{ command.name }}
                     </span>
@@ -57,7 +61,7 @@
                     {{ command.logFile }}
                 </td>
                 <td>
-                    <span style="font-size:14px;" class="badge badge-{% if command.lastReturnCode == 0 %}success{% else %}danger{% endif %}" title="Last Return Code: {{ command.lastReturnCode }}">
+                    <span style="font-size:14px;" class="badge bg-{% if command.lastReturnCode == 0 %}success{% else %}danger{% endif %}" title="Last Return Code: {{ command.lastReturnCode }}">
                     {{ command.lastExecution is empty ? "" : command.lastExecution|date( "dateFormat"|trans ) }}
                     </span>
                 </td>
@@ -70,7 +74,19 @@
                 <td class="text-right">
                     {{ command.priority }}
                 </td>
-                <td style="min-width: 90px;" class="action-container text-right">
+                <td class="text-right">
+                    {{ command.locked }}
+                </td>
+                <td class="text-right">
+                    {{ command.notes }}
+                </td>
+                <td class="text-right">
+                    {{ command.pingBackUrl }}
+                </td>
+                <td class="text-right">
+                    {{ command.pingBackFailedUrl }}
+                </td>
+                <td style="min-width: 150px;" class="action-container text-right">
                     {% if command.locked == true %}
                         <a href="{{ path('dukecity_command_scheduler_action_unlock', {'id': command.id}) }}"
                            onclick="return confirm('{{ "action.unlock"|trans }}')"
