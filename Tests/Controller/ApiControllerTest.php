@@ -47,7 +47,7 @@ class ApiControllerTest extends WebTestCase
         $jsonArray = json_decode($jsonResponse, true, 512, JSON_THROW_ON_ERROR);
 
         $this->assertGreaterThanOrEqual(1, count($jsonArray));
-        $this->assertArrayHasKey('_global', $jsonArray);
+        $this->assertArrayHasKey('about', $jsonArray);
         $this->assertSame("assets:install", $jsonArray["assets"]["assets:install"]);
         $this->assertSame("debug:autowiring", $jsonArray["debug"]["debug:autowiring"]);
     }
@@ -68,7 +68,7 @@ class ApiControllerTest extends WebTestCase
         $this->assertArrayHasKey('about', $commands);
         $this->assertSame("about", $commands["about"]["name"]);
 
-        $this->assertArrayHasKey('list', $commands);
+        $this->assertArrayHasKey('assets:install', $commands);
         $this->assertArrayHasKey('cache:clear', $commands);
     }
 
@@ -78,7 +78,7 @@ class ApiControllerTest extends WebTestCase
     public function testConsoleCommandsDetails(): void
     {
         // List all available console commands
-        $this->client->request('GET', '/command-scheduler/api/console_commands_details/about,list,cache:clear,asserts:install');
+        $this->client->request('GET', '/command-scheduler/api/console_commands_details/about,list,cache:clear,assets:install,app:unknown');
         self::assertResponseIsSuccessful();
 
         $jsonResponse = $this->client->getResponse()->getContent();
@@ -88,8 +88,10 @@ class ApiControllerTest extends WebTestCase
         $this->assertArrayHasKey('about', $commands);
         $this->assertSame("about", $commands["about"]["name"]);
 
-        $this->assertArrayHasKey('list', $commands);
+        $this->assertArrayHasKey('assets:install', $commands);
         $this->assertArrayHasKey('cache:clear', $commands);
+
+        $this->assertArrayNotHasKey('app:unknown', $commands);
     }
 
     /**
