@@ -28,6 +28,9 @@ jobs:
           - php: '8.3'
             symfony-version: 6.4.*
             stability: prefer-stable
+          - php: '8.4'
+            symfony-version: 6.4.*
+            stability: prefer-stable
 
     name: PHP ${{ matrix.php }} - ${{ matrix.symfony-version }} - ${{ matrix.stability }}
     steps:
@@ -61,26 +64,3 @@ jobs:
           SYMFONY_DEPRECATIONS_HELPER: 'weak'
         run: vendor/bin/phpunit
 
-
-  #cs:
-    #runs-on: ubuntu-latest
-    #steps:
-      #- uses: actions/checkout@v4
-      #- uses: shivammathur/setup-php@v2
-        #with:
-          #php-version: 8.2
-          #coverage: none # disable xdebug, pcov
-      #- run: composer install --no-progress
-      #- run: composer cscheck
-
-
-  #phpstan:
-    #runs-on: ubuntu-latest
-    #steps:
-      #- uses: actions/checkout@v4
-      #- uses: shivammathur/setup-php@v2
-        #with:
-          #php-version: 8.2
-          #coverage: none # disable xdebug, pcov
-      #- run: composer install --no-progress
-      #- run: composer phpstan
