@@ -26,22 +26,22 @@ class CommandParserTest extends WebTestCase
     public function testGetCommandDetails(): void
     {
         # Single parameter
-        $commandDetails = $this->commandParser->getCommandDetails(["help"]);
+        $commandDetails = $this->commandParser->getCommandDetails(["about"]);
 
         $this->assertIsArray($commandDetails);
-        $this->assertArrayHasKey('help', $commandDetails);
-        $this->assertSame("help", $commandDetails["help"]["name"]);
+        $this->assertArrayHasKey('about', $commandDetails);
+        $this->assertSame("about", $commandDetails["about"]["name"]);
 
         # Multiple parameters
         $commandDetails = $this->commandParser->getCommandDetails(
-            ["help", "assets:install", "cache:clear"]
+            ["about", "assets:install", "cache:clear"]
         );
 
         $this->assertIsArray($commandDetails);
-        $this->assertArrayHasKey('help', $commandDetails);
-        $this->assertSame("help", $commandDetails["help"]["name"]);
+        $this->assertArrayHasKey('about', $commandDetails);
+        $this->assertSame("about", $commandDetails["about"]["name"]);
 
-        $command = $commandDetails["help"];
+        $command = $commandDetails["about"];
         $this->assertArrayHasKey('name', $command);
         $this->assertArrayHasKey('usage', $command);
         $this->assertArrayHasKey('description', $command);
@@ -66,7 +66,7 @@ class CommandParserTest extends WebTestCase
         $commands = $this->commandParser->getCommands();
 
         $this->assertIsArray($commands);
-        $this->assertArrayHasKey('_global', $commands);
+        $this->assertArrayHasKey('about', $commands);
         $this->assertSame("assets:install", $commands["assets"]["assets:install"]);
     }
 
@@ -81,7 +81,7 @@ class CommandParserTest extends WebTestCase
         $this->assertArrayHasKey('about', $commands);
         $this->assertSame("about", $commands["about"]["name"]);
 
-        $this->assertArrayHasKey('list', $commands);
+        $this->assertArrayHasKey('assets:install', $commands);
         $this->assertArrayHasKey('cache:clear', $commands);
     }
 
@@ -122,7 +122,7 @@ class CommandParserTest extends WebTestCase
         $this->commandParser->setExcludedNamespaces([]);
         $this->commandParser->setIncludedNamespaces(["cache", "debug"]);
 
-        $commands = $this->commandParser->getCommands("test");
+        $commands = $this->commandParser->getCommands();
 
         $this->assertIsArray($commands);
         $this->assertArrayHasKey("debug", $commands);

@@ -3,11 +3,10 @@
 namespace Dukecity\CommandSchedulerBundle\Service;
 
 use Exception;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Descriptor\JsonDescriptor;
 use Symfony\Component\Console\Exception\CommandNotFoundException;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\StreamOutput;
-use Symfony\Component\ErrorHandler\Debug;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -45,12 +44,17 @@ class CommandParser
                 );
     }
 
-
+    /**
+     * @param string[] $namespaces
+     */
     public function setExcludedNamespaces(array $namespaces = []): void
     {
         $this->excludedNamespaces = $namespaces;
     }
 
+    /**
+     * @param string[] $namespaces
+     */
     public function setIncludedNamespaces(array $namespaces = []): void
     {
         $this->includedNamespaces = $namespaces;
@@ -59,49 +63,14 @@ class CommandParser
     /**
      * Get all available commands from symfony
      *
-     * @throws Exception
+     * @return string[] Command names
      */
-    public function getAvailableCommands(string $format="xml", string $env="prod"): string|array
+    public function getAvailableCommands(): array
     {
-        $application = new Application($this->kernel);
-        $application->setAutoExit(false);
-
-        $input = new ArrayInput(
-            [
-                'command' => 'list',
-                '--format' => $format,
-                '--env' => $env,
-            ]
-        );
-
-        try {
-            # needed for PHPUnit > 10
-            # https://github.com/sebastianbergmann/phpunit/issues/5721
-            if($this->kernel->getEnvironment() !== 'test')
-            {
-                Debug::enable();
-            }
-
-            $output = new StreamOutput(fopen('php://memory', 'wb+'));
-            $application->run($input, $output);
-
-            rewind($output->getStream());
-
-            if($format === "xml")
-            {return stream_get_contents($output->getStream());}
-
-            if($format === "json")
-            {return json_decode(
-                stream_get_contents($output->getStream()),
-                true,
-                512,
-                JSON_THROW_ON_ERROR
-            );}
-
-            throw new \InvalidArgumentException('Only xml and json are allowed');
-        } catch (\Throwable) {
-            throw new \RuntimeException('Listing of commands could not be read');
-        }
+        return $this->kernel
+            ->getContainer()
+            ->get('console.command_loader')
+            ->getNames();
     }
 
     /**
@@ -109,15 +78,15 @@ class CommandParser
      *
      * @return array<string, string[]> ["Namespace1" => ["Command1", "Command2"]]
      *
-     * @throws Exception
+     * @throws \InvalidArgumentException
      */
-    public function getCommands(string $env="prod"): array
+    public function getCommands(): array
     {
         if (!$this->isNamespacingValid($this->excludedNamespaces, $this->includedNamespaces)) {
             throw new \InvalidArgumentException('Cannot combine excludedNamespaces with includedNamespaces');
         }
 
-        return $this->extractCommands($this->getAvailableCommands("json", $env));
+        return $this->extractCommands($this->getAvailableCommands());
     }
 
 
@@ -127,17 +96,16 @@ class CommandParser
      * @return array<string, array<string, mixed>>
      * @throws Exception
      */
-    public function getAllowedCommandDetails(string $env="prod"): array
+    public function getAllowedCommandDetails(): array
     {
-       # var_dump($this->getCommands($env));
-       return $this->getCommandDetails($this->getCommands($env));
+        return $this->getCommandDetails($this->getAvailableCommands());
     }
 
 
     /**
      * Is the command-List wrapped in namespaces?
      *
-     * @param array<string, array<string, string>> $commands
+     * @param array<string, array<string, string>>|string[] $commands
      * @return string[]
      */
     public function reduceNamespacedCommands(array $commands): array
@@ -166,25 +134,29 @@ class CommandParser
     }
 
     /**
+     * @param string[] $commands
      * @return array<string, array<string, mixed>>
      * @throws Exception
      */
     public function getCommandDetails(array $commands): array
     {
-        $availableCommands = $this->getAvailableCommands("json");
         $result = [];
-        #$command->getDefinition();
 
-        # Is the command-List wrapped in namespaces?
-        $commands = $this->reduceNamespacedCommands($commands);
+        $commandLoader = $this->kernel->getContainer()->get('console.command_loader');
+        $jsonDescriptor = new JsonDescriptor();
 
-        foreach ($availableCommands["commands"] as $command)
-        {
-            #var_dump($command);
-            if(in_array($command["name"], $commands, true))
-            {
-                $result[$command["name"]] = $command;
+        foreach ($commands as $commandName) {
+            if (!$commandLoader->has($commandName)) {
+                continue;
             }
+
+            /** @var Command $command */
+            $command = $commandLoader->get($commandName);
+
+            $buffer = new BufferedOutput();
+            $jsonDescriptor->describe($buffer, $command);
+
+            $result[$commandName] = json_decode($buffer->fetch(), true);
         }
 
         if(count($result)===0)
@@ -193,48 +165,29 @@ class CommandParser
         return $result;
     }
 
-
-
-
     /**
      * Extract an array of available Symfony commands from the JSON output.
      *
-     * @param array<string, array<int, mixed>> $commands
+     * @param string[] $commands Command names
      * @return array<string, array<int|string, mixed>|string>
-     * ["namespaces]
-     *  [0]
-     *     ["id"] => cache
-     *     ["commands"] => ["cache:clear", "cache:warmup", ...]
+     * ["namespaces"][0]
      */
     private function extractCommands(array $commands): array
     {
-        if (count($commands) === 0) {
-            return [];
-        }
-
         $commandsList = [];
 
-        try {
-            foreach ($commands["namespaces"] as $namespace) {
-                $namespaceId = (string) $namespace["id"];
+        foreach ($commands as $commandName) {
+            $namespaceId = explode(':', $commandName)[0];
 
-                # Blacklisting and Whitelisting
-                if ((count($this->excludedNamespaces) > 0 && in_array($namespaceId, $this->excludedNamespaces, true))
-                    ||
-                    (count($this->includedNamespaces) > 0 && !in_array($namespaceId, $this->includedNamespaces, true))
-                ) {
-                    continue;
-                }
-
-                # Add Command Name to array
-                foreach ($namespace["commands"] as $command) {
-
-                    $commandsList[$namespaceId][$command] = $command;
-                }
+            # Blacklisting and Whitelisting
+            if ((count($this->excludedNamespaces) > 0 && in_array($namespaceId, $this->excludedNamespaces, true))
+                ||
+                (count($this->includedNamespaces) > 0 && !in_array($namespaceId, $this->includedNamespaces, true))
+            ) {
+                continue;
             }
-        } catch (Exception) {
-            // return an empty CommandList
-            $commandsList = ['ERROR: please check php bin/console list --format=json' => 'error'];
+
+            $commandsList[$namespaceId][$commandName] = $commandName;
         }
 
         return $commandsList;
