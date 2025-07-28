@@ -161,6 +161,10 @@
                 <source>flash.unlocked</source>
                 <target>Tarea desbloqueada exitosamente.</target>
             </trans-unit>
+            <trans-unit id="221">
+                 <source>detail.card.header.title</source>
+                 <target>Dominio</target>
+            </trans-unit>
 
             <!-- admin label -->
             <trans-unit id="400">

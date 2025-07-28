@@ -144,6 +144,10 @@
                  <source>detail.notes</source>
                  <target>Notes</target>
             </trans-unit>
+            <trans-unit id="221">
+                 <source>detail.card.header.title</source>
+                 <target>Commande</target>
+            </trans-unit>
           
             <!-- Flashs messages -->
             <trans-unit id="300">
