@@ -144,7 +144,7 @@
             </trans-unit>
             <trans-unit id="219">
                   <source>detail.executeImmediately.help</source>
-                  <target>Dit is een van de weinige problemen die de Cronjob heeft veroorzaakt/target>
+                  <target>Dit is een van de weinige problemen die de Cronjob heeft veroorzaakt</target>
             </trans-unit>
             <trans-unit id="221">
                  <source>detail.card.header.title</source>
