@@ -147,11 +147,14 @@
                  <source>detail.notes</source>
                  <target>notes</target>
             </trans-unit>
+            <trans-unit id="219">
+                  <source>detail.executeImmediately.help</source>
+                  <target>Bitte einmal ausführen, damit der Cronjob korrekt ausgeführt wird</target>
+            </trans-unit>
             <trans-unit id="221">
                  <source>detail.card.header.title</source>
                  <target>Aufgabe</target>
             </trans-unit>
-
 
             <!-- Flashs messages -->
             <trans-unit id="300">

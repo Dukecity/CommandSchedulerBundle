@@ -95,6 +95,7 @@ class ScheduledCommandType extends AbstractType
             [
                 'label' => 'detail.executeImmediately',
                 'required' => false,
+                'help' => 'detail.executeImmediately.help',
             ]
         );
 
