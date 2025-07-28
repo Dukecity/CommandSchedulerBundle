@@ -143,6 +143,10 @@
                  <source>detail.notes</source>
                  <target>notes</target>
             </trans-unit>
+            <trans-unit id="219">
+                  <source>detail.executeImmediately.help</source>
+                  <target>Execute uma vez para garantir que o cronjob seja executado corretamente</target>
+            </trans-unit>
             <trans-unit id="221">
                  <source>detail.card.header.title</source>
                  <target>Comando</target>

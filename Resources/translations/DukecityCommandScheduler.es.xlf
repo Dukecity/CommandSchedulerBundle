@@ -143,6 +143,14 @@
                  <source>detail.notes</source>
                  <target>notes</target>
             </trans-unit>
+            <trans-unit id="219">
+                  <source>detail.executeImmediately.help</source>
+                  <target>Ejecútelo una vez para garantizar que el cronjob se ejecute correctamente</target>
+            </trans-unit>
+            <trans-unit id="221">
+                 <source>detail.card.header.title</source>
+                 <target>Dominio</target>
+            </trans-unit>
 
             <!-- Flashs messages -->
             <trans-unit id="300">
@@ -161,10 +169,7 @@
                 <source>flash.unlocked</source>
                 <target>Tarea desbloqueada exitosamente.</target>
             </trans-unit>
-            <trans-unit id="221">
-                 <source>detail.card.header.title</source>
-                 <target>Dominio</target>
-            </trans-unit>
+
 
             <!-- admin label -->
             <trans-unit id="400">

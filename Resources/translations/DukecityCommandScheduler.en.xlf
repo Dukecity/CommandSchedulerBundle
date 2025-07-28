@@ -146,6 +146,10 @@
                  <source>detail.notes</source>
                  <target>notes</target>
             </trans-unit>
+            <trans-unit id="219">
+                  <source>detail.executeImmediately.help</source>
+                  <target>Please run once to ensure the cronjob is executed correctly</target>
+            </trans-unit>
             <trans-unit id="221">
                  <source>detail.card.header.title</source>
                  <target>Command</target>
