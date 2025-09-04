@@ -15,10 +15,10 @@ jobs:
         symfony-version: ['7.4.x@dev']
     steps:
       - name: 'Checkout code'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 'Install PHP with extensions'
-        uses: shivammathur/setup-php@2.34.0
+        uses: shivammathur/setup-php@2
         with:
           coverage: none
           php-version: '8.4'
