@@ -32,13 +32,13 @@ doctrine:
         charset:  UTF8
         path:     "%database_path%"
         url:      null
-        use_savepoints: true
+        #use_savepoints: true # removed in doctrine-bundle v3
     orm:
-        auto_generate_proxy_classes: true
+        #auto_generate_proxy_classes: true # removed in doctrine-bundle v3
         auto_mapping: false
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-        enable_lazy_ghost_objects: true
-        report_fields_where_declared: true
+        #enable_lazy_ghost_objects: true # removed in doctrine-bundle v3
+        #report_fields_where_declared: true # removed in doctrine-bundle v3
 
         mappings:
             # added for type: "attribute"
@@ -49,7 +49,7 @@ doctrine:
                 prefix: Dukecity\CommandSchedulerBundle\Entity
                 alias: CommandSchedulerBundle
         controller_resolver:
-            auto_mapping: true
+            #auto_mapping: true # false in doctrine-bundle v3
 
 dukecity_command_scheduler:
     lock_timeout: 300
