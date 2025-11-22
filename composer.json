@@ -89,5 +89,7 @@
             "allow-contrib": false,
             "require": "^7.4 || ^8.0"
         }
-    }
+    },
+    "minimum-stability": "rc",
+    "prefer-stable": true
 }
