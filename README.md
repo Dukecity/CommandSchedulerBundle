@@ -3,6 +3,7 @@ CommandSchedulerBundle
 
 [![Code_Checks](https://github.com/Dukecity/CommandSchedulerBundle/actions/workflows/code_checks.yaml/badge.svg?branch=main)](https://github.com/Dukecity/CommandSchedulerBundle/actions/workflows/code_checks.yaml)
 [![codecov](https://codecov.io/gh/Dukecity/CommandSchedulerBundle/branch/main/graph/badge.svg?token=V3IZ35QH9D)](https://codecov.io/gh/Dukecity/CommandSchedulerBundle)
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/Dukecity/CommandSchedulerBundle?utm_source=oss&utm_medium=github&utm_campaign=Dukecity%2FCommandSchedulerBundle&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
 
 This bundle will allow you to easily manage scheduling for Symfony's console commands (native or not) with cron expression.
 See [Wiki](https://github.com/Dukecity/CommandSchedulerBundle/wiki) for Details
