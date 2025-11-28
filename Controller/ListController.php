@@ -2,9 +2,7 @@
 
 namespace Dukecity\CommandSchedulerBundle\Controller;
 
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +16,7 @@ class ListController extends AbstractBaseController
 {
     private int $lockTimeout = 3600;
     private LoggerInterface $logger;
+    private string $scheduledCommandClass = '';
 
     public function setLockTimeout(int $lockTimeout): void
     {
@@ -29,10 +28,15 @@ class ListController extends AbstractBaseController
         $this->logger = $logger;
     }
 
+    public function setScheduledCommandClass(string $scheduledCommandClass): void
+    {
+        $this->scheduledCommandClass = $scheduledCommandClass;
+    }
+
     public function indexAction(): Response
     {
         $scheduledCommands = $this->getDoctrineManager()->getRepository(
-            ScheduledCommand::class
+            $this->scheduledCommandClass
         )->findAll();
         #)->findAllSortedByNextRuntime();
 
@@ -45,7 +49,7 @@ class ListController extends AbstractBaseController
     public function removeAction($id): RedirectResponse
     {
         $entityManager = $this->getDoctrineManager();
-        $scheduledCommand = $entityManager->getRepository(ScheduledCommand::class)->find($id);
+        $scheduledCommand = $entityManager->getRepository($this->scheduledCommandClass)->find($id);
         $entityManager->remove($scheduledCommand);
         $entityManager->flush();
 
@@ -60,7 +64,7 @@ class ListController extends AbstractBaseController
      */
     public function toggleAction($id): RedirectResponse
     {
-        $scheduledCommand = $this->getDoctrineManager()->getRepository(ScheduledCommand::class)->find($id);
+        $scheduledCommand = $this->getDoctrineManager()->getRepository($this->scheduledCommandClass)->find($id);
         $scheduledCommand->setDisabled(!$scheduledCommand->isDisabled());
         $this->getDoctrineManager()->flush();
 
@@ -69,7 +73,7 @@ class ListController extends AbstractBaseController
 
     public function executeAction($id, Request $request): RedirectResponse
     {
-        $scheduledCommand = $this->getDoctrineManager()->getRepository(ScheduledCommand::class)->find($id);
+        $scheduledCommand = $this->getDoctrineManager()->getRepository($this->scheduledCommandClass)->find($id);
         $scheduledCommand->setExecuteImmediately(true);
         $this->getDoctrineManager()->flush();
 
@@ -85,7 +89,7 @@ class ListController extends AbstractBaseController
 
     public function unlockAction($id, Request $request): RedirectResponse
     {
-        $scheduledCommand = $this->getDoctrineManager()->getRepository(ScheduledCommand::class)->find($id);
+        $scheduledCommand = $this->getDoctrineManager()->getRepository($this->scheduledCommandClass)->find($id);
         $scheduledCommand->setLocked(false);
         $this->getDoctrineManager()->flush();
 

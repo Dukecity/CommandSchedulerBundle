@@ -4,7 +4,7 @@ namespace Dukecity\CommandSchedulerBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 use Dukecity\CommandSchedulerBundle\Event\SchedulerCommandPostExecutionEvent;
 use Dukecity\CommandSchedulerBundle\Event\SchedulerCommandPreExecutionEvent;
 use Psr\Log\LoggerInterface;
@@ -28,13 +28,17 @@ class CommandSchedulerExecution
     private ObjectManager $em;
     private Application $application;
 
+    /**
+     * @param class-string<ScheduledCommandInterface> $scheduledCommandClass
+     */
     public function __construct(
         private readonly KernelInterface          $kernel,
         protected ParameterBagInterface           $parameterBag,
         private readonly ?LoggerInterface         $logger,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly ManagerRegistry          $managerRegistry,
-        string                                    $managerName
+        string                                    $managerName,
+        private readonly string                   $scheduledCommandClass
         )
     {
         $this->em = $managerRegistry->getManager($managerName);
@@ -45,7 +49,7 @@ class CommandSchedulerExecution
     }
 
 
-    private function getCommand(ScheduledCommand $scheduledCommand): ?Command
+    private function getCommand(ScheduledCommandInterface $scheduledCommand): ?Command
     {
         try {
             $command = $this->application->find($scheduledCommand->getCommand());
@@ -58,7 +62,7 @@ class CommandSchedulerExecution
     }
 
     private function getLog(
-        ScheduledCommand $scheduledCommand,
+        ScheduledCommandInterface $scheduledCommand,
         int $commandsVerbosity = OutputInterface::OUTPUT_NORMAL
         ): OutputInterface
     {
@@ -90,7 +94,7 @@ class CommandSchedulerExecution
     /**
      * - Find command
      */
-    private function prepareCommandExecution(ScheduledCommand $scheduledCommand): ?Command
+    private function prepareCommandExecution(ScheduledCommandInterface $scheduledCommand): ?Command
     {
         if(!($command = $this->getCommand($scheduledCommand)))
         {
@@ -108,7 +112,7 @@ class CommandSchedulerExecution
      * - merge the definition of the commands
      * - Disable interactive mode
      */
-    private function getInputCommand(ScheduledCommand $scheduledCommand, Command $command, string $env): StringInput
+    private function getInputCommand(ScheduledCommandInterface $scheduledCommand, Command $command, string $env): StringInput
     {
         $inputCommand = new StringInput(
             $scheduledCommand->getCommand().' '.$scheduledCommand->getArguments().' --env='.$env
@@ -136,7 +140,7 @@ class CommandSchedulerExecution
     /**
      * Do the real execution of a command
      */
-    private function doExecution(ScheduledCommand $scheduledCommand, int $commandsVerbosity): int
+    private function doExecution(ScheduledCommandInterface $scheduledCommand, int $commandsVerbosity): int
     {
         $command = $this->prepareCommandExecution($scheduledCommand);
 
@@ -177,14 +181,14 @@ class CommandSchedulerExecution
     }
 
 
-    private function prepareExecution(ScheduledCommand $scheduledCommand): void
+    private function prepareExecution(ScheduledCommandInterface $scheduledCommand): void
     {
         //reload command from database before every execution to avoid parallel execution
         $this->em->getConnection()->beginTransaction();
         try {
             $notLockedCommand = $this
                 ->em
-                ->getRepository(ScheduledCommand::class)
+                ->getRepository($this->scheduledCommandClass)
                 ->getNotLockedCommand($scheduledCommand);
 
             //$notLockedCommand will be locked for avoiding parallel calls:
@@ -214,15 +218,15 @@ class CommandSchedulerExecution
     }
 
     public function executeCommand(
-        ScheduledCommand $scheduledCommand,
+        ScheduledCommandInterface $scheduledCommand,
         string $env,
         int $commandsVerbosity = OutputInterface::VERBOSITY_NORMAL): int
     {
         $this->env = $env;
         $this->prepareExecution($scheduledCommand);
 
-        /** @var ScheduledCommand $scheduledCommand */
-        $scheduledCommand = $this->em->find(ScheduledCommand::class, $scheduledCommand);
+        /** @var ScheduledCommandInterface $scheduledCommand */
+        $scheduledCommand = $this->em->find($this->scheduledCommandClass, $scheduledCommand);
 
         $result = $this->doExecution($scheduledCommand, $commandsVerbosity);
 
@@ -232,8 +236,8 @@ class CommandSchedulerExecution
         }
 
         // Reactivate the command in DB
-        /** @var ScheduledCommand $scheduledCommand */
-        $scheduledCommand = $this->em->find(ScheduledCommand::class, $scheduledCommand);
+        /** @var ScheduledCommandInterface $scheduledCommand */
+        $scheduledCommand = $this->em->find($this->scheduledCommandClass, $scheduledCommand);
 
         $scheduledCommand->setLastReturnCode($result);
         $scheduledCommand->setLocked(false);

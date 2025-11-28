@@ -5,7 +5,7 @@
 namespace Dukecity\CommandSchedulerBundle\Command;
 
 use Doctrine\Persistence\ObjectManager;
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 use Knp\Bundle\TimeBundle\DateTimeFormatter;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -23,8 +23,15 @@ class ListCommand extends Command
 {
     private ObjectManager $em;
 
-    public function __construct(ManagerRegistry $managerRegistry, private readonly DateTimeFormatter $dateTimeFormatter, string $managerName)
-    {
+    /**
+     * @param class-string<ScheduledCommandInterface> $scheduledCommandClass
+     */
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        private readonly DateTimeFormatter $dateTimeFormatter,
+        string $managerName,
+        private readonly string $scheduledCommandClass
+    ) {
         $this->em = $managerRegistry->getManager($managerName);
         parent::__construct();
     }
@@ -43,7 +50,7 @@ class ListCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $commands = $this->em->getRepository(ScheduledCommand::class)->findAll();
+        $commands = $this->em->getRepository($this->scheduledCommandClass)->findAll();
 
         $table = new Table($output);
         $table->setStyle('box');

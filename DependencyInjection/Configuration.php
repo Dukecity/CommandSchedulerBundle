@@ -23,6 +23,10 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('scheduled_command_class')
+                    ->defaultValue('Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand')
+                    ->info('The entity class to use for scheduled commands. Must implement ScheduledCommandInterface.')
+                ->end()
                 ->scalarNode('doctrine_manager')->defaultValue('default')->end()
                 ->scalarNode('log_path')->defaultValue('%kernel.logs_dir%')->end()
                 ->scalarNode('lock_timeout')->defaultValue(false)->end()

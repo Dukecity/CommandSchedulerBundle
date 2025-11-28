@@ -3,9 +3,8 @@
 namespace Dukecity\CommandSchedulerBundle\Controller;
 
 use Cron\CronExpression as CronExpressionLib;
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 use Dukecity\CommandSchedulerBundle\Service\CommandParser;
-use Lorisleiva\CronTranslator\CronParsingException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +20,7 @@ class ApiController extends AbstractBaseController
     private int $lockTimeout = 3600;
     private LoggerInterface $logger;
     private CommandParser $commandParser;
+    private string $scheduledCommandClass = '';
 
     public function setLockTimeout(int $lockTimeout): void
     {
@@ -37,8 +37,13 @@ class ApiController extends AbstractBaseController
         $this->commandParser = $commandParser;
     }
 
+    public function setScheduledCommandClass(string $scheduledCommandClass): void
+    {
+        $this->scheduledCommandClass = $scheduledCommandClass;
+    }
+
     /**
-     * @param ScheduledCommand[] $commands
+     * @param ScheduledCommandInterface[] $commands
      * @return array<string, mixed>
      * @throws \Exception
      */
@@ -113,7 +118,7 @@ class ApiController extends AbstractBaseController
     public function listAction(): JsonResponse
     {
         $commands = $this->getDoctrineManager()
-            ->getRepository(ScheduledCommand::class)
+            ->getRepository($this->scheduledCommandClass)
             ->findAll();
 
         return $this->json($this->getCommandsAsArray($commands));
@@ -129,7 +134,7 @@ class ApiController extends AbstractBaseController
     public function monitorAction(): JsonResponse
     {
         $failedCommands = $this->getDoctrineManager()
-            ->getRepository(ScheduledCommand::class)
+            ->getRepository($this->scheduledCommandClass)
             ->findFailedAndTimeoutCommands($this->lockTimeout);
 
         $jsonArray = $this->getCommandsAsArray($failedCommands);

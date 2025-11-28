@@ -2,15 +2,15 @@
 
 namespace Dukecity\CommandSchedulerBundle\Event;
 
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 
 abstract class AbstractSchedulerCommandEvent
 {
-    public function __construct(private readonly ScheduledCommand $command)
+    public function __construct(private readonly ScheduledCommandInterface $command)
     {
     }
 
-    public function getCommand(): ScheduledCommand
+    public function getCommand(): ScheduledCommandInterface
     {
         return $this->command;
     }

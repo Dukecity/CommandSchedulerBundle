@@ -2,7 +2,7 @@
 
 namespace Dukecity\CommandSchedulerBundle\Notification;
 
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 use Symfony\Component\Notifier\Message\ChatMessage;
 use Symfony\Component\Notifier\Message\EmailMessage;
 use Symfony\Component\Notifier\Notification\ChatNotificationInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\Notifier\Recipient\RecipientInterface;
 class CronMonitorNotification extends Notification implements EmailNotificationInterface, ChatNotificationInterface
 {
     /**
-     * @param ScheduledCommand[] $scheduledCommands
+     * @param ScheduledCommandInterface[] $scheduledCommands
      */
     public function __construct(private readonly array $scheduledCommands, private readonly string $subject)
     {

@@ -6,7 +6,7 @@
 namespace Dukecity\CommandSchedulerBundle\Command;
 
 use Doctrine\Persistence\ObjectManager;
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 use Dukecity\CommandSchedulerBundle\Service\CommandSchedulerExecution;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -39,11 +39,15 @@ class ExecuteCommand extends Command
     private InputInterface $input;
     private string $env;
 
+    /**
+     * @param class-string<ScheduledCommandInterface> $scheduledCommandClass
+     */
     public function __construct(
         private readonly CommandSchedulerExecution $commandSchedulerExecution,
         private readonly EventDispatcherInterface  $eventDispatcher,
         ManagerRegistry                            $managerRegistry,
-        string                                     $managerName
+        string                                     $managerName,
+        private readonly string                    $scheduledCommandClass
     ) {
         $this->em = $managerRegistry->getManager($managerName);
 
@@ -127,7 +131,7 @@ HELP
             #$this->env="test";
         }
 
-        $commandsToExecute = $this->em->getRepository(ScheduledCommand::class)
+        $commandsToExecute = $this->em->getRepository($this->scheduledCommandClass)
             ->findCommandsToExecute();
         $amountCommands = count($commandsToExecute);
 

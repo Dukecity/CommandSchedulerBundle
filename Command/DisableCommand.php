@@ -3,7 +3,7 @@
 namespace Dukecity\CommandSchedulerBundle\Command;
 
 use Doctrine\Persistence\ObjectManager;
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -25,9 +25,14 @@ class DisableCommand extends Command
     private bool $disableAll;
     private string|null $scheduledCommandName = null;
 
-    public function __construct(ManagerRegistry $managerRegistry,
-                                string $managerName)
-    {
+    /**
+     * @param class-string<ScheduledCommandInterface> $scheduledCommandClass
+     */
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        string $managerName,
+        private readonly string $scheduledCommandClass = ''
+    ) {
         $this->em = $managerRegistry->getManager($managerName);
 
         parent::__construct();
@@ -66,7 +71,7 @@ class DisableCommand extends Command
             return Command::FAILURE;
         }
 
-        $repository = $this->em->getRepository(ScheduledCommand::class);
+        $repository = $this->em->getRepository($this->scheduledCommandClass);
 
         # disable ALL
         if ($this->disableAll) {
@@ -112,7 +117,7 @@ class DisableCommand extends Command
     /**
      * @throws \Exception
      */
-    protected function disable(ScheduledCommand $command): void
+    protected function disable(ScheduledCommandInterface $command): void
     {
         $command->setDisabled(true);
 

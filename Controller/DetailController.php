@@ -2,8 +2,8 @@
 
 namespace Dukecity\CommandSchedulerBundle\Controller;
 
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Dukecity\CommandSchedulerBundle\Form\Type\ScheduledCommandType;
+use Dukecity\CommandSchedulerBundle\Service\ScheduledCommandFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,15 +14,28 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class DetailController extends AbstractBaseController
 {
+    private string $scheduledCommandClass = '';
+    private ?ScheduledCommandFactory $scheduledCommandFactory = null;
+
+    public function setScheduledCommandClass(string $scheduledCommandClass): void
+    {
+        $this->scheduledCommandClass = $scheduledCommandClass;
+    }
+
+    public function setScheduledCommandFactory(ScheduledCommandFactory $scheduledCommandFactory): void
+    {
+        $this->scheduledCommandFactory = $scheduledCommandFactory;
+    }
+
     /**
      * Handle display of new/existing ScheduledCommand object.
      */
     public function edit(Request $request, ?int $id = null): Response
     {
         $validationGroups = [];
-        $scheduledCommand = $id ? $this->getDoctrineManager()->getRepository(ScheduledCommand::class)->find($id) : null;
+        $scheduledCommand = $id ? $this->getDoctrineManager()->getRepository($this->scheduledCommandClass)->find($id) : null;
         if (!$scheduledCommand) {
-            $scheduledCommand = new ScheduledCommand();
+            $scheduledCommand = $this->scheduledCommandFactory->create();
             $validationGroups[] = 'new';
         }
 

@@ -16,7 +16,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 //use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 
 /**
  * Class MonitorCommand
@@ -33,6 +33,7 @@ class MonitorCommand extends Command
 
     /**
      * @param string[] $receiver
+     * @param class-string<ScheduledCommandInterface> $scheduledCommandClass
      */
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
@@ -42,7 +43,8 @@ class MonitorCommand extends Command
         private readonly int | bool               $lockTimeout,
         private readonly array                    $receiver,
         private readonly string                   $mailSubject,
-        private readonly bool                     $sendMailIfNoError = false
+        private readonly bool                     $sendMailIfNoError = false,
+        private readonly string                   $scheduledCommandClass = ''
     ) {
         $this->em = $managerRegistry->getManager($managerName);
         parent::__construct();
@@ -82,7 +84,7 @@ HELP);
         }
 
         // Fist, get all failed or potential timeout
-        $failedCommands = $this->em->getRepository(ScheduledCommand::class)
+        $failedCommands = $this->em->getRepository($this->scheduledCommandClass)
             ->findFailedAndTimeoutCommands($this->lockTimeout);
         //->findAll(); // for notification testing
 
@@ -106,7 +108,7 @@ HELP);
     /**
      * Print a table of locked Commands to console.
      *
-     * @param ScheduledCommand[] $failedCommands
+     * @param ScheduledCommandInterface[] $failedCommands
      * @throws \Exception
      */
     private function dump(OutputInterface $output, array $failedCommands): void
