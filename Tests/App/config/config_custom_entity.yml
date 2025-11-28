@@ -1,0 +1,69 @@
+# Full standalone configuration for integration tests with custom entity class
+# This replaces the base config to avoid loading ScheduledCommand entity
+
+parameters:
+    database_path: "%kernel.project_dir%/build/test_custom_entity.db"
+
+twig:
+    paths:
+        '%kernel.project_dir%/Resources/views': DukecityCommandScheduler
+
+framework:
+    translator:      ~
+    assets:
+    secret:          secret
+    test:            true
+    router:          { resource: "%kernel.project_dir%/Tests/App/config/routing_custom_entity.yml" }
+    form:            true
+    csrf_protection: false
+    http_method_override: false
+    session:
+        handler_id: null
+        cookie_secure: auto
+        cookie_samesite: lax
+        storage_factory_id: session.storage.factory.mock_file
+
+    profiler:
+        enabled: false
+        collect: false
+
+    property_info:
+        with_constructor_extractor: true
+
+
+doctrine:
+    dbal:
+        driver:   pdo_sqlite
+        dbname:   dukecity_command_scheduler_test_custom
+        user:     root
+        charset:  UTF8
+        path:     "%database_path%"
+        url:      null
+    orm:
+        auto_mapping: false
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        mappings:
+            # Only map our test entity - NOT the original ScheduledCommand
+            TestEntities:
+                type: attribute
+                dir: '%kernel.project_dir%/Tests/Entity'
+                is_bundle: false
+                prefix: Dukecity\CommandSchedulerBundle\Tests\Entity
+                alias: TestEntities
+        controller_resolver:
+
+dukecity_command_scheduler:
+    lock_timeout: 300
+    scheduled_command_class: Dukecity\CommandSchedulerBundle\Tests\Entity\TestCustomScheduledCommand
+    excluded_command_namespaces:
+        - scheduler
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    Dukecity\CommandSchedulerBundle\Fixtures\ORM\:
+        resource: '../../../Fixtures/ORM/*'
+        tags: ['doctrine.fixture.orm']
