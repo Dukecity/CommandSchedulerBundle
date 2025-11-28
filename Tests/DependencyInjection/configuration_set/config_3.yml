@@ -1,0 +1,3 @@
+dukecity_command_scheduler:
+    scheduled_command_class: 'App\Entity\CustomScheduledCommand'
+    doctrine_manager: default

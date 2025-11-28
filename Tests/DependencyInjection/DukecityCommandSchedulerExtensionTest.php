@@ -3,6 +3,8 @@
 namespace App\Tests\DependencyInjection;
 
 use Dukecity\CommandSchedulerBundle\DependencyInjection\DukecityCommandSchedulerExtension;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -54,5 +56,67 @@ class DukecityCommandSchedulerExtensionTest extends TestCase
         }
 
         return $tests;
+    }
+
+    public function testScheduledCommandClassDefaultValue(): void
+    {
+        $builder = new ContainerBuilder();
+        $ext = new DukecityCommandSchedulerExtension();
+
+        // Load with minimal config (no scheduled_command_class specified)
+        $ext->load([['doctrine_manager' => 'default']], $builder);
+
+        $this->assertTrue($builder->hasParameter('dukecity_command_scheduler.scheduled_command_class'));
+        $this->assertSame(
+            ScheduledCommand::class,
+            $builder->getParameter('dukecity_command_scheduler.scheduled_command_class')
+        );
+    }
+
+    public function testScheduledCommandClassCustomValue(): void
+    {
+        $builder = new ContainerBuilder();
+        $ext = new DukecityCommandSchedulerExtension();
+
+        $customClass = 'App\Entity\MyCustomScheduledCommand';
+        $ext->load([['scheduled_command_class' => $customClass, 'doctrine_manager' => 'default']], $builder);
+
+        $this->assertSame(
+            $customClass,
+            $builder->getParameter('dukecity_command_scheduler.scheduled_command_class')
+        );
+    }
+
+    public function testResolveTargetEntityConfigured(): void
+    {
+        $builder = new ContainerBuilder();
+        $ext = new DukecityCommandSchedulerExtension();
+
+        $ext->load([['doctrine_manager' => 'default']], $builder);
+
+        $this->assertTrue($builder->hasParameter('doctrine.orm.resolve_target_entities'));
+
+        $resolveTargetEntities = $builder->getParameter('doctrine.orm.resolve_target_entities');
+        $this->assertIsArray($resolveTargetEntities);
+        $this->assertArrayHasKey(ScheduledCommandInterface::class, $resolveTargetEntities);
+        $this->assertSame(
+            ScheduledCommand::class,
+            $resolveTargetEntities[ScheduledCommandInterface::class]
+        );
+    }
+
+    public function testResolveTargetEntityWithCustomClass(): void
+    {
+        $builder = new ContainerBuilder();
+        $ext = new DukecityCommandSchedulerExtension();
+
+        $customClass = 'App\Entity\CustomCommand';
+        $ext->load([['scheduled_command_class' => $customClass, 'doctrine_manager' => 'default']], $builder);
+
+        $resolveTargetEntities = $builder->getParameter('doctrine.orm.resolve_target_entities');
+        $this->assertSame(
+            $customClass,
+            $resolveTargetEntities[ScheduledCommandInterface::class]
+        );
     }
 }
