@@ -46,4 +46,6 @@ php bin/console make:migration
 php bin/console doctrine:migrations:migrate
 ```
 
+**Note:** When you configure a custom entity class, the bundle automatically excludes its default `ScheduledCommand` entity from Doctrine mappings to prevent table name conflicts.
+
 **Important:** The base table structure (`scheduled_command`) is unchanged, so your existing data will continue to work with your custom entity class. Only custom fields you add require a migration.

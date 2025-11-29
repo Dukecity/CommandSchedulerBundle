@@ -2,6 +2,7 @@
 
 namespace Dukecity\CommandSchedulerBundle\DependencyInjection;
 
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -30,6 +31,11 @@ class DukecityCommandSchedulerExtension extends Extension
         foreach ($config as $key => $value) {
             $container->setParameter('dukecity_command_scheduler.'.$key, $value);
         }
+
+        // Set parameter to control whether bundle's default entity mapping is enabled
+        // This is used by DoctrineOrmMappingsPass in the bundle's build() method
+        $useDefaultEntity = $config['scheduled_command_class'] === ScheduledCommand::class;
+        $container->setParameter('dukecity_command_scheduler.use_default_entity', $useDefaultEntity);
 
         // Configure ResolveTargetEntity to map interface to configured entity class
         $this->configureResolveTargetEntity($container, $config['scheduled_command_class']);

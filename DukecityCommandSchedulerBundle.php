@@ -3,7 +3,9 @@
 namespace Dukecity\CommandSchedulerBundle;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
+use Dukecity\CommandSchedulerBundle\DependencyInjection\Compiler\ScheduledCommandMappingPass;
 use Dukecity\CommandSchedulerBundle\DependencyInjection\DukecityCommandSchedulerExtension;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -34,16 +36,14 @@ class DukecityCommandSchedulerBundle extends Bundle
                 )
             );
 
-                # TODO
-            /** If this is merged it could be renamed https://github.com/doctrine/DoctrineBundle/pull/1369/files
-             * new DoctrineOrmMappingsPass(
-             * DoctrineOrmMappingsPass::createPhpMappingDriver(
-             * $namespaces,
-            $directories,
-            $managerParameters,
-            $enabledParameter,
-            $aliasMap)
-             */
+            // Register pass to remove bundle's entity mapping when custom class is configured.
+            // Must run after DoctrineOrmMappingsPass has added the mappings.
+            // Priority -10 ensures it runs after DoctrineOrmMappingsPass (priority 0).
+            $container->addCompilerPass(
+                new ScheduledCommandMappingPass(),
+                PassConfig::TYPE_BEFORE_OPTIMIZATION,
+                -10
+            );
         }
     }
 

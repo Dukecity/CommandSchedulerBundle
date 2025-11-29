@@ -2,13 +2,14 @@
 
 namespace App\Tests\App;
 
+use Dukecity\CommandSchedulerBundle\DukecityCommandSchedulerBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Custom kernel for integration tests with TestCustomScheduledCommand configured.
- * Uses a custom bundle that skips default entity mapping to avoid conflicts.
+ * The bundle automatically excludes its default entity when a custom class is configured.
  */
 class AppKernelCustomEntity extends Kernel
 {
@@ -24,8 +25,9 @@ class AppKernelCustomEntity extends Kernel
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-            // Use custom bundle that skips entity mapping
-            new DukecityCommandSchedulerBundleCustomEntity(),
+            // Use the real bundle - it automatically excludes its default entity
+            // when scheduled_command_class is configured to a custom class
+            new DukecityCommandSchedulerBundle(),
             new \Liip\TestFixturesBundle\LiipTestFixturesBundle(),
             new \Symfony\Bundle\DebugBundle\DebugBundle(),
             new \Knp\Bundle\TimeBundle\KnpTimeBundle(),

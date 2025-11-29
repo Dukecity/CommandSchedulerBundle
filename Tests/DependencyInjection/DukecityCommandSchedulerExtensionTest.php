@@ -119,4 +119,28 @@ class DukecityCommandSchedulerExtensionTest extends TestCase
             $resolveTargetEntities[ScheduledCommandInterface::class]
         );
     }
+
+    public function testUseDefaultEntityParameterTrueWhenDefaultClass(): void
+    {
+        $builder = new ContainerBuilder();
+        $ext = new DukecityCommandSchedulerExtension();
+
+        // Load with default entity class (or no class specified)
+        $ext->load([['doctrine_manager' => 'default']], $builder);
+
+        $this->assertTrue($builder->hasParameter('dukecity_command_scheduler.use_default_entity'));
+        $this->assertTrue($builder->getParameter('dukecity_command_scheduler.use_default_entity'));
+    }
+
+    public function testUseDefaultEntityParameterFalseWhenCustomClass(): void
+    {
+        $builder = new ContainerBuilder();
+        $ext = new DukecityCommandSchedulerExtension();
+
+        $customClass = 'App\Entity\CustomScheduledCommand';
+        $ext->load([['scheduled_command_class' => $customClass, 'doctrine_manager' => 'default']], $builder);
+
+        $this->assertTrue($builder->hasParameter('dukecity_command_scheduler.use_default_entity'));
+        $this->assertFalse($builder->getParameter('dukecity_command_scheduler.use_default_entity'));
+    }
 }
