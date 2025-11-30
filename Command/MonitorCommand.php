@@ -17,6 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 //use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
+use Dukecity\CommandSchedulerBundle\Service\ScheduledCommandQueryService;
 
 /**
  * Class MonitorCommand
@@ -36,15 +37,16 @@ class MonitorCommand extends Command
      * @param class-string<ScheduledCommandInterface> $scheduledCommandClass
      */
     public function __construct(
-        private readonly EventDispatcherInterface $eventDispatcher,
-        ManagerRegistry                           $managerRegistry,
-        private readonly DateTimeFormatter        $dateTimeFormatter,
-        string                                    $managerName,
-        private readonly int | bool               $lockTimeout,
-        private readonly array                    $receiver,
-        private readonly string                   $mailSubject,
-        private readonly bool                     $sendMailIfNoError = false,
-        private readonly string                   $scheduledCommandClass = ''
+        private readonly EventDispatcherInterface         $eventDispatcher,
+        ManagerRegistry                                   $managerRegistry,
+        private readonly DateTimeFormatter                $dateTimeFormatter,
+        string                                            $managerName,
+        private readonly int | bool                       $lockTimeout,
+        private readonly array                            $receiver,
+        private readonly string                           $mailSubject,
+        private readonly bool                             $sendMailIfNoError = false,
+        private readonly string                           $scheduledCommandClass = '',
+        private readonly ?ScheduledCommandQueryService    $queryService = null,
     ) {
         $this->em = $managerRegistry->getManager($managerName);
         parent::__construct();
@@ -84,9 +86,7 @@ HELP);
         }
 
         // Fist, get all failed or potential timeout
-        $failedCommands = $this->em->getRepository($this->scheduledCommandClass)
-            ->findFailedAndTimeoutCommands($this->lockTimeout);
-        //->findAll(); // for notification testing
+        $failedCommands = $this->queryService->findFailedAndTimeoutCommands($this->lockTimeout);
 
         // Commands in error
         if (count($failedCommands) > 0) {

@@ -5,6 +5,7 @@ namespace Dukecity\CommandSchedulerBundle\Controller;
 use Cron\CronExpression as CronExpressionLib;
 use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 use Dukecity\CommandSchedulerBundle\Service\CommandParser;
+use Dukecity\CommandSchedulerBundle\Service\ScheduledCommandQueryService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,7 @@ class ApiController extends AbstractBaseController
     private LoggerInterface $logger;
     private CommandParser $commandParser;
     private string $scheduledCommandClass = '';
+    private ?ScheduledCommandQueryService $queryService = null;
 
     public function setLockTimeout(int $lockTimeout): void
     {
@@ -40,6 +42,11 @@ class ApiController extends AbstractBaseController
     public function setScheduledCommandClass(string $scheduledCommandClass): void
     {
         $this->scheduledCommandClass = $scheduledCommandClass;
+    }
+
+    public function setQueryService(ScheduledCommandQueryService $queryService): void
+    {
+        $this->queryService = $queryService;
     }
 
     /**
@@ -133,9 +140,7 @@ class ApiController extends AbstractBaseController
      */
     public function monitorAction(): JsonResponse
     {
-        $failedCommands = $this->getDoctrineManager()
-            ->getRepository($this->scheduledCommandClass)
-            ->findFailedAndTimeoutCommands($this->lockTimeout);
+        $failedCommands = $this->queryService->findFailedAndTimeoutCommands($this->lockTimeout);
 
         $jsonArray = $this->getCommandsAsArray($failedCommands);
 

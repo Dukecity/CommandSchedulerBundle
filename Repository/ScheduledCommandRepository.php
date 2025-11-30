@@ -15,11 +15,16 @@ use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
  *
  * @template-extends EntityRepository<ScheduledCommandInterface>
  * @author  Julien Guyon <julienguyon@hotmail.com>
+ *
+ * @deprecated The custom query methods in this repository are deprecated.
+ *             Use ScheduledCommandQueryService instead, which works with any entity class.
  */
 class ScheduledCommandRepository extends EntityRepository
 {
     /**
      * Find all enabled command ordered by priority.
+     *
+     * @deprecated Use ScheduledCommandQueryService::findEnabledCommand() instead
      * @return ScheduledCommandInterface[]|null
      */
     public function findEnabledCommand(): ?array
@@ -39,6 +44,7 @@ class ScheduledCommandRepository extends EntityRepository
     /**
      * Find all commands ordered by next run time
      *
+     * @deprecated Use ScheduledCommandQueryService instead
      * @throws \Exception
      * @return ScheduledCommandInterface[]|null
      */
@@ -97,6 +103,7 @@ class ScheduledCommandRepository extends EntityRepository
     /**
      * Find all locked commands.
      *
+     * @deprecated Use ScheduledCommandQueryService::findLockedCommand() instead
      * @return ScheduledCommandInterface[]
      */
     public function findLockedCommand(): array
@@ -107,6 +114,7 @@ class ScheduledCommandRepository extends EntityRepository
     /**
      * Find all failed command.
      *
+     * @deprecated Use ScheduledCommandQueryService::findFailedCommand() instead
      * @return ScheduledCommandInterface[]|null
      */
     public function findFailedCommand(): ?array
@@ -123,6 +131,7 @@ class ScheduledCommandRepository extends EntityRepository
     /**
      * Find all enabled commands that need to be executed ordered by priority.
      *
+     * @deprecated Use ScheduledCommandQueryService::findCommandsToExecute() instead
      * @throws \Exception
      * @return ScheduledCommandInterface[]|null
      */
@@ -155,6 +164,7 @@ class ScheduledCommandRepository extends EntityRepository
     }
 
     /**
+     * @deprecated Use ScheduledCommandQueryService::findFailedAndTimeoutCommands() instead
      * @return ScheduledCommandInterface[]
      */
     public function findFailedAndTimeoutCommands(int | bool $lockTimeout = false): array
@@ -177,6 +187,7 @@ class ScheduledCommandRepository extends EntityRepository
     }
 
     /**
+     * @deprecated Use ScheduledCommandQueryService::getNotLockedCommand() instead
      * @throws NonUniqueResultException
      * @throws TransactionRequiredException
      */

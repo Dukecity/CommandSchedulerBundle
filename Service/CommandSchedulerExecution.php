@@ -32,13 +32,14 @@ class CommandSchedulerExecution
      * @param class-string<ScheduledCommandInterface> $scheduledCommandClass
      */
     public function __construct(
-        private readonly KernelInterface          $kernel,
-        protected ParameterBagInterface           $parameterBag,
-        private readonly ?LoggerInterface         $logger,
-        private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly ManagerRegistry          $managerRegistry,
-        string                                    $managerName,
-        private readonly string                   $scheduledCommandClass
+        private readonly KernelInterface               $kernel,
+        protected ParameterBagInterface                $parameterBag,
+        private readonly ?LoggerInterface              $logger,
+        private readonly EventDispatcherInterface      $eventDispatcher,
+        private readonly ManagerRegistry               $managerRegistry,
+        string                                         $managerName,
+        private readonly string                        $scheduledCommandClass,
+        private readonly ScheduledCommandQueryService  $queryService,
         )
     {
         $this->em = $managerRegistry->getManager($managerName);
@@ -186,10 +187,7 @@ class CommandSchedulerExecution
         //reload command from database before every execution to avoid parallel execution
         $this->em->getConnection()->beginTransaction();
         try {
-            $notLockedCommand = $this
-                ->em
-                ->getRepository($this->scheduledCommandClass)
-                ->getNotLockedCommand($scheduledCommand);
+            $notLockedCommand = $this->queryService->getNotLockedCommand($scheduledCommand);
 
             //$notLockedCommand will be locked for avoiding parallel calls:
             // http://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html
