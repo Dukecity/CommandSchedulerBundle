@@ -12,6 +12,8 @@ php bin/console doctrine:migrations:migrate
 
 Version 6 introduces extensible entity architecture. If you want to extend the ScheduledCommand entity with custom fields:
 
+**Important:** Custom entities MUST extend `BaseScheduledCommand`. Implementing only `ScheduledCommandInterface` is not supported, as validation constraints and ORM mappings are defined on the base class.
+
 1. **Create your custom entity** extending `BaseScheduledCommand`:
 
 ```php

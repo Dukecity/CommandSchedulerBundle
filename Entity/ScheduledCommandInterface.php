@@ -6,7 +6,11 @@ use DateTime;
 
 /**
  * Interface for scheduled command entities.
- * Implement this interface to create custom scheduled command entities.
+ *
+ * This interface is used for type-hinting throughout the bundle.
+ * To create a custom scheduled command entity, extend BaseScheduledCommand
+ * instead of implementing this interface directly. The base class provides
+ * ORM mappings, validation constraints, and helper methods.
  */
 interface ScheduledCommandInterface
 {
