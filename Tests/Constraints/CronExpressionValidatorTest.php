@@ -5,6 +5,8 @@ namespace Dukecity\CommandSchedulerBundle\Tests\Constraints;
 use Dukecity\CommandSchedulerBundle\Validator\Constraints\CronExpression;
 use Dukecity\CommandSchedulerBundle\Validator\Constraints\CronExpressionValidator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
@@ -45,7 +47,14 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($value, $constraint);
 
-        $this->buildViolation('myMessage')
+        if (Kernel::MAJOR_VERSION < 8) {
+            $message = 'myMessage';
+        }
+        else {
+            $message = 'The string "{{ string }}" is not a valid cron expression.';
+        }
+
+        $this->buildViolation($message)
             ->setParameter('{{ string }}', $value)
             ->assertRaised();
     }
