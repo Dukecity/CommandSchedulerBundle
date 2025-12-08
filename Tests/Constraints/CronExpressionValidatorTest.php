@@ -6,6 +6,7 @@ use Dukecity\CommandSchedulerBundle\Validator\Constraints\CronExpression;
 use Dukecity\CommandSchedulerBundle\Validator\Constraints\CronExpressionValidator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\RequiresPhp;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
@@ -46,7 +47,7 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($value, $constraint);
 
-        if (PHP_VERSION_ID < 80500) {
+        if (Kernel::MAJOR_VERSION < 8) {
             $message = 'myMessage';
         }
         else {
