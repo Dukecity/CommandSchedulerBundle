@@ -20,7 +20,7 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
     #[DataProvider('getValidValues')]
     public function testValidValues(string $value): void
     {
-        $this->validator->validate($value, new CronExpression(['message' => '']));
+        $this->validator->validate($value, new CronExpression(['message' => 'The string "{{ string }}" is not a valid cron expression.']));
 
         $this->assertNoViolation();
     }
@@ -45,8 +45,7 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($value, $constraint);
 
-        $this->buildViolation('myMessage') # works in ci
-        #$this->buildViolation('The string "{{ string }}" is not a valid cron expression.') # works on local mac runs (difference?)
+        $this->buildViolation('The string "{{ string }}" is not a valid cron expression.')
             ->setParameter('{{ string }}', $value)
             ->assertRaised();
     }
