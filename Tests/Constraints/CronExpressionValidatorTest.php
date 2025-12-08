@@ -40,7 +40,6 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
     }
 
     #[DataProvider('getInvalidValues')]
-    #[RequiresPhp('=> 8')]
     public function testInvalidValues(string $value): void
     {
         $constraint = new CronExpression(['message' => 'myMessage']);
