@@ -13,7 +13,7 @@ See [Wiki](https://github.com/Dukecity/CommandSchedulerBundle/wiki) for Details
 Please read [Upgrade-News for Version 6](UPGRADE.md)
 
 Version 6.x has the goal to use modern Php and Symfony features and low maintenance.
-So only Php >= 8.2 and Symfony ^7.0 (Latest: ^7.3) are supported at the moment.
+So only PHP >= 8.2 and Symfony ^7.0 (Latest: ^7.4|^8.0) are supported at the moment.
 
 The following table shows the compatibilities of different versions of the bundle :
 
