@@ -75,6 +75,64 @@ Please read [Changelog](CHANGELOG.md)
 
 ![new2](Resources/doc/images/command-list.png)
 
+## Extending the ScheduledCommand Entity
+
+You can extend the default `ScheduledCommand` entity to add custom fields or behavior. The bundle uses a MappedSuperclass pattern with an interface for maximum flexibility.
+
+### Creating a Custom Entity
+
+1. Create your custom entity extending `BaseScheduledCommand`:
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Dukecity\CommandSchedulerBundle\Entity\BaseScheduledCommand;
+
+#[ORM\Entity]
+#[ORM\Table(name: 'scheduled_command')]
+class MyScheduledCommand extends BaseScheduledCommand
+{
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $customField = null;
+
+    public function getCustomField(): ?string
+    {
+        return $this->customField;
+    }
+
+    public function setCustomField(?string $customField): static
+    {
+        $this->customField = $customField;
+        return $this;
+    }
+}
+```
+
+2. Configure the bundle to use your custom entity:
+
+```yaml
+# config/packages/dukecity_command_scheduler.yaml
+dukecity_command_scheduler:
+    scheduled_command_class: App\Entity\MyScheduledCommand
+```
+
+3. Update your database schema:
+
+```sh
+php bin/console make:migration
+php bin/console doctrine:migrations:migrate
+```
+
+### Available Extension Points
+
+- `ScheduledCommandInterface` - Contract for all scheduled command entities
+- `BaseScheduledCommand` - MappedSuperclass with all base properties and methods
+- `ScheduledCommand` - Default concrete entity (used if no custom class configured)
+- `ScheduledCommandFactory` - Service for creating entity instances
+
 ## Documentation
 
 See the [documentation here](https://github.com/Dukecity/CommandSchedulerBundle/wiki).

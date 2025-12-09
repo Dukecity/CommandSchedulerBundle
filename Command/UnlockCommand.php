@@ -5,7 +5,8 @@
 namespace Dukecity\CommandSchedulerBundle\Command;
 
 use Doctrine\Persistence\ObjectManager;
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
+use Dukecity\CommandSchedulerBundle\Service\ScheduledCommandQueryService;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -36,11 +37,14 @@ class UnlockCommand extends Command
      * @param ManagerRegistry $managerRegistry
      * @param string          $managerName
      * @param int             $lockTimeout     Number of seconds after a command is considered as timeout
+     * @param class-string<ScheduledCommandInterface> $scheduledCommandClass
      */
     public function __construct(
-        ManagerRegistry $managerRegistry,
-        string $managerName,
-        private int $lockTimeout = self::DEFAULT_LOCK_TIME
+        ManagerRegistry                                $managerRegistry,
+        string                                         $managerName,
+        private int                                    $lockTimeout = self::DEFAULT_LOCK_TIME,
+        private readonly string                        $scheduledCommandClass = '',
+        private readonly ?ScheduledCommandQueryService $queryService = null,
     ) {
         $this->em = $managerRegistry->getManager($managerName);
 
@@ -92,11 +96,11 @@ class UnlockCommand extends Command
             return Command::FAILURE;
         }
 
-        $repository = $this->em->getRepository(ScheduledCommand::class);
+        $repository = $this->em->getRepository($this->scheduledCommandClass);
 
         if ($this->unlockAll) {
             // Unlock all locked commands
-            $failedCommands = $repository->findLockedCommand();
+            $failedCommands = $this->queryService->findLockedCommand();
 
             if ($failedCommands) {
                 foreach ($failedCommands as $failedCommand) {
@@ -131,7 +135,7 @@ class UnlockCommand extends Command
     /**
      * @throws \Exception
      */
-    protected function unlock(ScheduledCommand $command): bool
+    protected function unlock(ScheduledCommandInterface $command): bool
     {
         if (!$command->isLocked()) {
             $this->io->warning(sprintf('Skipping: Scheduled Command "%s" is not locked.', $command->getName()));

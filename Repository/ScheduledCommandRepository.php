@@ -8,19 +8,24 @@ use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\TransactionRequiredException;
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 
 /**
  * Class ScheduledCommandRepository.
  *
- * @template-extends EntityRepository<ScheduledCommand>
+ * @template-extends EntityRepository<ScheduledCommandInterface>
  * @author  Julien Guyon <julienguyon@hotmail.com>
+ *
+ * @deprecated The custom query methods in this repository are deprecated.
+ *             Use ScheduledCommandQueryService instead, which works with any entity class.
  */
 class ScheduledCommandRepository extends EntityRepository
 {
     /**
      * Find all enabled command ordered by priority.
-     * @return ScheduledCommand[]|null
+     *
+     * @deprecated Use ScheduledCommandQueryService::findEnabledCommand() instead
+     * @return ScheduledCommandInterface[]|null
      */
     public function findEnabledCommand(): ?array
     {
@@ -39,8 +44,9 @@ class ScheduledCommandRepository extends EntityRepository
     /**
      * Find all commands ordered by next run time
      *
+     * @deprecated Use ScheduledCommandQueryService instead
      * @throws \Exception
-     * @return ScheduledCommand[]|null
+     * @return ScheduledCommandInterface[]|null
      */
     public function findAllSortedByNextRuntime(): ?array
     {
@@ -97,7 +103,8 @@ class ScheduledCommandRepository extends EntityRepository
     /**
      * Find all locked commands.
      *
-     * @return ScheduledCommand[]
+     * @deprecated Use ScheduledCommandQueryService::findLockedCommand() instead
+     * @return ScheduledCommandInterface[]
      */
     public function findLockedCommand(): array
     {
@@ -107,7 +114,8 @@ class ScheduledCommandRepository extends EntityRepository
     /**
      * Find all failed command.
      *
-     * @return ScheduledCommand[]|null
+     * @deprecated Use ScheduledCommandQueryService::findFailedCommand() instead
+     * @return ScheduledCommandInterface[]|null
      */
     public function findFailedCommand(): ?array
     {
@@ -123,8 +131,9 @@ class ScheduledCommandRepository extends EntityRepository
     /**
      * Find all enabled commands that need to be executed ordered by priority.
      *
+     * @deprecated Use ScheduledCommandQueryService::findCommandsToExecute() instead
      * @throws \Exception
-     * @return ScheduledCommand[]|null
+     * @return ScheduledCommandInterface[]|null
      */
     public function findCommandsToExecute(): ?array
     {
@@ -155,7 +164,8 @@ class ScheduledCommandRepository extends EntityRepository
     }
 
     /**
-     * @return ScheduledCommand[]
+     * @deprecated Use ScheduledCommandQueryService::findFailedAndTimeoutCommands() instead
+     * @return ScheduledCommandInterface[]
      */
     public function findFailedAndTimeoutCommands(int | bool $lockTimeout = false): array
     {
@@ -177,10 +187,11 @@ class ScheduledCommandRepository extends EntityRepository
     }
 
     /**
+     * @deprecated Use ScheduledCommandQueryService::getNotLockedCommand() instead
      * @throws NonUniqueResultException
      * @throws TransactionRequiredException
      */
-    public function getNotLockedCommand(ScheduledCommand $command): ScheduledCommand | null
+    public function getNotLockedCommand(ScheduledCommandInterface $command): ScheduledCommandInterface | null
     {
         $query = $this->createQueryBuilder('command')
             ->where('command.locked = false')

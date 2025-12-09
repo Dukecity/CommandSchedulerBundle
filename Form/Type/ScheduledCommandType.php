@@ -2,7 +2,7 @@
 
 namespace Dukecity\CommandSchedulerBundle\Form\Type;
 
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -22,10 +22,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ScheduledCommandType extends AbstractType
 {
+    /**
+     * @param class-string<ScheduledCommandInterface> $scheduledCommandClass
+     */
+    public function __construct(
+        private readonly string $scheduledCommandClass = ''
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
-            /** @var ScheduledCommand $scheduledCommand */
+            /** @var ScheduledCommandInterface $scheduledCommand */
             $scheduledCommand = $event->getData();
             $form = $event->getForm();
             $options = [
@@ -151,7 +159,7 @@ class ScheduledCommandType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => ScheduledCommand::class,
+                'data_class' => $this->scheduledCommandClass,
                 'wrapper_attr' => 'default_wrapper',
                 'translation_domain' => 'DukecityCommandScheduler',
             ]

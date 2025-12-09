@@ -1,5 +1,6 @@
 ### New in Version 6:
 - Read Upgrade
+- Add extensible entity architecture: extend `BaseScheduledCommand` to add custom fields (see README)
 - Ensure that the log file reside in the log directory and finish with a ".log" extension
 - Add command `scheduler:disable` to disable one or all scheduled commands
 - Add support of Symfony 7, 8

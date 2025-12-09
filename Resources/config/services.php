@@ -14,12 +14,14 @@ use Dukecity\CommandSchedulerBundle\Command\UnlockCommand;
 use Dukecity\CommandSchedulerBundle\Controller\DetailController;
 use Dukecity\CommandSchedulerBundle\Controller\ApiController;
 use Dukecity\CommandSchedulerBundle\Controller\ListController;
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Dukecity\CommandSchedulerBundle\EventSubscriber\SchedulerCommandSubscriber;
 use Dukecity\CommandSchedulerBundle\Form\Type\CommandChoiceType;
+use Dukecity\CommandSchedulerBundle\Form\Type\ScheduledCommandType;
 use Dukecity\CommandSchedulerBundle\Service\CommandParser;
 use Dukecity\CommandSchedulerBundle\Command\ListCommand;
 use Dukecity\CommandSchedulerBundle\Service\CommandSchedulerExecution;
+use Dukecity\CommandSchedulerBundle\Service\ScheduledCommandFactory;
+use Dukecity\CommandSchedulerBundle\Service\ScheduledCommandQueryService;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
@@ -30,10 +32,35 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->public()
         ->autowire(true);
 
+    $services->set(ScheduledCommandFactory::class)
+        ->args(
+            [
+                '%dukecity_command_scheduler.scheduled_command_class%',
+            ]
+        );
+
+    $services->set(ScheduledCommandQueryService::class)
+        ->args(
+            [
+                service('doctrine.orm.default_entity_manager'),
+                '%dukecity_command_scheduler.scheduled_command_class%',
+            ]
+        );
+
+    $services->set(ScheduledCommandType::class)
+        ->args(
+            [
+                '%dukecity_command_scheduler.scheduled_command_class%',
+            ]
+        )
+        ->tag('form.type');
+
     $services->set(DetailController::class)
         ->call('setManagerRegistry', [service('doctrine')])
         ->call('setManagerName', ['%dukecity_command_scheduler.doctrine_manager%'])
         ->call('setTranslator', [service('translator')])
+        ->call('setScheduledCommandClass', ['%dukecity_command_scheduler.scheduled_command_class%'])
+        ->call('setScheduledCommandFactory', [service(ScheduledCommandFactory::class)])
         ->tag('container.service_subscriber')
         ->tag('controller.service_arguments');
 
@@ -43,6 +70,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->call('setTranslator', [service('translator')])
         ->call('setLockTimeout', ['%dukecity_command_scheduler.lock_timeout%'])
         ->call('setLogger', [service('logger')])
+        ->call('setScheduledCommandClass', ['%dukecity_command_scheduler.scheduled_command_class%'])
         ->tag('container.service_subscriber')
         ->tag('controller.service_arguments');
 
@@ -62,6 +90,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->call('setLockTimeout', ['%dukecity_command_scheduler.lock_timeout%'])
         ->call('setLogger', [service('logger')])
         ->call('setCommandParser', [service(CommandParser::class)])
+        ->call('setScheduledCommandClass', ['%dukecity_command_scheduler.scheduled_command_class%'])
+        ->call('setQueryService', [service(ScheduledCommandQueryService::class)])
         ->tag('container.service_subscriber')
         ->tag('controller.service_arguments')
     ;
@@ -75,6 +105,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 service('event_dispatcher'),
                 service('doctrine'),
                 '%dukecity_command_scheduler.doctrine_manager%',
+                '%dukecity_command_scheduler.scheduled_command_class%',
+                service(ScheduledCommandQueryService::class),
             ]
         )
         #->alias("CommandSchedulerExecution")
@@ -90,6 +122,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 service('event_dispatcher'),
                 service('doctrine'),
                 '%dukecity_command_scheduler.doctrine_manager%',
+                '%dukecity_command_scheduler.scheduled_command_class%',
+                service(ScheduledCommandQueryService::class),
             ]
         )
         ->tag('console.command');
@@ -105,6 +139,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 '%dukecity_command_scheduler.monitor_mail%',
                 '%dukecity_command_scheduler.monitor_mail_subject%',
                 '%dukecity_command_scheduler.send_ok%',
+                '%dukecity_command_scheduler.scheduled_command_class%',
+                service(ScheduledCommandQueryService::class),
             ]
         )
         ->tag('console.command');
@@ -115,6 +151,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 service('doctrine'),
                 service('time.datetime_formatter'),
                 '%dukecity_command_scheduler.doctrine_manager%',
+                '%dukecity_command_scheduler.scheduled_command_class%',
             ]
         )
         ->tag('console.command');
@@ -125,6 +162,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 service('doctrine'),
                 '%dukecity_command_scheduler.doctrine_manager%',
                 '%dukecity_command_scheduler.lock_timeout%',
+                '%dukecity_command_scheduler.scheduled_command_class%',
+                service(ScheduledCommandQueryService::class),
             ]
         )
         ->tag('console.command');
@@ -134,6 +173,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             [
                 service('doctrine'),
                 '%dukecity_command_scheduler.doctrine_manager%',
+                service(ScheduledCommandFactory::class),
+                '%dukecity_command_scheduler.scheduled_command_class%',
             ]
         )
         ->tag('console.command');
@@ -143,6 +184,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             [
                 service('doctrine'),
                 '%dukecity_command_scheduler.doctrine_manager%',
+                '%dukecity_command_scheduler.scheduled_command_class%',
             ]
         )
         ->tag('console.command');
@@ -152,6 +194,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             [
                 service('doctrine'),
                 '%dukecity_command_scheduler.doctrine_manager%',
+                '%dukecity_command_scheduler.scheduled_command_class%',
             ]
         )
         ->tag('console.command');
@@ -162,14 +205,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(TestCommand::class)
         ->tag('console.command');
 
-    $services->set(ScheduledCommand::class)
-        ->tag('controller.service_arguments');
-
     $services->set(DisableCommand::class)
         ->args(
             [
                 service('doctrine'),
-                '%dukecity_command_scheduler.doctrine_manager%'
+                '%dukecity_command_scheduler.doctrine_manager%',
+                '%dukecity_command_scheduler.scheduled_command_class%',
             ]
         )
         ->tag('console.command');

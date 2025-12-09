@@ -5,7 +5,7 @@
 namespace Dukecity\CommandSchedulerBundle\Command;
 
 use Doctrine\Persistence\ObjectManager;
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -26,8 +26,14 @@ class RemoveCommand extends Command
     private ObjectManager $em;
     private SymfonyStyle $io;
 
-    public function __construct(ManagerRegistry $managerRegistry, string $managerName)
-    {
+    /**
+     * @param class-string<ScheduledCommandInterface> $scheduledCommandClass
+     */
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        string $managerName,
+        private readonly string $scheduledCommandClass
+    ) {
         $this->em = $managerRegistry->getManager($managerName);
 
         parent::__construct();
@@ -94,7 +100,7 @@ HELP
         $commandName = (string) $input->getArgument('name');
 
         try {
-            $command = $this->em->getRepository(ScheduledCommand::class)->findOneBy(
+            $command = $this->em->getRepository($this->scheduledCommandClass)->findOneBy(
                 ['name' => $commandName]
             );
 
@@ -120,7 +126,7 @@ HELP
     public function getCommandNames(): array
     {
         $return = [];
-        $commands = $this->em->getRepository(ScheduledCommand::class)->findAll();
+        $commands = $this->em->getRepository($this->scheduledCommandClass)->findAll();
         foreach ($commands as $command){
             $return[] = $command->getName();
         }

@@ -5,7 +5,8 @@
 namespace Dukecity\CommandSchedulerBundle\Command;
 
 use Doctrine\Persistence\ObjectManager;
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
+use Dukecity\CommandSchedulerBundle\Service\ScheduledCommandFactory;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -25,8 +26,15 @@ class AddCommand extends Command
     #use CommandReturnTrait;
     private ObjectManager $em;
 
-    public function __construct(ManagerRegistry $managerRegistry, string $managerName)
-    {
+    /**
+     * @param class-string<ScheduledCommandInterface> $scheduledCommandClass
+     */
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        string $managerName,
+        private readonly ScheduledCommandFactory $scheduledCommandFactory,
+        private readonly string $scheduledCommandClass
+    ) {
         $this->em = $managerRegistry->getManager($managerName);
 
         parent::__construct();
@@ -68,11 +76,11 @@ class AddCommand extends Command
         $disabled = (bool) $input->getArgument('disabled');
 
         try {
-            $cmd = $this->em->getRepository(ScheduledCommand::class)
+            $cmd = $this->em->getRepository($this->scheduledCommandClass)
                         ->findOneBy(['name' => $commandName]);
 
             if (!$cmd) {
-                $cmd = new ScheduledCommand();
+                $cmd = $this->scheduledCommandFactory->create();
                 $cmd->setName($commandName)
                 ->setCommand($command)
                 ->setArguments($arguments)

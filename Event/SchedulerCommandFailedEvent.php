@@ -2,19 +2,19 @@
 
 namespace Dukecity\CommandSchedulerBundle\Event;
 
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 
 class SchedulerCommandFailedEvent
 {
     /**
-     * @param ScheduledCommand[] $failedCommands
+     * @param ScheduledCommandInterface[] $failedCommands
      */
     public function __construct(private readonly array $failedCommands = [])
     {
     }
 
     /**
-     * @return ScheduledCommand[]
+     * @return ScheduledCommandInterface[]
      */
     public function getFailedCommands(): array
     {

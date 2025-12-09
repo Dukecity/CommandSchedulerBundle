@@ -2,7 +2,7 @@
 
 namespace Dukecity\CommandSchedulerBundle\Event;
 
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class SchedulerCommandPostExecutionEvent extends AbstractSchedulerCommandEvent
@@ -11,11 +11,11 @@ class SchedulerCommandPostExecutionEvent extends AbstractSchedulerCommandEvent
      * @param array<string, mixed>|null $profiling
      */
     public function __construct(
-        private readonly ScheduledCommand                  $command,
-        private readonly int                               $result,
-        private readonly ?OutputInterface                  $log = null,
-        private readonly ?array                            $profiling = null,
-        private readonly \Exception|\Error|\Throwable|null $exception = null)
+        private readonly ScheduledCommandInterface              $command,
+        private readonly int                                    $result,
+        private readonly ?OutputInterface                       $log = null,
+        private readonly ?array                                 $profiling = null,
+        private readonly \Exception|\Error|\Throwable|null      $exception = null)
     {
         parent::__construct($command);
     }

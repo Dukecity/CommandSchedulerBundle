@@ -1,0 +1,5 @@
+# Routing for custom entity integration tests
+# Imports bundle routes directly by path instead of bundle reference
+
+command_scheduler_routes:
+    resource: '../../../Resources/config/routing.php'

@@ -4,7 +4,7 @@ namespace Dukecity\CommandSchedulerBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommandInterface;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -28,9 +28,13 @@ class StartSchedulerCommand extends Command
 
     private EntityManagerInterface $em;
 
+    /**
+     * @param class-string<ScheduledCommandInterface> $scheduledCommandClass
+     */
     public function __construct(
         ManagerRegistry $managerRegistry,
         string $managerName,
+        private readonly string $scheduledCommandClass = ''
     ) {
         $this->em = $managerRegistry->getManager($managerName);
 
@@ -123,7 +127,7 @@ HELP
             }
 
             $command->run($input, $output);
-            $this->em->clear(ScheduledCommand::class);
+            $this->em->clear($this->scheduledCommandClass);
         }
     }
 }
