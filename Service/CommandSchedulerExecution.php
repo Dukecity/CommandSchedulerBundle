@@ -74,7 +74,7 @@ class CommandSchedulerExecution
             // log into a file
             try{
                 $logOutput = new StreamOutput(
-                    fopen(
+                    @fopen(
                         $this->logPath.u($scheduledCommand->getLogFile())->ensureEnd('.log'),
                         'ab',
                         false
