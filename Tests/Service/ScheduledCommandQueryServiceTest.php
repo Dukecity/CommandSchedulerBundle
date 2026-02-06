@@ -88,7 +88,7 @@ class ScheduledCommandQueryServiceTest extends WebTestCase
     {
         // Create a disabled command
         $command = $this->factory->create();
-        $command->setName('test-disabled-' . uniqid());
+        $command->setName('test-disabled-' . uniqid('', true));
         $command->setCommand('cache:clear');
         $command->setCronExpression('@daily');
         $command->setDisabled(true);
@@ -113,7 +113,7 @@ class ScheduledCommandQueryServiceTest extends WebTestCase
     {
         // Create a locked command
         $command = $this->factory->create();
-        $command->setName('test-locked-' . uniqid());
+        $command->setName('test-locked-' . uniqid('', true));
         $command->setCommand('cache:clear');
         $command->setCronExpression('@daily');
         $command->setLocked(true);
@@ -138,7 +138,7 @@ class ScheduledCommandQueryServiceTest extends WebTestCase
     {
         // Create a locked command
         $command = $this->factory->create();
-        $command->setName('test-find-locked-' . uniqid());
+        $command->setName('test-find-locked-' . uniqid('', true));
         $command->setCommand('cache:clear');
         $command->setCronExpression('@daily');
         $command->setLocked(true);
@@ -164,7 +164,7 @@ class ScheduledCommandQueryServiceTest extends WebTestCase
     {
         // Create a failed command
         $command = $this->factory->create();
-        $command->setName('test-failed-' . uniqid());
+        $command->setName('test-failed-' . uniqid('', true));
         $command->setCommand('cache:clear');
         $command->setCronExpression('@daily');
         $command->setLastReturnCode(1); // Non-zero = failed
@@ -190,7 +190,7 @@ class ScheduledCommandQueryServiceTest extends WebTestCase
     {
         // Create a locked command
         $command = $this->factory->create();
-        $command->setName('test-not-locked-' . uniqid());
+        $command->setName('test-not-locked-' . uniqid('', true));
         $command->setCommand('cache:clear');
         $command->setCronExpression('@daily');
         $command->setLocked(true);
@@ -211,7 +211,7 @@ class ScheduledCommandQueryServiceTest extends WebTestCase
     {
         // Create an unlocked command
         $command = $this->factory->create();
-        $command->setName('test-unlocked-' . uniqid());
+        $command->setName('test-unlocked-' . uniqid('', true));
         $command->setCommand('cache:clear');
         $command->setCronExpression('@daily');
         $command->setLocked(false);
