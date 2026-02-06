@@ -326,10 +326,10 @@ abstract class BaseScheduledCommand implements ScheduledCommandInterface
         return (new CronExpressionLib($this->getCronExpression()))->getNextRunDate();
     }
 
-    public function getCronExpressionTranslated(): string
+    public function getCronExpressionTranslated(string $locale = 'en', bool $timeFormat24hours = false): string
     {
         try {
-            return CronTranslator::translate($this->getCronExpression());
+            return CronTranslator::translate($this->getCronExpression(), $locale, $timeFormat24hours);
         } catch (\Exception $e) {
             return 'error: could not translate cron expression';
         }
