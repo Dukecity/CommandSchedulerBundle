@@ -12,18 +12,19 @@ See [Wiki](https://github.com/Dukecity/CommandSchedulerBundle/wiki) for Details
 
 Please read [Upgrade-News for Version 6](UPGRADE.md)
 
-Version 6.x has the goal to use modern Php and Symfony features and low maintenance.
-So only PHP >= 8.2 and Symfony ^7.0 (Latest: ^7.4|^8.0) are supported at the moment.
+Version 7.x has the goal to use modern Php and Symfony features and low maintenance.
+So only PHP >= 8.4 and Symfony ^8.0 are supported at the moment.
 
 The following table shows the compatibilities of different versions of the bundle :
 
-| Version                                                                    | Symfony        | PHP   |
-|----------------------------------------------------------------------------|----------------|-------|
-| [6.x (main)](https://github.com/Dukecity/CommandSchedulerBundle/tree/main) | ^7.0 + ^8.0    | >=8.2 |
-| [5.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/5.x)         | ^5.4 + ^6.0    | >=8.0 |
-| [4.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/4.x)         | ^4.4.20 + ^5.3 | >=8.0 |
-| [3.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/3.x)         | ^4.4.20 + ^5.3 | >=7.3 |
-| [2.2.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/2.2)       | ^3.4 + ^4.3    | ^7.1  |
+| Version                                                                      | Symfony        | PHP   |
+|------------------------------------------------------------------------------|----------------|-------|
+| [7.x (main)](https://github.com/Dukecity/CommandSchedulerBundle/tree/main) | ^8.0           | >=8.4 |
+| [6.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/main)        | ^7.0 + ^8.0    | >=8.2 |
+| [5.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/5.x)        | ^5.4 + ^6.0    | >=8.0 |
+| [4.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/4.x)        | ^4.4.20 + ^5.3 | >=8.0 |
+| [3.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/3.x)        | ^4.4.20 + ^5.3 | >=7.3 |
+| [2.2.x](https://github.com/Dukecity/CommandSchedulerBundle/tree/2.2)      | ^3.4 + ^4.3    | ^7.1  |
 
 
 ## Install

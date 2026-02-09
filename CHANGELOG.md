@@ -1,3 +1,13 @@
+### New in Version 7:
+- Added localization for translated cron-string 
+  Change method getCronExpressionTranslated() please Adapt your code.
+- Drop support of Symfony < 8.0
+- Drop support of php < 8.4
+- Drop support of doctrine/orm 2
+- Drop support of doctrine/doctrine-bundle 2
+- Drop support of doctrine/dbal 3
+- Bump minimum dependencies
+
 ### New in Version 6:
 - Read Upgrade
 - Add extensible entity architecture: extend `BaseScheduledCommand` to add custom fields (see README)
