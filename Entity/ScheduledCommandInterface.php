@@ -86,7 +86,7 @@ interface ScheduledCommandInterface
 
     public function getNextRunDate(bool $checkExecuteImmediately = true): ?DateTime;
 
-    public function getCronExpressionTranslated(): string;
+    public function getCronExpressionTranslated(string $locale = 'en', bool $timeFormat24hours = false): string;
 
     public function __toString(): string;
 }
