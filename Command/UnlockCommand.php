@@ -25,7 +25,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class UnlockCommand extends Command
 {
     private ObjectManager $em;
-    public const DEFAULT_LOCK_TIME = 3600; // 1 hour
+    public const int DEFAULT_LOCK_TIME = 3600; // 1 hour
     private SymfonyStyle $io;
 
     private bool $unlockAll;
