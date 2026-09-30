@@ -26,10 +26,10 @@ jobs:
     name: PHP ${{ matrix.php }} - ${{ matrix.symfony-version }} - ${{ matrix.stability }}
     steps:
       # basically git clone
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Cache dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.composer/cache/files
           key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
@@ -59,7 +59,7 @@ jobs:
   #cs:
     #runs-on: ubuntu-latest
     #steps:
-      #- uses: actions/checkout@v6
+      #- uses: actions/checkout@v7
       #- uses: shivammathur/setup-php@v2
         #with:
           #php-version: 8.4
@@ -71,7 +71,7 @@ jobs:
   #phpstan:
     #runs-on: ubuntu-latest
     #steps:
-      #- uses: actions/checkout@v6
+      #- uses: actions/checkout@v7
       #- uses: shivammathur/setup-php@v2
         #with:
           #php-version: 8.4

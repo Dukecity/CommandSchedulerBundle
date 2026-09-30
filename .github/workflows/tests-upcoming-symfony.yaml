@@ -15,7 +15,7 @@ jobs:
         symfony-version: ['8.2.x@dev']
     steps:
       - name: 'Checkout code'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: 'Install PHP with extensions'
         uses: shivammathur/setup-php@v2
