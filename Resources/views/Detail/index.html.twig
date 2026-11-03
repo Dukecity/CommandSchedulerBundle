@@ -66,7 +66,9 @@
 {% endblock content %}
 
 {% block javascript %}
-    $(document).ready(function() {
+    document.addEventListener("DOMContentLoaded", function ()
+    {
+        //document.querySelectorAll('.select2').forEach(el => $(el).select2());
         $('.select2').select2();
     });
 {% endblock javascript %}
