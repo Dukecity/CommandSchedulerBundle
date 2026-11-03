@@ -15,6 +15,7 @@
             <tr>
                 <th data-searchable="false" data-orderable="false">&nbsp;</th>
                 <th data-searchable="true" data-orderable="true">{{ "detail.name"|trans }}</th>
+                <th data-visible="false" data-searchable="true" data-orderable="true" ´>{{ "detail.command"|trans }}</th>
                 <th data-searchable="true" data-orderable="true">{{ "detail.command"|trans }}</th>
                 <th data-searchable="false" data-orderable="false">{{ "detail.cronExpression"|trans }}</th>
                 <th data-searchable="true" data-orderable="false">{{ "detail.logFile"|trans }}</th>
@@ -50,6 +51,9 @@
                             {% endif %}>
                     {{ command.name }}
                     </span>
+                </td>
+                <td>
+                    {{ command.command|split(':')|first }}
                 </td>
                 <td>
                     {{ command.command }} {{ command.arguments }}
@@ -124,23 +128,28 @@
 
 
 {% block javascript %}
-$(document).ready(function() {
-
-    $('#duketown-cronjobs').DataTable( {
+document.addEventListener("DOMContentLoaded", function ()
+{
+    var tableDuketownCronjobs = new DataTable('#duketown-cronjobs', {
         stateSave: true,
         dom: 'Bfrtip',
         buttons: [
-            'colvis'
+            'colvis',
+            'csv',
+            //'print',
+            //'excel',
         ],
         /*rowGroup: {
             dataSrc: 1
         },*/
-        order: [[ 6, "desc" ], [ 7, "desc" ]],
+        order: [[ 7, "desc" ], [ 8, "desc" ]],
         columnDefs: [
             {
-                "targets": [ 4 ],
-                "visible": false,
-                "searchable": false
+                target: [2, 3, 8],
+                columnControl: {
+                    target: 0,
+                    content: [['searchList']]
+                }
             }
         ],
         paging: false,
