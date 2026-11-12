@@ -55,7 +55,7 @@
         "symfony/maker-bundle": "^1.65",
         "symfony/notifier": "^7.4 || ^8.0",
         "symfony/phpunit-bridge": "^7.4 || ^8.0",
-        "symfony/process": "^8.1",
+        "symfony/process": "^7.4 || ^8.0",
         "symfony/var-dumper": "^7.4 || ^8.0"
     },
     "suggest": {
