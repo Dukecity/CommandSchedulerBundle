@@ -105,7 +105,8 @@ HELP
 
         $this->scheduler(new NullOutput(), $pidFile);
 
-        return Command::SUCCESS;
+        // the forked child must never return into the caller
+        exit(Command::SUCCESS);
     }
 
     /**
@@ -119,8 +120,8 @@ HELP
         $command = $console->find('scheduler:execute');
 
         while (true) {
-            $now = (int) microtime(false);
-            usleep((int) ((60 - ($now % 60) + (int) $now - $now) * 1_000_000.0));
+            $now = microtime(true);
+            usleep((int) ((60 - fmod($now, 60)) * 1_000_000.0));
 
             if (null !== $pidFile && !file_exists($pidFile)) {
                 break;
